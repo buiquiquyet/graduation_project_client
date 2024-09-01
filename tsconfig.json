@@ -43,6 +43,6 @@
     "noFallthroughCasesInSwitch": true
   },
   // "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "include": ["src/**/*", "**/*.test.ts", "vite.config.ts", "src/app/teacher/.tsx"],
+  "include": ["src/**/*", "**/*.test.ts", "vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
