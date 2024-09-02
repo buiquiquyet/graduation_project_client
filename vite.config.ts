@@ -13,6 +13,9 @@ export default defineConfig(() => {
         
       }
     },
+    optimizeDeps: {
+      exclude: ['js-big-decimal']
+    },
     plugins: [
       tsconfigPaths(),
       react(),

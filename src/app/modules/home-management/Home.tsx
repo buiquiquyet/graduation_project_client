@@ -1,6 +1,9 @@
+import { environment } from "@/shared/environment/Environment";
 import "./Home.scss";
+import SlideHome from "./slide-management/SlideHome";
 function Home() {
-  const publicUrl = import.meta.env.VITE_PUBLIC_URL;
+  
+  const publicUrl = environment.publicUrl;
 
   return (
     <div className="home">
@@ -80,7 +83,7 @@ function Home() {
             data-scrollax-parent="true"
           >
             <div
-              className="col-md-7 ftco-animate text-center"
+              className="col-md-7  text-center"
               data-scrollax=" properties: { translateY: '70%' }"
             >
               <h1
@@ -111,7 +114,7 @@ function Home() {
       <section className="ftco-counter ftco-intro" id="section-counter">
         <div className="container">
           <div className="row no-gutters">
-            <div className="col-md-5 d-flex justify-content-center counter-wrap ftco-animate">
+            <div className="col-md-5 d-flex justify-content-center counter-wrap "> 
               <div className="block-18 color-1 align-items-stretch">
                 <div className="text">
                   <span>Served Over</span>
@@ -122,7 +125,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div className="col-md d-flex justify-content-center counter-wrap ">
               <div className="block-18 color-2 align-items-stretch">
                 <div className="text">
                   <h3 className="mb-4">Donate Money</h3>
@@ -138,7 +141,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div className="col-md d-flex justify-content-center counter-wrap ">
               <div className="block-18 color-3 align-items-stretch">
                 <div className="text">
                   <h3 className="mb-4">Be a Volunteer</h3>
@@ -160,7 +163,7 @@ function Home() {
       <section className="ftco-section">
         <div className="container">
           <div className="row">
-            <div className="col-md-4 d-flex align-self-stretch ftco-animate">
+            <div className="col-md-4 d-flex align-self-stretch ">
               <div className="media block-6 d-flex services p-3 py-4 d-block">
                 <div className="icon d-flex mb-3">
                   <span className="flaticon-donation-1" />
@@ -174,7 +177,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4 d-flex align-self-stretch ftco-animate">
+            <div className="col-md-4 d-flex align-self-stretch ">
               <div className="media block-6 d-flex services p-3 py-4 d-block">
                 <div className="icon d-flex mb-3">
                   <span className="flaticon-charity" />
@@ -188,7 +191,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4 d-flex align-self-stretch ftco-animate">
+            <div className="col-md-4 d-flex align-self-stretch ">
               <div className="media block-6 d-flex services p-3 py-4 d-block">
                 <div className="icon d-flex mb-3">
                   <span className="flaticon-donation" />
@@ -208,7 +211,7 @@ function Home() {
       <section className="ftco-section bg-light">
         <div className="container-fluid">
           <div className="row justify-content-center mb-5 pb-3">
-            <div className="col-md-5 heading-section ftco-animate text-center">
+            <div className="col-md-5 heading-section  text-center">
               <h2 className="mb-4">Our Causes</h2>
               <p>
                 Far far away, behind the word mountains, far from the countries
@@ -216,246 +219,14 @@ function Home() {
               </p>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12 ftco-animate">
-              <div className="carousel-cause owl-carousel">
-                <div className="item">
-                  <div className="cause-entry">
-                    <a
-                      href="#"
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/cause-1.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="text p-3 p-md-4">
-                      <h3>
-                        <a href="#">Clean water for the urban area</a>
-                      </h3>
-                      <p>
-                        Even the all-powerful Pointing has no control about the
-                        blind texts it is an almost unorthographic life
-                      </p>
-                      <span className="donation-time mb-3 d-block">
-                        Last donation 1w ago
-                      </span>
-                      <div className="progress custom-progress-success">
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "28%" }}
-                          aria-valuenow={28}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        />
-                      </div>
-                      <span className="fund-raised d-block">
-                        $12,000 raised of $30,000
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="cause-entry">
-                    <a
-                      href="#"
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/cause-2.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="text p-3 p-md-4">
-                      <h3>
-                        <a href="#">Clean water for the urban area</a>
-                      </h3>
-                      <p>
-                        Even the all-powerful Pointing has no control about the
-                        blind texts it is an almost unorthographic life
-                      </p>
-                      <span className="donation-time mb-3 d-block">
-                        Last donation 1w ago
-                      </span>
-                      <div className="progress custom-progress-success">
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "28%" }}
-                          aria-valuenow={28}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        />
-                      </div>
-                      <span className="fund-raised d-block">
-                        $12,000 raised of $30,000
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="cause-entry">
-                    <a
-                      href="#"
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/cause-3.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="text p-3 p-md-4">
-                      <h3>
-                        <a href="#">Clean water for the urban area</a>
-                      </h3>
-                      <p>
-                        Even the all-powerful Pointing has no control about the
-                        blind texts it is an almost unorthographic life
-                      </p>
-                      <span className="donation-time mb-3 d-block">
-                        Last donation 1w ago
-                      </span>
-                      <div className="progress custom-progress-success">
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "28%" }}
-                          aria-valuenow={28}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        />
-                      </div>
-                      <span className="fund-raised d-block">
-                        $12,000 raised of $30,000
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="cause-entry">
-                    <a
-                      href="#"
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/cause-4.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="text p-3 p-md-4">
-                      <h3>
-                        <a href="#">Clean water for the urban area</a>
-                      </h3>
-                      <p>
-                        Even the all-powerful Pointing has no control about the
-                        blind texts it is an almost unorthographic life
-                      </p>
-                      <span className="donation-time mb-3 d-block">
-                        Last donation 1w ago
-                      </span>
-                      <div className="progress custom-progress-success">
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "28%" }}
-                          aria-valuenow={28}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        />
-                      </div>
-                      <span className="fund-raised d-block">
-                        $12,000 raised of $30,000
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="cause-entry">
-                    <a
-                      href="#"
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/cause-5.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="text p-3 p-md-4">
-                      <h3>
-                        <a href="#">Clean water for the urban area</a>
-                      </h3>
-                      <p>
-                        Even the all-powerful Pointing has no control about the
-                        blind texts it is an almost unorthographic life
-                      </p>
-                      <span className="donation-time mb-3 d-block">
-                        Last donation 1w ago
-                      </span>
-                      <div className="progress custom-progress-success">
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "28%" }}
-                          aria-valuenow={28}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        />
-                      </div>
-                      <span className="fund-raised d-block">
-                        $12,000 raised of $30,000
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="cause-entry">
-                    <a
-                      href="#"
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/cause-6.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="text p-3 p-md-4">
-                      <h3>
-                        <a href="#">Clean water for the urban area</a>
-                      </h3>
-                      <p>
-                        Even the all-powerful Pointing has no control about the
-                        blind texts it is an almost unorthographic life
-                      </p>
-                      <span className="donation-time mb-3 d-block">
-                        Last donation 1w ago
-                      </span>
-                      <div className="progress custom-progress-success">
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "28%" }}
-                          aria-valuenow={28}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        />
-                      </div>
-                      <span className="fund-raised d-block">
-                        $12,000 raised of $30,000
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+         {/* slide */}
+          <SlideHome/>
         </div>
       </section>
       <section className="ftco-section">
         <div className="container">
           <div className="row justify-content-center mb-5 pb-3">
-            <div className="col-md-7 heading-section ftco-animate text-center">
+            <div className="col-md-7 heading-section  text-center">
               <h2 className="mb-4">Latest Donations</h2>
               <p>
                 Far far away, behind the word mountains, far from the countries
@@ -464,7 +235,7 @@ function Home() {
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
+            <div className="col-lg-4 d-flex mb-sm-4 ">
               <div className="staff">
                 <div className="d-flex mb-4">
                   <div
@@ -490,7 +261,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
+            <div className="col-lg-4 d-flex mb-sm-4 ">
               <div className="staff">
                 <div className="d-flex mb-4">
                   <div
@@ -516,7 +287,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
+            <div className="col-lg-4 d-flex mb-sm-4 ">
               <div className="staff">
                 <div className="d-flex mb-4">
                   <div
@@ -549,7 +320,7 @@ function Home() {
         <div className="d-md-flex">
           <a
             href="assets/layout/images/cause-2.jpg"
-            className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
+            className="gallery image-popup d-flex justify-content-center align-items-center img "
             style={{
               backgroundImage: `url(${publicUrl + "/images/cause-2.jpg"})`,
             }}
@@ -560,7 +331,7 @@ function Home() {
           </a>
           <a
             href="assets/layout/images/cause-3.jpg"
-            className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
+            className="gallery image-popup d-flex justify-content-center align-items-center img "
             style={{  backgroundImage: `url(${publicUrl + "/images/cause-3.jpg"})`,}}
           >
             <div className="icon d-flex justify-content-center align-items-center">
@@ -569,7 +340,7 @@ function Home() {
           </a>
           <a
             href="assets/layout/images/cause-4.jpg"
-            className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
+            className="gallery image-popup d-flex justify-content-center align-items-center img "
             style={{  backgroundImage: `url(${publicUrl + "/images/cause-4.jpg"})`, }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
@@ -578,7 +349,7 @@ function Home() {
           </a>
           <a
             href="assets/layout/images/cause-5.jpg"
-            className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
+            className="gallery image-popup d-flex justify-content-center align-items-center img "
             style={{  backgroundImage: `url(${publicUrl + "/images/cause-5.jpg"})`, }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
@@ -589,7 +360,7 @@ function Home() {
         <div className="d-md-flex">
           <a
             href="assets/layout/images/cause-6.jpg"
-            className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
+            className="gallery image-popup d-flex justify-content-center align-items-center img "
             style={{  backgroundImage: `url(${publicUrl + "/images/cause-6.jpg"})`, }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
@@ -598,7 +369,7 @@ function Home() {
           </a>
           <a
             href="assets/layout/images/image_3.jpg"
-            className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
+            className="gallery image-popup d-flex justify-content-center align-items-center img "
             style={{ backgroundImage: `url(${publicUrl + "/images/image_3.jpg"})`, }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
@@ -607,7 +378,7 @@ function Home() {
           </a>
           <a
             href="assets/layout/images/image_1.jpg"
-            className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
+            className="gallery image-popup d-flex justify-content-center align-items-center img "
             style={{ backgroundImage: `url(${publicUrl + "/images/image_1.jpg"})` }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
@@ -616,7 +387,7 @@ function Home() {
           </a>
           <a
             href="assets/layout/images/image_2.jpg"
-            className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
+            className="gallery image-popup d-flex justify-content-center align-items-center img "
             style={{ backgroundImage: `url(${publicUrl + "/images/image_2.jpg"})` }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
@@ -628,7 +399,7 @@ function Home() {
       <section className="ftco-section">
         <div className="container">
           <div className="row justify-content-center mb-5 pb-3">
-            <div className="col-md-7 heading-section ftco-animate text-center">
+            <div className="col-md-7 heading-section  text-center">
               <h2 className="mb-4">Recent from blog</h2>
               <p>
                 Far far away, behind the word mountains, far from the countries
@@ -637,7 +408,7 @@ function Home() {
             </div>
           </div>
           <div className="row d-flex">
-            <div className="col-md-4 d-flex ftco-animate">
+            <div className="col-md-4 d-flex ">
               <div className="blog-entry align-self-stretch">
                 <a
                   href="blog-single.html"
@@ -670,7 +441,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4 d-flex ftco-animate">
+            <div className="col-md-4 d-flex ">
               <div className="blog-entry align-self-stretch">
                 <a
                   href="blog-single.html"
@@ -703,7 +474,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4 d-flex ftco-animate">
+            <div className="col-md-4 d-flex ">
               <div className="blog-entry align-self-stretch">
                 <a
                   href="blog-single.html"
@@ -742,12 +513,12 @@ function Home() {
       <section className="ftco-section bg-light">
         <div className="container">
           <div className="row justify-content-center mb-5 pb-3">
-            <div className="col-md-7 heading-section ftco-animate text-center">
+            <div className="col-md-7 heading-section  text-center">
               <h2 className="mb-4">Our Latest Events</h2>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-4 d-flex ftco-animate">
+            <div className="col-md-4 d-flex ">
               <div className="blog-entry align-self-stretch">
                 <a
                   href="blog-single.html"
@@ -793,7 +564,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4 d-flex ftco-animate">
+            <div className="col-md-4 d-flex ">
               <div className="blog-entry align-self-stretch">
                 <a
                   href="blog-single.html"
@@ -839,7 +610,7 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4 d-flex ftco-animate">
+            <div className="col-md-4 d-flex ">
               <div className="blog-entry align-self-stretch">
                 <a
                   href="blog-single.html"
@@ -895,7 +666,7 @@ function Home() {
         <div className="overlay" />
         <div className="container">
           <div className="row d-md-flex">
-            <div className="col-md-6 d-flex ftco-animate">
+            <div className="col-md-6 d-flex ">
               <div
                 className="img img-2 align-self-stretch"
                 style={{
@@ -903,7 +674,7 @@ function Home() {
                 }}
               />
             </div>
-            <div className="col-md-6 volunteer pl-md-5 ftco-animate">
+            <div className="col-md-6 volunteer pl-md-5 ">
               <h3 className="mb-3">Be a volunteer</h3>
               <form action="#" className="volunter-form">
                 <div className="form-group">
@@ -955,17 +726,17 @@ function Home() {
                   countries Vokalia and Consonantia, there live the blind texts.
                 </p>
                 <ul className="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                  <li className="ftco-animate">
+                  <li className="">
                     <a href="#">
                       <span className="icon-twitter" />
                     </a>
                   </li>
-                  <li className="ftco-animate">
+                  <li className="">
                     <a href="#">
                       <span className="icon-facebook" />
                     </a>
                   </li>
-                  <li className="ftco-animate">
+                  <li className="">
                     <a href="#">
                       <span className="icon-instagram" />
                     </a>
