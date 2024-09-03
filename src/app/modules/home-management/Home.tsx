@@ -1,120 +1,19 @@
-import { environment } from "@/shared/environment/Environment";
 import "./Home.scss";
 import SlideHome from "./slide-management/SlideHome";
+import { MyContext } from "@/App";
+import { useContext } from "react";
 function Home() {
-  
-  const publicUrl = environment.publicUrl;
-
+  const  context = useContext(MyContext)
+  if (!context) {
+      return null;
+    }
+  const { publicUrl } = context;
   return (
-    <div className="home">
-      <nav
-        className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-        id="ftco-navbar"
-      >
-        <div className="container">
-          <a className="navbar-brand">Welfare</a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#ftco-nav"
-            aria-controls="ftco-nav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="oi oi-menu" /> Menu
-          </button>
-          <div className="collapse navbar-collapse" id="ftco-nav">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item active">
-                <a href="index.html" className="nav-link">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="about.html" className="nav-link">
-                  About
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="causes.html" className="nav-link">
-                  Causes
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="donate.html" className="nav-link">
-                  Donate
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="blog.html" className="nav-link">
-                  Blog
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="gallery.html" className="nav-link">
-                  Gallery
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="event.html" className="nav-link">
-                  Events
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="contact.html" className="nav-link">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      {/* END nav */}
-      <div
-        className="hero-wrap"
-        style={{ backgroundImage: `url(${publicUrl + "/images/bg_7.jpg"})` }}
-        data-stellar-background-ratio="0.5"
-      >
-        <div className="overlay" />
-        <div className="container">
-          <div
-            className="row no-gutters slider-text align-items-center justify-content-center"
-            data-scrollax-parent="true"
-          >
-            <div
-              className="col-md-7  text-center"
-              data-scrollax=" properties: { translateY: '70%' }"
-            >
-              <h1
-                className="mb-4"
-                data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
-              >
-                Doing Nothing is Not An Option of Our Life
-              </h1>
-              <p
-                className="mb-5"
-                data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
-              >
-                Created by <a href="#">Colorlib.com</a>
-              </p>
-              <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                <a
-                  href="https://vimeo.com/45830194"
-                  className="btn btn-white btn-outline-white px-4 py-3 popup-vimeo"
-                >
-                  <span className="icon-play mr-2" />
-                  Watch Video
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <>
       <section className="ftco-counter ftco-intro" id="section-counter">
         <div className="container">
           <div className="row no-gutters">
-            <div className="col-md-5 d-flex justify-content-center counter-wrap "> 
+            <div className="col-md-5 d-flex justify-content-center counter-wrap ">
               <div className="block-18 color-1 align-items-stretch">
                 <div className="text">
                   <span>Served Over</span>
@@ -219,8 +118,8 @@ function Home() {
               </p>
             </div>
           </div>
-         {/* slide */}
-          <SlideHome/>
+          {/* slide */}
+          <SlideHome />
         </div>
       </section>
       <section className="ftco-section">
@@ -332,7 +231,9 @@ function Home() {
           <a
             href="assets/layout/images/cause-3.jpg"
             className="gallery image-popup d-flex justify-content-center align-items-center img "
-            style={{  backgroundImage: `url(${publicUrl + "/images/cause-3.jpg"})`,}}
+            style={{
+              backgroundImage: `url(${publicUrl + "/images/cause-3.jpg"})`,
+            }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
               <span className="icon-search" />
@@ -341,7 +242,9 @@ function Home() {
           <a
             href="assets/layout/images/cause-4.jpg"
             className="gallery image-popup d-flex justify-content-center align-items-center img "
-            style={{  backgroundImage: `url(${publicUrl + "/images/cause-4.jpg"})`, }}
+            style={{
+              backgroundImage: `url(${publicUrl + "/images/cause-4.jpg"})`,
+            }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
               <span className="icon-search" />
@@ -350,7 +253,9 @@ function Home() {
           <a
             href="assets/layout/images/cause-5.jpg"
             className="gallery image-popup d-flex justify-content-center align-items-center img "
-            style={{  backgroundImage: `url(${publicUrl + "/images/cause-5.jpg"})`, }}
+            style={{
+              backgroundImage: `url(${publicUrl + "/images/cause-5.jpg"})`,
+            }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
               <span className="icon-search" />
@@ -361,7 +266,9 @@ function Home() {
           <a
             href="assets/layout/images/cause-6.jpg"
             className="gallery image-popup d-flex justify-content-center align-items-center img "
-            style={{  backgroundImage: `url(${publicUrl + "/images/cause-6.jpg"})`, }}
+            style={{
+              backgroundImage: `url(${publicUrl + "/images/cause-6.jpg"})`,
+            }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
               <span className="icon-search" />
@@ -370,7 +277,9 @@ function Home() {
           <a
             href="assets/layout/images/image_3.jpg"
             className="gallery image-popup d-flex justify-content-center align-items-center img "
-            style={{ backgroundImage: `url(${publicUrl + "/images/image_3.jpg"})`, }}
+            style={{
+              backgroundImage: `url(${publicUrl + "/images/image_3.jpg"})`,
+            }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
               <span className="icon-search" />
@@ -379,7 +288,9 @@ function Home() {
           <a
             href="assets/layout/images/image_1.jpg"
             className="gallery image-popup d-flex justify-content-center align-items-center img "
-            style={{ backgroundImage: `url(${publicUrl + "/images/image_1.jpg"})` }}
+            style={{
+              backgroundImage: `url(${publicUrl + "/images/image_1.jpg"})`,
+            }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
               <span className="icon-search" />
@@ -388,7 +299,9 @@ function Home() {
           <a
             href="assets/layout/images/image_2.jpg"
             className="gallery image-popup d-flex justify-content-center align-items-center img "
-            style={{ backgroundImage: `url(${publicUrl + "/images/image_2.jpg"})` }}
+            style={{
+              backgroundImage: `url(${publicUrl + "/images/image_2.jpg"})`,
+            }}
           >
             <div className="icon d-flex justify-content-center align-items-center">
               <span className="icon-search" />
@@ -414,7 +327,9 @@ function Home() {
                   href="blog-single.html"
                   className="block-20"
                   style={{
-                   backgroundImage: `url(${publicUrl + "/images/image_1.jpg"})`
+                    backgroundImage: `url(${
+                      publicUrl + "/images/image_1.jpg"
+                    })`,
                   }}
                 ></a>
                 <div className="text p-4 d-block">
@@ -447,7 +362,9 @@ function Home() {
                   href="blog-single.html"
                   className="block-20"
                   style={{
-                   backgroundImage: `url(${publicUrl + "/images/image_2.jpg"})`
+                    backgroundImage: `url(${
+                      publicUrl + "/images/image_2.jpg"
+                    })`,
                   }}
                 ></a>
                 <div className="text p-4 d-block">
@@ -480,7 +397,9 @@ function Home() {
                   href="blog-single.html"
                   className="block-20"
                   style={{
-                    backgroundImage: `url(${publicUrl + "/images/image_3.jpg"})`
+                    backgroundImage: `url(${
+                      publicUrl + "/images/image_3.jpg"
+                    })`,
                   }}
                 ></a>
                 <div className="text p-4 d-block">
@@ -524,7 +443,9 @@ function Home() {
                   href="blog-single.html"
                   className="block-20"
                   style={{
-                    backgroundImage: `url(${publicUrl + "/images/event-1.jpg"})`
+                    backgroundImage: `url(${
+                      publicUrl + "/images/event-1.jpg"
+                    })`,
                   }}
                 ></a>
                 <div className="text p-4 d-block">
@@ -570,7 +491,9 @@ function Home() {
                   href="blog-single.html"
                   className="block-20"
                   style={{
-                    backgroundImage: `url(${publicUrl + "/images/event-2.jpg"})`
+                    backgroundImage: `url(${
+                      publicUrl + "/images/event-2.jpg"
+                    })`,
                   }}
                 ></a>
                 <div className="text p-4 d-block">
@@ -616,7 +539,9 @@ function Home() {
                   href="blog-single.html"
                   className="block-20"
                   style={{
-                    backgroundImage: `url(${publicUrl + "/images/event-3.jpg"})`
+                    backgroundImage: `url(${
+                      publicUrl + "/images/event-3.jpg"
+                    })`,
                   }}
                 ></a>
                 <div className="text p-4 d-block">
@@ -670,7 +595,7 @@ function Home() {
               <div
                 className="img img-2 align-self-stretch"
                 style={{
-                 backgroundImage: `url(${publicUrl + "/images/bg_4.jpg"})`
+                  backgroundImage: `url(${publicUrl + "/images/bg_4.jpg"})`,
                 }}
               />
             </div>
@@ -714,211 +639,7 @@ function Home() {
           </div>
         </div>
       </section>
-      <footer className="ftco-footer ftco-section img">
-        <div className="overlay" />
-        <div className="container">
-          <div className="row mb-5">
-            <div className="col-md-3">
-              <div className="ftco-footer-widget mb-4">
-                <h2 className="ftco-heading-2">About Us</h2>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia and Consonantia, there live the blind texts.
-                </p>
-                <ul className="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                  <li className="">
-                    <a href="#">
-                      <span className="icon-twitter" />
-                    </a>
-                  </li>
-                  <li className="">
-                    <a href="#">
-                      <span className="icon-facebook" />
-                    </a>
-                  </li>
-                  <li className="">
-                    <a href="#">
-                      <span className="icon-instagram" />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="ftco-footer-widget mb-4">
-                <h2 className="ftco-heading-2">Recent Blog</h2>
-                <div className="block-21 mb-4 d-flex">
-                  <a
-                    className="blog-img mr-4"
-                    style={{
-                     backgroundImage: `url(${publicUrl + "/images/image_1.jpg"})`
-                    }}
-                  />
-                  <div className="text">
-                    <h3 className="heading">
-                      <a href="#">
-                        Even the all-powerful Pointing has no control about
-                      </a>
-                    </h3>
-                    <div className="meta">
-                      <div>
-                        <a href="#">
-                          <span className="icon-calendar" /> July 12, 2018
-                        </a>
-                      </div>
-                      <div>
-                        <a href="#">
-                          <span className="icon-person" /> Admin
-                        </a>
-                      </div>
-                      <div>
-                        <a href="#">
-                          <span className="icon-chat" /> 19
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="block-21 mb-4 d-flex">
-                  <a
-                    className="blog-img mr-4"
-                    style={{
-                      backgroundImage: `url(${publicUrl + "/images/image_2.jpg"})`
-                    }}
-                  />
-                  <div className="text">
-                    <h3 className="heading">
-                      <a href="#">
-                        Even the all-powerful Pointing has no control about
-                      </a>
-                    </h3>
-                    <div className="meta">
-                      <div>
-                        <a href="#">
-                          <span className="icon-calendar" /> July 12, 2018
-                        </a>
-                      </div>
-                      <div>
-                        <a href="#">
-                          <span className="icon-person" /> Admin
-                        </a>
-                      </div>
-                      <div>
-                        <a href="#">
-                          <span className="icon-chat" /> 19
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-2">
-              <div className="ftco-footer-widget mb-4 ml-md-4">
-                <h2 className="ftco-heading-2">Site Links</h2>
-                <ul className="list-unstyled">
-                  <li>
-                    <a href="#" className="py-2 d-block">
-                      Home
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="py-2 d-block">
-                      About
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="py-2 d-block">
-                      Donate
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="py-2 d-block">
-                      Causes
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="py-2 d-block">
-                      Event
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="py-2 d-block">
-                      Blog
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div className="ftco-footer-widget mb-4">
-                <h2 className="ftco-heading-2">Have a Questions?</h2>
-                <div className="block-23 mb-3">
-                  <ul>
-                    <li>
-                      <span className="icon icon-map-marker" />
-                      <span className="text">
-                        203 Fake St. Mountain View, San Francisco, California,
-                        USA
-                      </span>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span className="icon icon-phone" />
-                        <span className="text">+2 392 3929 210</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span className="icon icon-envelope" />
-                        <span className="text">info@yourdomain.com</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12 text-center">
-              <p>
-                {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
-                Copyright © All rights reserved | This template is made with{" "}
-                <i className="icon-heart" aria-hidden="true" /> by{" "}
-                <a href="https://colorlib.com" target="_blank">
-                  Colorlib
-                </a>
-                {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
-      {/* loader */}
-      {/* <div id="ftco-loader" className="show fullscreen">
-          <svg className="circular" width="48px" height="48px">
-            <circle
-              className="path-bg"
-              cx={24}
-              cy={24}
-              r={22}
-              fill="none"
-              strokeWidth={4}
-              stroke="#eeeeee"
-            />
-            <circle
-              className="path"
-              cx={24}
-              cy={24}
-              r={22}
-              fill="none"
-              strokeWidth={4}
-              strokeMiterlimit={10}
-              stroke="#F96D00"
-            />
-          </svg>
-        </div> */}
-    </div>
+    </>
   );
 }
 
