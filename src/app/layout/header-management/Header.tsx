@@ -1,14 +1,13 @@
 import { MyContext } from "@/App";
+import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-
-
 const HeaderComponent = () => {
-    const  context = useContext(MyContext)
-    if (!context) {
-        return null;
-      }
-    const { publicUrl } = context;
+  const context = useContext(MyContext);
+  if (!context) {
+    return null;
+  }
+  const { publicUrl } = context;
 
   return (
     <>
@@ -17,7 +16,9 @@ const HeaderComponent = () => {
         id="ftco-navbar"
       >
         <div className="container">
-          <Link to={"/"} className="navbar-brand">Welfare</Link>
+          <Link to={"/"} className="navbar-brand">
+            Welfare
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -91,27 +92,33 @@ const HeaderComponent = () => {
               className="col-md-7  text-center"
               data-scrollax=" properties: { translateY: '70%' }"
             >
-              <h1
-                className="mb-4"
-                data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
-              >
-                Doing Nothing is Not An Option of Our Life
-              </h1>
-              <p
-                className="mb-5"
-                data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
-              >
-                Created by <Link to={"/"}>Colorlib.com</Link>
-              </p>
-              <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                <Link
-                  to={"/"}
-                  className="btn btn-white btn-outline-white px-4 py-3 popup-vimeo"
+              <LazyLoadComponent>
+                <h1
+                  className="mb-4"
+                  data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
                 >
-                  <span className="icon-play mr-2" />
-                  Watch Video
-                </Link>
-              </p>
+                  Doing Nothing is Not An Option of Our Life
+                </h1>
+              </LazyLoadComponent>
+              <LazyLoadComponent>
+                <p
+                  className="mb-5"
+                  data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+                >
+                  Created by <Link to={"/"}>Colorlib.com</Link>
+                </p>
+              </LazyLoadComponent>
+              <LazyLoadComponent>
+                <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                  <Link
+                    to={"/"}
+                    className="btn btn-white btn-outline-white px-4 py-3 popup-vimeo"
+                  >
+                    <span className="icon-play mr-2" />
+                    Watch Video
+                  </Link>
+                </p>
+              </LazyLoadComponent>
             </div>
           </div>
         </div>

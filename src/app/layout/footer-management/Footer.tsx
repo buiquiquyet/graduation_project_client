@@ -1,12 +1,13 @@
 import { MyContext } from "@/App";
+import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import { useContext } from "react";
 
 const FooterComponent = () => {
-    const  context = useContext(MyContext)
-    if (!context) {
-        return null;
-      }
-    const { publicUrl } = context;
+  const context = useContext(MyContext);
+  if (!context) {
+    return null;
+  }
+  const { publicUrl } = context;
   return (
     <footer className="ftco-footer ftco-section img">
       <div className="overlay" />
@@ -19,23 +20,25 @@ const FooterComponent = () => {
                 Far far away, behind the word mountains, far from the countries
                 Vokalia and Consonantia, there live the blind texts.
               </p>
-              <ul className="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                <li className="">
-                  <a href="#">
-                    <span className="icon-twitter" />
-                  </a>
-                </li>
-                <li className="">
-                  <a href="#">
-                    <span className="icon-facebook" />
-                  </a>
-                </li>
-                <li className="">
-                  <a href="#">
-                    <span className="icon-instagram" />
-                  </a>
-                </li>
-              </ul>
+              <LazyLoadComponent>
+                <ul className="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                  <li className="">
+                    <a href="#">
+                      <span className="icon-twitter" />
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#">
+                      <span className="icon-facebook" />
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#">
+                      <span className="icon-instagram" />
+                    </a>
+                  </li>
+                </ul>
+              </LazyLoadComponent>
             </div>
           </div>
           <div className="col-md-4">

@@ -1,0 +1,21 @@
+
+@keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .hidden {
+    opacity: 0;
+  }
+  
+  .slide-up {
+    opacity: 1;
+    animation: slideUp 1s forwards;
+  }
+  
