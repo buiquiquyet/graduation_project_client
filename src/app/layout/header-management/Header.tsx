@@ -1,13 +1,20 @@
 import { MyContext } from "@/App";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { EHeaderTab } from "./constants/Header.enum";
+import { HeaderConst } from "./constants/Header.const";
 const HeaderComponent = () => {
   const context = useContext(MyContext);
+  const [activeTab, setActiveTab] = useState(EHeaderTab.HOME);
   if (!context) {
     return null;
   }
   const { publicUrl } = context;
+  const onClickActiveHeader = (activeTab: EHeaderTab) => {
+    setActiveTab(activeTab);
+  };
+  console.log(HeaderConst.arrTabHeader);
 
   return (
     <>
@@ -32,46 +39,18 @@ const HeaderComponent = () => {
           </button>
           <div className="collapse navbar-collapse" id="ftco-nav">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item active">
-                <Link to={"/"} className="nav-link">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link">
-                  About
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link">
-                  Causes
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link">
-                  Donate
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link">
-                  Blog
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link">
-                  Gallery
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link">
-                  Events
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link">
-                  Contact
-                </Link>
-              </li>
+              {HeaderConst.arrTabHeader?.map((item: any) => (
+                <li
+                  className={`nav-item ${
+                    item?.value === activeTab ? "active" : ""
+                  }`}
+                  onClick={() => onClickActiveHeader(item?.value)}
+                >
+                  <Link to={`/${item?.key}`} className="nav-link">
+                    {item?.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

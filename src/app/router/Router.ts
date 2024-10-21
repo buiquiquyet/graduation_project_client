@@ -1,9 +1,11 @@
 import DefaultLayout from "../layout/default-component-management/DefaultComponent"
+import { EHeaderTabKey } from "../layout/header-management/constants/Header.enum"
+import About from "../modules/about-management/About"
 import Home from "../modules/home-management/Home"
 
 const publicRouter = [
-    {path: '/', component: Home, children: null, layout: DefaultLayout, type: ''},
-    // {path: '/login', component: LoginUser, type: 'homeUser'},
+    {path: `${EHeaderTabKey.HOME}`, component: Home, children: null, layout: DefaultLayout, type: ''},
+    {path: `${EHeaderTabKey.ABOUT}`, component: About, children: null, layout: DefaultLayout, type: ''},
     // {path: '/friendPage',  component: UserFriend, layout: DefaultLayoutWithHeader, type: 'friendPage'},
     // {path: '/feedPage',  component: UserFeed, layout: DefaultLayoutWithHeader, type: 'feedPage'},
     // {path: '/viewFeedPage/:idFeed',  component: UserViewFeed, layout: DefaultLayoutWithHeader, type: 'viewFeedPage'},

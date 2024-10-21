@@ -2,13 +2,22 @@ import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyCompo
 import "./Home.scss";
 import SlideHome from "./slide-management/SlideHome";
 import { MyContext } from "@/App";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { getListUser } from "./services/Home.service";
 function Home() {
   const context = useContext(MyContext);
   if (!context) {
     return null;
   }
   const { publicUrl } = context;
+  const handleCallApiGetListUser = async () => {
+    const rs = await getListUser()
+    console.log(rs);
+    
+  }
+  useEffect(() => {
+    handleCallApiGetListUser()
+  })
   return (
     <>
       <section className="ftco-counter ftco-intro" id="section-counter">
