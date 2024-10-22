@@ -19,7 +19,7 @@ export enum EHeaderTabText {
     CONTACT = "Contact" // liên lạc
 }
 export enum EHeaderTabKey {
-    HOME = "home", // trang chủ
+    HOME = "", // trang chủ
     ABOUT = "about", // về chúng tôi
     CAUSES = "causes", // nguyên nhân
     DONATE = "donate", // quyên góp

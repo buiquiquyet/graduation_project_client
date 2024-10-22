@@ -18,11 +18,11 @@ export class HeaderConst {
       label: EHeaderTabText.BLOG,
       key: EHeaderTabKey.BLOG,
     },
-    {
-      value: EHeaderTab.CAUSES,
-      label: EHeaderTabText.CAUSES,
-      key: EHeaderTabKey.CAUSES,
-    },
+    // {
+    //   value: EHeaderTab.CAUSES,
+    //   label: EHeaderTabText.CAUSES,
+    //   key: EHeaderTabKey.CAUSES,
+    // },
     {
       value: EHeaderTab.CONTACT,
       label: EHeaderTabText.CONTACT,
@@ -38,10 +38,10 @@ export class HeaderConst {
       label: EHeaderTabText.EVENTS,
       key: EHeaderTabKey.EVENTS,
     },
-    {
-      value: EHeaderTab.GALLEY,
-      label: EHeaderTabText.GALLEY,
-      key: EHeaderTabKey.GALLEY,
-    },
+    // {
+    //   value: EHeaderTab.GALLEY,
+    //   label: EHeaderTabText.GALLEY,
+    //   key: EHeaderTabKey.GALLEY,
+    // },
   ];
 }
