@@ -2,7 +2,7 @@ import {  SwiperSlide } from "swiper/react";
 import "swiper/css"; // Import Swiper styles
 import "swiper/css/navigation"; // Import Swiper Navigation styles
 import "swiper/css/pagination"; // Import Swiper Pagination styles
-import Slide from "@/shared/libraries/Slide";
+import Slide from "@/shared/libraries/slide-component/Slide";
 import { SlideHomeConstants } from "./constances/SlideHomeConstants";
 
 // Example public URL

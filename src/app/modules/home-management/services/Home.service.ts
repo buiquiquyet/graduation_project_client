@@ -8,4 +8,10 @@ export const getListUser = async () => {
   }
 };
 
-export const getListAll = () => {};
+export const fetchData = async () => {
+  try {
+    return await request.get("https://data.unicef.org/api/v1/indicators/1388.json");
+  } catch (error) {
+    throw Error;
+  }
+};

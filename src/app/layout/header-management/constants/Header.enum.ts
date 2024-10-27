@@ -6,17 +6,19 @@ export enum EHeaderTab {
     BLOG, // các bài viết
     GALLEY, // bằng chứng
     EVENTS, // sự kiện
-    CONTACT // liên lạc
+    CONTACT, // liên lạc
+    LOGIN // đăng ký, đăng nhập
 }
 export enum EHeaderTabText {
-    HOME = "Home", // trang chủ
-    ABOUT = "About", // về chúng tôi
-    CAUSES = "Causes", // nguyên nhân
-    DONATE = "Donate", // quyên góp
-    BLOG = "Blog", // các bài viết
-    GALLEY = "Galley", // bằng chứng
-    EVENTS = "Events", // sự kiện
-    CONTACT = "Contact" // liên lạc
+    HOME = "Trang chủ", // trang chủ
+    ABOUT = "Giới thiệu", // về chúng tôi
+    CAUSES = "Nguyên nhân", // nguyên nhân
+    DONATE = "Quyên góp", // quyên góp
+    BLOG = "Bài đăng", // các bài viết
+    GALLEY = "Bằng chứng", // bằng chứng
+    EVENTS = "Sự kiện", // sự kiện
+    CONTACT = "Liên hệ", // liên lạc
+    LOGIN = "Đăng ký / Đăng nhập" // đăng ký đăng nhập
 }
 export enum EHeaderTabKey {
     HOME = "", // trang chủ
@@ -26,5 +28,6 @@ export enum EHeaderTabKey {
     BLOG = "blog", // các bài viết
     GALLEY = "galley", // bằng chứng
     EVENTS = "events", // sự kiện
-    CONTACT = "contact" // liên lạc
+    CONTACT = "contact", // liên lạc
+    LOGIN = "login" // đăng ký đăng nhập
 }

@@ -4,27 +4,26 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { EHeaderTab } from "./constants/Header.enum";
 import { HeaderConst } from "./constants/Header.const";
+import "./Header.scss";
 const HeaderComponent = () => {
   const context = useContext(MyContext);
-  const [activeTab, setActiveTab] = useState(EHeaderTab.HOME);
   if (!context) {
     return null;
   }
   const { publicUrl } = context;
+  const [activeTab, setActiveTab] = useState(EHeaderTab.HOME);
   const onClickActiveHeader = (activeTab: EHeaderTab) => {
     setActiveTab(activeTab);
   };
-  console.log(HeaderConst.arrTabHeader);
-
   return (
-    <>
+    <div className="header">
       <nav
         className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
         id="ftco-navbar"
       >
         <div className="container">
-          <Link to={"/"} className="navbar-brand">
-            Welfare
+          <Link to={"/"} className="navbar-brand label-title">
+            SOS
           </Link>
           <button
             className="navbar-toggler"
@@ -39,8 +38,9 @@ const HeaderComponent = () => {
           </button>
           <div className="collapse navbar-collapse" id="ftco-nav">
             <ul className="navbar-nav ml-auto">
-              {HeaderConst.arrTabHeader?.map((item: any) => (
+              {HeaderConst.arrTabHeader?.map((item: any, index: number) => (
                 <li
+                  key={index}
                   className={`nav-item ${
                     item?.value === activeTab ? "active" : ""
                   }`}
@@ -76,17 +76,10 @@ const HeaderComponent = () => {
                   className="mb-4"
                   data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
                 >
-                  Doing Nothing is Not An Option of Our Life
+                  KHÔNG LÀM GÌ KHÔNG PHẢI LÀ MỘT LỰA CHỌN CỦA CUỘC SỐNG CHÚNG TA
                 </h1>
               </LazyLoadComponent>
-              <LazyLoadComponent>
-                <p
-                  className="mb-5"
-                  data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
-                >
-                  Created by <Link to={"/"}>Colorlib.com</Link>
-                </p>
-              </LazyLoadComponent>
+
               <LazyLoadComponent>
                 <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
                   <Link
@@ -94,7 +87,7 @@ const HeaderComponent = () => {
                     className="btn btn-white btn-outline-white px-4 py-3 popup-vimeo"
                   >
                     <span className="icon-play mr-2" />
-                    Watch Video
+                    <span>Xem video</span>
                   </Link>
                 </p>
               </LazyLoadComponent>
@@ -102,7 +95,7 @@ const HeaderComponent = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default HeaderComponent;

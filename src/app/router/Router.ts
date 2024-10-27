@@ -5,7 +5,8 @@ import Blog from "../modules/blog-management/Blog"
 import Contact from "../modules/contact-management/Contact"
 import Donate from "../modules/donate-management/Donate"
 import Events from "../modules/events-management/Events"
-import Home from "../modules/home-management/Home"
+import Home from "../modules/home-management/pages/Home"
+import Login from "../modules/login-management/Login"
 
 const publicRouter = [
     {path: `${EHeaderTabKey.HOME}`, component: Home, children: null, layout: DefaultLayout, type: ''},
@@ -14,6 +15,7 @@ const publicRouter = [
     {path: `${EHeaderTabKey.CONTACT}`, component: Contact, children: null, layout: DefaultLayout, type: ''},
     {path: `${EHeaderTabKey.DONATE}`, component: Donate, children: null, layout: DefaultLayout, type: ''},
     {path: `${EHeaderTabKey.EVENTS}`, component: Events, children: null, layout: DefaultLayout, type: ''},
+    {path: `${EHeaderTabKey.LOGIN}`, component: Login, children: null, type: ''},
     // {path: '/friendPage',  component: UserFriend, layout: DefaultLayoutWithHeader, type: 'friendPage'},
     // {path: '/feedPage',  component: UserFeed, layout: DefaultLayoutWithHeader, type: 'feedPage'},
     // {path: '/viewFeedPage/:idFeed',  component: UserViewFeed, layout: DefaultLayoutWithHeader, type: 'viewFeedPage'},
