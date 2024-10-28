@@ -2,19 +2,76 @@ import { MyContext } from "@/App";
 import "./css/main.css";
 import "./css/util.css";
 import "./Login.scss";
-import { useContext, useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { ClientKey } from "./constants/Login.enum";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
+import * as ApiServiceLoginSignIn from './services/Login.service'
 export default function Login() {
   const context = useContext(MyContext);
   if (!context) {
     return null;
   }
+  const navigate = useNavigate();
   const { publicUrl } = context;
-  const [toRegister, setToRegister] = useState(false);
-
+  const [toRegister, setToRegister] = useState(
+    window.location.href.endsWith(EHeaderTabKey.SIGN_IN)
+  );
+  const [showPassword, setShowPassword] = useState(false);
+  const [valueEmail, setValueEmail] = useState("");
+  const [valuePassWord, setValuePassWord] = useState("");
+  //========
+  // chuyển sang đăng ký
   const onClickToRegister = () => {
     setToRegister(!toRegister);
   };
+  //=========
+  // ẩn hiển thị mật khẩu
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  //========
+  // login bằng google
+  const handleSuccess = (response: any) => {
+    const loginData = jwtDecode(response?.credential);
+    if (loginData) {
+      console.log(loginData);
+    }
+  };
+  // Hàm xử lý khi đăng nhập thất bại
+  const handleError = (error?: any) => {
+    console.log("Login Failed:", error);
+  };
+
+  //=========
+  // set value email
+  const onChangeValueEmail = (value: ChangeEvent<HTMLInputElement>) => {
+    setValueEmail(value.target.value);
+  };
+  // set value pasword
+  const onChangeValuePassWord = (value: ChangeEvent<HTMLInputElement>) => {
+    setValuePassWord(value.target.value);
+  };
+  //===========
+  // hàm xử lý login hoặc đăng ký
+  const handleLoginOrSignIn = async () => {
+    // nếu đang là đăng ký
+    if (toRegister) {
+      const rs = await ApiServiceLoginSignIn.createVerificationEmail(valueEmail)
+      console.log(rs);
+      
+    }
+  };
+  useEffect(() => {
+    if (toRegister) {
+      navigate(`/${EHeaderTabKey.SIGN_IN}`);
+    } else {
+      navigate(`/${EHeaderTabKey.LOGIN}`);
+    }
+  }, [toRegister]);
   return (
     <>
       <div className="limiter">
@@ -23,7 +80,7 @@ export default function Login() {
           style={{ backgroundImage: `url(${publicUrl + "/images/bg_7.jpg"})` }}
         >
           <div className=" background-login wrap-login100  p-l-55 p-r-55 p-t-65 p-b-54">
-            <form className="login100-form validate-form">
+            <div className="login100-form validate-form">
               <span className="text-color  login100-form-title p-b-49">
                 {!toRegister ? "ĐĂNG NHẬP" : "ĐĂNG KÝ"}
               </span>
@@ -36,9 +93,11 @@ export default function Login() {
                 <input
                   className="text-color  input100"
                   type="text"
-                  name="username"
+                  value={valueEmail}
+                  onChange={(value: ChangeEvent<HTMLInputElement>) =>
+                    onChangeValueEmail(value)
+                  }
                 />
-                {/* <span className="focus-input100" data-symbol="&#xf206;"></span> */}
               </div>
 
               <div
@@ -46,12 +105,27 @@ export default function Login() {
                 data-validate="Password is required"
               >
                 <span className="text-color  label-input100">Mật khẩu</span>
-                <input
-                  className="text-color  input100"
-                  type="password"
-                  name="pass"
-                />
-                {/* <span className="focus-input100" data-symbol="&#xf190;"></span> */}
+                <div className="d-flex align-items-center">
+                  <input
+                    className="text-color  input100"
+                    type={!showPassword ? "password" : "text"}
+                    value={valuePassWord}
+                    onChange={(value: ChangeEvent<HTMLInputElement>) =>
+                      onChangeValuePassWord(value)
+                    }
+                  />
+                  {showPassword ? (
+                    <FaEyeSlash
+                      style={{ cursor: "pointer" }}
+                      onClick={togglePasswordVisibility}
+                    />
+                  ) : (
+                    <FaEye
+                      style={{ cursor: "pointer" }}
+                      onClick={togglePasswordVisibility}
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="text-color  text-right p-t-8 p-b-31"></div>
@@ -59,7 +133,10 @@ export default function Login() {
               <div className="container-login100-form-btn">
                 <div className="wrap-login100-form-btn">
                   <div className="login100-form-bgbtn"></div>
-                  <button className="text-color  login100-form-btn">
+                  <button
+                    onClick={handleLoginOrSignIn}
+                    className="text-color  login100-form-btn"
+                  >
                     {!toRegister ? "ĐĂNG NHẬP" : "ĐĂNG KÝ"}
                   </button>
                 </div>
@@ -68,14 +145,18 @@ export default function Login() {
               {!toRegister && (
                 <>
                   <div className="txt1 text-center p-t-54 p-b-20">
-                    <span className="text-color">Hoặc đăng ký</span>
+                    <span className="text-color">Hoặc đăng nhập</span>
                   </div>
-
-                  <div className="flex-c-m">
-                    <a href="#" className="login100-social-item bg2">
-                      <FcGoogle size={24} color="red" />
-                    </a>
-                  </div>
+                  <GoogleOAuthProvider clientId={`${ClientKey.KEY_ID}`}>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <GoogleLogin
+                        onSuccess={handleSuccess}
+                        onError={() => handleError()}
+                        text="signin_with"
+                        shape="circle"
+                      />
+                    </div>
+                  </GoogleOAuthProvider>
                 </>
               )}
 
@@ -92,7 +173,7 @@ export default function Login() {
                   {toRegister ? "Quay lại đăng nhập" : "Đăng ký"}
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

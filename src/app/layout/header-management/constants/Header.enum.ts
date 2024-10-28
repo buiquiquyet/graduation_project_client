@@ -29,5 +29,6 @@ export enum EHeaderTabKey {
     GALLEY = "galley", // bằng chứng
     EVENTS = "events", // sự kiện
     CONTACT = "contact", // liên lạc
-    LOGIN = "login" // đăng ký đăng nhập
+    LOGIN = "login", //  đăng nhập
+    SIGN_IN = "sign-in" // đăng ký 
 }

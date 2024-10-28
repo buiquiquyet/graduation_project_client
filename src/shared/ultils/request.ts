@@ -1,8 +1,10 @@
 import axios from "axios";
+import config from "./config";
 
 const request = axios.create({
-    baseURL: 'https://localhost:7112/api/',
-    timeout: 3000000
+    // baseURL: config.API_URL,
+    baseURL: 'https://localhost:7112/api',
+    timeout: 100000
 })
 
 request.interceptors.response.use(

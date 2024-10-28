@@ -16,6 +16,7 @@ const publicRouter = [
     {path: `${EHeaderTabKey.DONATE}`, component: Donate, children: null, layout: DefaultLayout, type: ''},
     {path: `${EHeaderTabKey.EVENTS}`, component: Events, children: null, layout: DefaultLayout, type: ''},
     {path: `${EHeaderTabKey.LOGIN}`, component: Login, children: null, type: ''},
+    {path: `${EHeaderTabKey.SIGN_IN}`, component: Login, children: null, type: ''},
     // {path: '/friendPage',  component: UserFriend, layout: DefaultLayoutWithHeader, type: 'friendPage'},
     // {path: '/feedPage',  component: UserFeed, layout: DefaultLayoutWithHeader, type: 'feedPage'},
     // {path: '/viewFeedPage/:idFeed',  component: UserViewFeed, layout: DefaultLayoutWithHeader, type: 'viewFeedPage'},
