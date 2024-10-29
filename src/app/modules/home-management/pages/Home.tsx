@@ -3,7 +3,7 @@ import "./Home.scss";
 import SlideHome from "../slide-management/SlideHome";
 import { MyContext } from "@/App";
 import { useContext, useEffect, useState } from "react";
-import * as ApiServiceHome from "../services/Home.service";
+// import * as ApiServiceHome from "../services/Home.service";
 import { Link } from "react-router-dom";
 import { CountChildWorld } from "../constants/Home.enum";
 import LastestEvent from "./lastest-event/Lastest-event";
@@ -23,8 +23,8 @@ function Home() {
   const duration = 2000; // Thời gian hoàn thành hiệu ứng (tính bằng ms)
   // lấy thông tin người dung
   const handleCallApiGetListUser = async () => {
-    const rs = await ApiServiceHome.getListUser();
-    console.log(rs);
+    // const rs = await ApiServiceHome.getListUser();
+    // console.log(rs);
   };
 
   useEffect(() => {

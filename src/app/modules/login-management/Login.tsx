@@ -10,6 +10,11 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
 import * as ApiServiceLoginSignIn from './services/Login.service'
+import { ToastMessage, ToastStatus } from "@/shared/libraries/message-log-component/MessageLog";
+import { ResponseDTOKey } from "@/shared/enums/responseDataDTO.enum";
+import { handleResponseInterceptor } from "@/shared/constants/base.constants";
+
+
 export default function Login() {
   const context = useContext(MyContext);
   if (!context) {
@@ -59,9 +64,12 @@ export default function Login() {
   // hàm xử lý login hoặc đăng ký
   const handleLoginOrSignIn = async () => {
     // nếu đang là đăng ký
+
     if (toRegister) {
-      const rs = await ApiServiceLoginSignIn.createVerificationEmail(valueEmail)
-      console.log(rs);
+      const res: any = await ApiServiceLoginSignIn.createVerificationEmail(valueEmail)
+      if(handleResponseInterceptor(res)) {
+        
+      }
       
     }
   };
