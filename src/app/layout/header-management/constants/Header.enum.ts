@@ -30,5 +30,5 @@ export enum EHeaderTabKey {
     EVENTS = "events", // sự kiện
     CONTACT = "contact", // liên lạc
     LOGIN = "login", //  đăng nhập
-    SIGN_IN = "sign-in" // đăng ký 
+    SIGN_IN = "sign-in", // đăng ký 
 }

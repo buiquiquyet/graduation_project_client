@@ -1,7 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { publicRouter } from "./app/router/Router";
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { environment } from "./shared/environment/Environment";
+import { useLoading } from "./helper/LoadingContext/LoadingContext";
+import Loading from "./shared/libraries/loading-component/Loading";
 
 interface MyContextType {
   publicUrl: string;
@@ -14,6 +16,14 @@ function App() {
   const contextValue: MyContextType = {
     publicUrl,
   };
+  // loading component
+  const { isLoading, setLoading } = useLoading();
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [setLoading]);
   return (
     <div className="">
       <Routes>
@@ -50,6 +60,7 @@ function App() {
             />
           } */}
       </Routes>
+      {isLoading && <Loading />}
     </div>
   );
 }

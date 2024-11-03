@@ -11,13 +11,19 @@ export function handleResponseInterceptor(
   message?: string,
   isToatMessage: boolean = true
 ) {
+  // message trong response
+  const messRes = response?.[EAxiosResponse.DATA]?.[EAxiosResponse.MESSAGE]
   if (
     [ESuccessCode.OK, ESuccessCode.CREATED].includes(
       response?.[EAxiosResponse.STATUS]
     )
   ) {
-    if (message && isToatMessage) {
-      ToastMessage.show(ToastStatus.success, message);
+    if (
+      (message && isToatMessage) ||
+      messRes
+    ) {
+      let newMessage = message ?? messRes
+      ToastMessage.show(ToastStatus.success, newMessage);
     }
     return true;
   } else if (response?.[EAxiosResponse.STATUS] in EErrorCode) {

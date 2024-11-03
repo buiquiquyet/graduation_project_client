@@ -73,12 +73,3 @@ export const customRequest = async (
   }
 };
 
-// export const get = async (path, option = {}) => {
-//     const res = await request.get(path, option)
-//     return res.data
-// }
-// export const post = async (path, option = {}) => {
-//     const res = await request.post(path, option)
-//     return res.data
-// }
-// export default request
