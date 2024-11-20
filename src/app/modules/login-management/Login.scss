@@ -3,4 +3,16 @@
     .text-color {
         color: white;
     }
+    .button-back-home {
+        position: absolute;
+        left: -150px;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        &:hover{
+            background: none;
+            scale: 1.2;
+        }
+    }
 }

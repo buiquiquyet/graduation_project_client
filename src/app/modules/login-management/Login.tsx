@@ -3,7 +3,7 @@ import "./css/main.css";
 import "./css/util.css";
 import "./Login.scss";
 import { useContext, useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { ClientKey } from "./constants/Login.enum";
 import { jwtDecode } from "jwt-decode";
@@ -14,8 +14,16 @@ import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import BaseMessageLog from "@/shared/libraries/message-log-text-component/MessageLogText";
-import { useLoading } from "@/helper/LoadingContext/LoadingContext";
+import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import VerifyEmailCode from "./pages/verifyEmailCode-management/VerifyEmailCode";
+import {
+  ToastMessage,
+  ToastStatus,
+} from "@/shared/libraries/message-log-component/MessageLog";
+import {
+  UserFields,
+  UsersDTO,
+} from "../user-management/constants/User.interface";
 
 export default function Login() {
   const context = useContext(MyContext);
@@ -33,7 +41,7 @@ export default function Login() {
   // email được gửi về verify
   const [emailSendToVerify, SetEmailSendToVerify] = useState("");
   // usecontext set loading
-  const { setLoading } = useLoading();
+  const { setLoading, setAuthenticated, isAuthenticated } = useContextCommon();
   //========
   // chuyển sang đăng ký
   const onClickToRegister = () => {
@@ -45,38 +53,66 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
   //========
-  // login bằng google
-  const handleSuccess = (response: any) => {
-    const loginData = jwtDecode(response?.credential);
-    if (loginData) {
-      console.log(loginData);
-    }
-  };
-  // Hàm xử lý khi đăng nhập thất bại
-  const handleError = (error?: any) => {
-    console.log("Login Failed:", error);
-  };
 
   //===========
   // hàm xử lý login hoặc đăng ký
-  const handleLoginOrSignIn = async (email: string) => {
+  const handleLoginOrSignIn = async (email: string, passWord: string) => {
     // nếu đang là đăng ký
     if (toRegister) {
       setLoading(true);
-      const res: any = await ApiServiceLoginSignIn.createVerificationEmail(
-        email
-      );
+      const res: any = await ApiServiceLoginSignIn.createVerificationEmail({
+        email,
+        passWord,
+      });
       setLoading(false);
       if (handleResponseInterceptor(res)) {
-        SetEmailSendToVerify(res?.data?.data?.email)
+        localStorage.setItem("token", res?.data?.data?.token);
+        SetEmailSendToVerify(res?.data?.data?.[UserFields.EMAIL]);
         SetVerifyEmailCode(!isVerifyEmailCode);
+      }
+      // nếu login nhập tay
+    } else {
+      setLoading(true);
+      const res: any = await ApiServiceLoginSignIn.login({
+        email,
+        passWord,
+      });
+      setLoading(false);
+      if (handleResponseInterceptor(res)) {
+        localStorage.setItem("token", res?.data?.data?.token);
+        setAuthenticated(!isAuthenticated);
+        navigate(`/${EHeaderTabKey.HOME}`);
       }
     }
   };
+  // login bằng google
+  const handleSuccess = async (response: any) => {
+    const loginGoogleData: any = jwtDecode(response?.credential);
+    if (loginGoogleData) {
+      const user: UsersDTO = {
+        [UserFields.EMAIL]: loginGoogleData?.[UserFields.EMAIL],
+        [UserFields.FULL_NAME]: loginGoogleData?.name,
+        [UserFields.AVATAR]: loginGoogleData?.picture,
+        [UserFields.IS_VERIFIED]: true,
+      };
+      setLoading(true);
+      const res: any = await ApiServiceLoginSignIn.loginWithGoogle(user);
+      setLoading(false);
+      if (handleResponseInterceptor(res)) {
+        localStorage.setItem("token", res?.data?.data?.token);
+        setAuthenticated(!isAuthenticated);
+        navigate(`/${EHeaderTabKey.HOME}`);
+      }
+    }
+  };
+  // Hàm xử lý khi đăng nhập thất bại
+  const handleError = () => {
+    ToastMessage.show(ToastStatus.error, "Đăng nhập thất bại.");
+  };
   // validate input
   const initialValues = {
-    email: "",
-    passWord: "",
+    [UserFields.EMAIL]: "",
+    [UserFields.PASS_WORD]: "",
   };
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -96,7 +132,10 @@ export default function Login() {
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
-      handleLoginOrSignIn(values.email);
+      handleLoginOrSignIn(
+        values?.[UserFields.EMAIL],
+        values?.[UserFields.PASS_WORD]
+      );
     },
   });
   const handleBlur = (fieldName: string) => {
@@ -139,14 +178,15 @@ export default function Login() {
                       className="text-color  input100"
                       type="text"
                       name="email"
-                      value={formik.values.email}
+                      value={formik.values?.[UserFields.EMAIL]}
                       onChange={formik.handleChange}
                       onBlur={() => handleBlur("email")}
                       onFocus={() => handleFocus("email")}
                     />
                   </div>
-                  {formik.errors.email && formik.touched.email ? (
-                    <BaseMessageLog text={formik.errors.email} />
+                  {formik.errors?.[UserFields.EMAIL] &&
+                  formik.touched?.[UserFields.EMAIL] ? (
+                    <BaseMessageLog text={formik.errors?.[UserFields.EMAIL]} />
                   ) : null}
                 </div>
 
@@ -161,7 +201,7 @@ export default function Login() {
                         className="text-color  input100"
                         type={!showPassword ? "password" : "text"}
                         name="passWord"
-                        value={formik.values.passWord}
+                        value={formik.values?.[UserFields.PASS_WORD]}
                         onChange={formik.handleChange}
                         onBlur={() => handleBlur("passWord")}
                         onFocus={() => handleFocus("passWord")}
@@ -179,8 +219,11 @@ export default function Login() {
                       )}
                     </div>
                   </div>
-                  {formik.errors.passWord && formik.touched.passWord ? (
-                    <BaseMessageLog text={formik.errors.passWord} />
+                  {formik.errors?.[UserFields.PASS_WORD] &&
+                  formik.touched?.[UserFields.PASS_WORD] ? (
+                    <BaseMessageLog
+                      text={formik.errors?.[UserFields.PASS_WORD]}
+                    />
                   ) : null}
                 </div>
 
@@ -189,10 +232,7 @@ export default function Login() {
                 <div className="container-login100-form-btn">
                   <div className="wrap-login100-form-btn">
                     <div className="login100-form-bgbtn"></div>
-                    <button
-                      // onClick={handleLoginOrSignIn}
-                      className="text-color  login100-form-btn"
-                    >
+                    <button className="text-color  login100-form-btn">
                       {!toRegister ? "ĐĂNG NHẬP" : "ĐĂNG KÝ"}
                     </button>
                   </div>
@@ -224,11 +264,26 @@ export default function Login() {
                   )}
 
                   <div
-                    style={{ cursor: "pointer" }}
-                    className="txt2 text-color"
-                    onClick={() => onClickToRegister()}
+                    className="d-flex align-items-center"
+                    style={{ position: "relative" }}
                   >
-                    {toRegister ? "Quay lại đăng nhập" : "Đăng ký"}
+                    {!toRegister && (
+                      <div
+                        className="txt2 text-color button-back-home"
+                        onClick={() => {
+                          navigate(`/${EHeaderTabKey.HOME}`);
+                        }}
+                      >
+                        <FaArrowLeft />
+                      </div>
+                    )}
+                    <div
+                      style={{ cursor: "pointer" }}
+                      className="txt2 text-color"
+                      onClick={() => onClickToRegister()}
+                    >
+                      {toRegister ? "Quay lại đăng nhập" : "Đăng ký"}
+                    </div>
                   </div>
                 </div>
               </div>

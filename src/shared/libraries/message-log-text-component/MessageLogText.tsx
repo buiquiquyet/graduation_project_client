@@ -1,6 +1,6 @@
 import './MessageLogText.scss'
 interface MessageProps {
-    text?: string
+    text?: string|any
     type?: string
 }
 const BaseMessageLog: React.FC<MessageProps> = ({text}) => {

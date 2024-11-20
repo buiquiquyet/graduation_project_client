@@ -7,7 +7,8 @@ export enum EHeaderTab {
     GALLEY, // bằng chứng
     EVENTS, // sự kiện
     CONTACT, // liên lạc
-    LOGIN // đăng ký, đăng nhập
+    LOGIN, // đăng ký, đăng nhập
+    ROLE // đăng ký, đăng nhập
 }
 export enum EHeaderTabText {
     HOME = "Trang chủ", // trang chủ
@@ -18,7 +19,8 @@ export enum EHeaderTabText {
     GALLEY = "Bằng chứng", // bằng chứng
     EVENTS = "Sự kiện", // sự kiện
     CONTACT = "Liên hệ", // liên lạc
-    LOGIN = "Đăng ký / Đăng nhập" // đăng ký đăng nhập
+    LOGIN = "Đăng ký / Đăng nhập", // đăng ký đăng nhập
+    ROLE = "" // trang người dùng
 }
 export enum EHeaderTabKey {
     HOME = "", // trang chủ
@@ -31,4 +33,5 @@ export enum EHeaderTabKey {
     CONTACT = "contact", // liên lạc
     LOGIN = "login", //  đăng nhập
     SIGN_IN = "sign-in", // đăng ký 
+    ROLE = "role"
 }

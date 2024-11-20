@@ -7,6 +7,7 @@ import Donate from "../modules/donate-management/Donate"
 import Events from "../modules/events-management/Events"
 import Home from "../modules/home-management/pages/Home"
 import Login from "../modules/login-management/Login"
+import User from "../modules/user-management/User"
 
 const publicRouter = [
     {path: `${EHeaderTabKey.HOME}`, component: Home, children: null, layout: DefaultLayout, type: ''},
@@ -17,6 +18,7 @@ const publicRouter = [
     {path: `${EHeaderTabKey.EVENTS}`, component: Events, children: null, layout: DefaultLayout, type: ''},
     {path: `${EHeaderTabKey.LOGIN}`, component: Login, children: null, type: ''},
     {path: `${EHeaderTabKey.SIGN_IN}`, component: Login, children: null, type: ''},
+    {path: `${EHeaderTabKey.ROLE}`, component: User, children: null,layout: DefaultLayout, isBackImgHeader: false, type: ''},
     // {path: '/friendPage',  component: UserFriend, layout: DefaultLayoutWithHeader, type: 'friendPage'},
     // {path: '/feedPage',  component: UserFeed, layout: DefaultLayoutWithHeader, type: 'feedPage'},
     // {path: '/viewFeedPage/:idFeed',  component: UserViewFeed, layout: DefaultLayoutWithHeader, type: 'viewFeedPage'},

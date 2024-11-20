@@ -3,11 +3,15 @@ import HeaderComponent from "../header-management/Header";
 
 interface PropsDefaultLayout {
   children: React.ReactNode;
+  isBackImgHeader?: boolean;
 }
-const DefaultLayout: React.FC<PropsDefaultLayout> = ({ children }) => {
+const DefaultLayout: React.FC<PropsDefaultLayout> = ({
+  children,
+  isBackImgHeader = true,
+}) => {
   return (
     <div className="home">
-      <HeaderComponent />
+      <HeaderComponent isBackImgHeader={isBackImgHeader} />
       {children}
       <FooterComponent />
     </div>

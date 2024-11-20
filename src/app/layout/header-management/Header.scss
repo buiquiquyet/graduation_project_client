@@ -1,5 +1,32 @@
 .header {
-    .label-title {
-        font-size: 30px;
+  .label-title {
+    font-size: 30px;
+  }
+  .item-user {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    .user-img-home {
+        cursor: pointer;
+      img {
+        border-radius: 999px;
+        width: 30px;
+        height: 30px;
+      }
+      
     }
+  }
+  .active-user{
+    color: #f86f2d !important;
+  }
+  .header-noBgImg {
+    height: 100px;
+    background-color: #252525
+  }
+  @media (max-width: 991.98px) {
+    .header-noBgImg {
+      height: 0px;
+      background-color: none
+    }
+  }
 }

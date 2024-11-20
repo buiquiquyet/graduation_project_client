@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./VerifyEmailCode.scss";
-import { useLoading } from "@/helper/LoadingContext/LoadingContext";
+import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import * as ApiServiceLoginSignIn from "./../../services/Login.service";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function VerifyEmailCode({ email }: VerifyEmailCodeProps) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null); // State để lưu trữ timeout
   // load ding
-  const { setLoading } = useLoading();
+  const { setLoading } = useContextCommon();
   const navigate = useNavigate();
   const handleChange = (
     index: number,
