@@ -15,7 +15,7 @@ interface PropsButton {
 
 
 const BaseButton: React.FC<PropsButton> = ({
-  title,
+  title = "Cập nhật",
   icon,
   style,
   color = ButtonColor.Primary,

@@ -1,0 +1,13 @@
+// .user-container input:focus {
+//     // border-color: #1677ff !important;
+//     border-color: none !important;
+// }
+.custom-textarea:focus {
+  border-color: 1px solid #ccc !important; /* Màu đường viền khi hover */
+}
+.textarea:focus {
+  border-color: none !important; /* Màu đường viền khi hover */
+}
+.ant-input-outlined:focus {
+    border-color: #1677ff !important;
+}

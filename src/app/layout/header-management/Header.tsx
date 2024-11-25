@@ -37,7 +37,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
         );
         setArrTabHome(newArrTabHome);
       }
-      setRole(dataUser?.[UserFields.ROLE]);
+      setRole(dataUser?.[UserFields.ROLE]); 
     }
   }, [dataUser]);
   useEffect(() => {

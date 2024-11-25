@@ -22,3 +22,6 @@ export enum EErrorCode {
     SERVICE_UNAVAILABLE = 503,
     GATEWAY_TIMEOUT = 504,
 }
+export enum MessageError {
+    INPUT_ERROR_NULL = "Thông tin không được để trống."
+}
