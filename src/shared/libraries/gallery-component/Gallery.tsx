@@ -85,18 +85,20 @@ const ImageModal: React.FC<ImageModalProps> = ({
           onClick={closeModal} // Đóng modal khi nhấn vào phần bên ngoài ảnh
         >
           {/* Nút trước */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation(); // Ngăn chặn sự kiện click truyền vào modal
-              goToPrevious();
-            }}
-            style={{
-              left: "15px",
-            }}
-            className="button-gallery"
-          >
-            <FaChevronLeft /> {/* Biểu tượng mũi tên trái */}
-          </button>
+          {imgSrcList && imgSrcList?.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // Ngăn chặn sự kiện click truyền vào modal
+                goToPrevious();
+              }}
+              style={{
+                left: "15px",
+              }}
+              className="button-gallery"
+            >
+              <FaChevronLeft /> {/* Biểu tượng mũi tên trái */}
+            </button>
+          )}
           {/* Ảnh được hiển thị ở giữa modal với kích thước cố định */}
           <img
             src={imgSrcList[currentIndex]} // Hiển thị ảnh dựa trên chỉ số hiện tại
@@ -111,18 +113,20 @@ const ImageModal: React.FC<ImageModalProps> = ({
           />
 
           {/* Nút tiếp theo */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation(); // Ngăn chặn sự kiện click truyền vào modal
-              goToNext();
-            }}
-            className="button-gallery"
-            style={{
-              right: "15px",
-            }}
-          >
-            <FaChevronRight /> {/* Biểu tượng mũi tên phải */}
-          </button>
+          {imgSrcList && imgSrcList?.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // Ngăn chặn sự kiện click truyền vào modal
+                goToNext();
+              }}
+              className="button-gallery"
+              style={{
+                right: "15px",
+              }}
+            >
+              <FaChevronRight /> {/* Biểu tượng mũi tên phải */}
+            </button>
+          )}
         </div>
       </Modal>
     </>

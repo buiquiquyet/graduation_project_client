@@ -11,7 +11,7 @@ import {
 } from "../../services/User-edit.services";
 import BaseButton from "@/shared/component/base-button/BaseButton";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
-import { UpdateUser } from "../../services/User.services";
+import { updateUser } from "../../services/User.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import { UserFields, UsersDTO } from "../../constants/User.interface";
 import "./User-edit.scss";
@@ -52,7 +52,7 @@ export default function UserEdit() {
     validationSchema,
     onSubmit: async (values: any) => {
       setLoading(true);
-      const res: any = await UpdateUser(dataUser?.[UserFields.ID] ?? "", {
+      const res: any = await updateUser(dataUser?.[UserFields.ID] ?? "", {
         ...(dataUser ?? {}),
         ...values,
       });

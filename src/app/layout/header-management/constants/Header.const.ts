@@ -39,4 +39,18 @@ export class HeaderConst {
       key: EHeaderTabKey.LOGIN,
     },
   ];
+  // mảng các element tippy user
+  public static arrTabHeaderUser = [
+   
+    {
+      value: EHeaderTab.ROLE,
+      label: EHeaderTabText.ROLE,
+      key: EHeaderTabKey.ROLE,
+    },
+    {
+      value: EHeaderTab.LOGIN,
+      label: EHeaderTabText.LOGIN,
+      key: EHeaderTabKey.LOGIN,
+    },
+  ];
 }

@@ -1,4 +1,5 @@
 import { ItemLibSwitchInput } from "./enums/inputType.enum";
+import config from "./ultils/config";
 
 // update lại options của dropdown
 export const updateOptionsFormInputs = (
@@ -25,3 +26,7 @@ export const convertToCommonOptions = (options: any[]) => {
     };
   });
 };
+// hàm lấy ảnh
+export const getImgCommon = (avatar: string) => {
+  return config.FILE_URL + avatar
+}

@@ -16,6 +16,7 @@
     "@mui/material": "^6.1.5",
     "@react-oauth/google": "^0.12.1",
     "@rollup/plugin-babel": "^6.0.4",
+    "@tippyjs/react": "^4.2.6",
     "antd": "^5.22.2",
     "antd-img-crop": "^4.23.0",
     "axios": "^1.7.7",
@@ -35,6 +36,7 @@
     "react-toastify": "^10.0.6",
     "sass": "^1.77.8",
     "swiper": "^11.1.12",
+    "tippy.js": "^6.3.7",
     "vite-tsconfig-paths": "^4.3.2",
     "yup": "^1.4.0"
   },

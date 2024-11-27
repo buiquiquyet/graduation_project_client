@@ -1,13 +1,14 @@
 import { MyContext } from "@/App";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { EHeaderTab, EHeaderTabKey } from "./constants/Header.enum";
+import { EHeaderTab } from "./constants/Header.enum";
 import { HeaderConst } from "./constants/Header.const";
 import "./Header.scss";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { RoleUser } from "@/helper/ContextCommon/ContextCommon.enum";
 import { UserFields } from "@/app/modules/user-management/constants/User.interface";
+import HeadeLessTippyComponent from "@/shared/libraries/headeLessTippy-component/headeLessTippy-component";
 interface HeaderProps {
   isBackImgHeader?: boolean;
 }
@@ -23,7 +24,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
   const { dataUser } = useContextCommon();
   // phân quyền
   const [role, setRole] = useState<RoleUser>(RoleUser.NONE);
-  const [arrTabHome, setArrTabHome] = useState<any[]>(HeaderConst.arrTabHeader);
+  const [arrTabHome, setArrTabHome] = useState<any[]>(HeaderConst.arrTabHeader); // mảng tab header Home
+  const arrTabHomeUser = HeaderConst.arrTabHeaderUser; // mảng element tippy user
   // mảng các tab
   const onClickActiveHeader = (activeTab: EHeaderTab) => {
     sessionStorage.setItem("headerActive", `${activeTab}`);
@@ -37,7 +39,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
         );
         setArrTabHome(newArrTabHome);
       }
-      setRole(dataUser?.[UserFields.ROLE]); 
+      setRole(dataUser?.[UserFields.ROLE]);
     }
   }, [dataUser]);
   useEffect(() => {
@@ -83,27 +85,54 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                 </li>
               ))}
               {role !== RoleUser.NONE && (
-                <li className="nav-link d-flex " style={{ padding: "0 20px" }}>
-                  <Link
-                    to={`/${EHeaderTabKey.ROLE}`}
-                    className={`nav-item item-user   ${
-                      EHeaderTab.ROLE === activeTab ? "active" : ""
-                    }`}
-                    onClick={() => onClickActiveHeader(EHeaderTab.ROLE)}
-                  >
-                    <div className="user-img-home">
-                      <img src="https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg" />
-                    </div>
-                    <div className={`nav-link `} style={{ padding: "0" }}>
-                      <span
-                        className={`${
-                          EHeaderTab.ROLE === activeTab ? "active-user" : ""
-                        }`}
-                      >
-                        {dataUser?.[UserFields.FULL_NAME]}
-                      </span>
-                    </div>
-                  </Link>
+                <li
+                  className="nav-link d-flex align-items-center "
+                  style={{ padding: "0 20px" }}
+                >
+                  {/* headeLess tippy dropdown login */}
+                  <HeadeLessTippyComponent
+                    widthChildrenMenu={150}
+                    children={
+                      <div className="nav-item item-user">
+                        <div className="user-img-home">
+                          <img src="https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg" />
+                        </div>
+                        <div className={`nav-link `} style={{ padding: "0" }}>
+                          <span
+                            className={`${
+                              EHeaderTab.ROLE === activeTab ? "active-user" : ""
+                            }`}
+                            style={{ fontSize: "14px", cursor: "pointer" }}
+                          >
+                            {dataUser?.[UserFields.FULL_NAME]}
+                          </span>
+                        </div>
+                      </div>
+                    }
+                    childrenMenu={
+                      <>
+                        {arrTabHomeUser &&
+                          arrTabHomeUser.map((item: any, index: number) => (
+                            <Fragment key={index}>
+                              <Link
+                                className="tippy-header"
+                                to={`/${item?.key}`}
+                                onClick={() => onClickActiveHeader(item?.value)}
+                              >
+                                <div
+                                  className={`nav-link `}
+                                  style={{ padding: "0" }}
+                                >
+                                  <span className="span-tippy-header">
+                                    {item?.label}
+                                  </span>
+                                </div>
+                              </Link>
+                            </Fragment>
+                          ))}
+                      </>
+                    }
+                  ></HeadeLessTippyComponent>
                 </li>
               )}
             </ul>

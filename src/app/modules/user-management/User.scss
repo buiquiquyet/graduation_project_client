@@ -19,6 +19,8 @@
   }
   .user-avatar {
     .user-head {
+      display: flex;
+      justify-content: start;
       position: relative;
       background-position: center; /* Căn giữa hình nền */
       background-size: cover; /* Đảm bảo hình nền bao phủ toàn bộ phần tử */
@@ -28,11 +30,17 @@
       align-items: center;
       justify-content: center;
       border-radius: 999px; /* Làm tròn phần tử */
+      border: 1px solid #ccc;
       .user-name {
         font-weight: bold;
         font-size: 20px;
         position: absolute;
         bottom: -40px;
+      }
+      .image-modal {
+        width: 80%;
+        height: 100%;
+        cursor: pointer;
       }
     }
   }

@@ -20,7 +20,7 @@ export enum EHeaderTabText {
     EVENTS = "Sự kiện", // sự kiện
     CONTACT = "Liên hệ", // liên lạc
     LOGIN = "Đăng ký / Đăng nhập", // đăng ký đăng nhập
-    ROLE = "" // trang người dùng
+    ROLE = "Trang cá nhân" // trang người dùng
 }
 export enum EHeaderTabKey {
     HOME = "", // trang chủ

@@ -4,7 +4,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import "./BaseDialogFile.scss";
 import config from "@/shared/ultils/config";
 import BaseDialog from "./BaseDialog";
-import { BaseIframe } from "./BaseIframe";
+// import { BaseIframe } from "./BaseIframe";
 import BaseButton from "../base-button/BaseButton";
 import ImgCrop from "antd-img-crop";
 interface Props {
@@ -27,9 +27,9 @@ const BaseDialogFile: React.FC<Props> = ({
   titleUploadFile = "Tải ảnh lên",
 }) => {
  
-  const onPreview = async (file: any) => {
-    BaseIframe.openIframe(file, file.url);
-  };
+  // const onPreview = async (file: any) => {
+  //   BaseIframe.openIframe(file, file.url);
+  // };
   const typeImg = ["image/jpeg", "image/png", "image/gif", "image/webp"];
   // Hàm kiểm tra file trước khi tải lên
   const beforeUpload = (file: any) => {
@@ -38,17 +38,17 @@ const BaseDialogFile: React.FC<Props> = ({
   };
 
   // Cập nhật fileList khi có thay đổi (khi người dùng tải lên hoặc xóa file)
-  const handleFileChange = (info: any) => {
-    const updatedFileList = info.fileList.map((file: any) => ({
-      uid: file.uid,
-      name: file.name,
-      // status: file.status,
-      status: 'done',
-      url: file.originFileObj
-        ? URL.createObjectURL(file.originFileObj)
-        : `${config.FILE_URL}${file.name}`,
-    }));
-    onChange(updatedFileList); // Gọi lại onChange để cập nhật file list từ bên ngoài
+  const handleFileChange = ({ fileList: newFileList }: any) => {
+    // const updatedFileList = info.fileList.map((file: any) => ({
+    //   uid: file.uid,
+    //   name: file.name,
+    //   // status: file.status,
+    //   status: 'done',
+    //   url: file.originFileObj
+    //     ? URL.createObjectURL(file.originFileObj)
+    //     : `${config.FILE_URL}${file.name}`,
+    // }));
+    onChange(newFileList); // Gọi lại onChange để cập nhật file list từ bên ngoài
   };
 
   // Xử lý sự kiện xóa file
@@ -67,18 +67,18 @@ const BaseDialogFile: React.FC<Props> = ({
         <span>{titleUploadFile}</span>
         <ImgCrop rotationSlider>
           <Upload
-            action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+            // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
             listType="picture-card" // Hiển thị như thẻ hình ảnh
-            //   fileList={fileList.map((file: any) => ({
-            //     uid: file.uid || file.Id,
-            //     name: file.name || file.ten,
-            //     url: file.originFileObj ? null : `${config.FILE_URL}${file.ten}`,
-            //     ...file,
-            //     status: file.status || "error",
-            //   }))}
+              fileList={fileList.map((file: any) => ({
+                uid: file.uid || file.Id,
+                name: file.name || file.ten,
+                url: file.originFileObj ? null : `${config.FILE_URL}${file.ten}`,
+                ...file,
+                status: "done",
+              }))}
 
-            fileList={fileList}
-            onPreview={onPreview}
+            // fileList={fileList}
+            // onPreview={onPreview}
             onChange={handleFileChange}
             beforeUpload={beforeUpload} // Kiểm tra loại file
             accept=".png,.jpg,.jpeg,.webp,.gif" // Cho phép tải lên ảnh và file pdf
@@ -88,7 +88,7 @@ const BaseDialogFile: React.FC<Props> = ({
             <Button icon={<UploadOutlined />}></Button>
           </Upload>
         </ImgCrop>
-        <BaseButton title={titleButtonSubmit} onClick={onSubmit} />
+        <BaseButton disabled={fileList?.length === 0} title={titleButtonSubmit} onClick={onSubmit} />
       </div>
     </BaseDialog>
   );

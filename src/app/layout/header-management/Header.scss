@@ -18,10 +18,25 @@
   }
   .active-user{
     color: #f86f2d !important;
+    cursor: pointer;
   }
   .header-noBgImg {
     height: 100px;
     background-color: #252525
+  }
+  .tippy-header {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 4px 8px;
+    &:hover {
+      background-color: rgb(199, 199, 199);
+    }
+    .span-tippy-header {
+      font-size: 14px;
+      color: black;
+    }
   }
   @media (max-width: 991.98px) {
     .header-noBgImg {
