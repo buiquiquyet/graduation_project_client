@@ -3,7 +3,8 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const request = axios.create({
   // baseURL: config.API_URL,
-  baseURL: "https://localhost:7112/api",
+  // baseURL: "https://localhost:7112/api",
+  baseURL: "https://localhost:5001/api",
   timeout: 100000,
 });
 export enum EAxiosResponse {
@@ -34,7 +35,7 @@ request.interceptors.response.use(
     const { response } = error;
     return Promise.reject({
       status: response?.status || 500, // Nếu không có response, trả về 500
-      data: response?.data || { error: "Có lỗi xảy ra. Vui lòng thử lại sau." },
+      data: response?.data || { error: "Có lỗi xảy ra." },
     });
   }
 );

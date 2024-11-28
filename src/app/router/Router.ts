@@ -1,3 +1,4 @@
+import { useContextCommon } from "@/helper/ContextCommon/ContextCommon"
 import DefaultLayout from "../layout/default-component-management/DefaultComponent"
 import { EHeaderTabKey } from "../layout/header-management/constants/Header.enum"
 import About from "../modules/about-management/About"
@@ -8,7 +9,9 @@ import Events from "../modules/events-management/Events"
 import Home from "../modules/home-management/pages/Home"
 import Login from "../modules/login-management/Login"
 import User from "../modules/user-management/User"
-
+import { UserFields } from "../modules/user-management/constants/User.interface"
+import { RoleUser } from "@/helper/ContextCommon/ContextCommon.enum"
+// const { dataUser } = useContextCommon();
 const publicRouter = [
     {path: `${EHeaderTabKey.HOME}`, component: Home, children: null, layout: DefaultLayout, type: ''},
     {path: `${EHeaderTabKey.ABOUT}`, component: About, children: null, layout: DefaultLayout, type: ''},
@@ -18,21 +21,26 @@ const publicRouter = [
     {path: `${EHeaderTabKey.EVENTS}`, component: Events, children: null, layout: DefaultLayout, type: ''},
     {path: `${EHeaderTabKey.LOGIN}`, component: Login, children: null, type: ''},
     {path: `${EHeaderTabKey.SIGN_IN}`, component: Login, children: null, type: ''},
-    {path: `${EHeaderTabKey.ROLE}`, component: User, children: null,layout: DefaultLayout, isBackImgHeader: false, type: ''},
-    // {path: '/friendPage',  component: UserFriend, layout: DefaultLayoutWithHeader, type: 'friendPage'},
-    // {path: '/feedPage',  component: UserFeed, layout: DefaultLayoutWithHeader, type: 'feedPage'},
-    // {path: '/viewFeedPage/:idFeed',  component: UserViewFeed, layout: DefaultLayoutWithHeader, type: 'viewFeedPage'},
-    // {path: '/searchPage/:nameUser',  component: UserSearch, layout: DefaultLayoutWithHeader, type: 'searchPage'},
-    // {path: '/userPost/:userId', children: PostUserPage, component: UserPage, layout: DefaultLayoutWithHeader, type: 'userPost'},
-    // {path: '/userFriend/:userId', children: FriendPage, component: UserPage, layout: DefaultLayoutWithHeader, type: 'userFriend'},
-    // {path: '/userIntroduce/:userId', children: IntroducePage, component: UserPage, layout: DefaultLayoutWithHeader, type: 'userIntroduce'},
-    // {path: '/userImage/:userId', children: ImagePage, component: UserPage, layout: DefaultLayoutWithHeader, type: 'userImage'},
-    // {path: '/userVideo', children: VideoPage, component: UserPage, layout: DefaultLayoutWithHeader, type: 'userVideo'},
+    
     // {path: '/pageNotFound',  component: PageNotFound, type: 'pageNotFound'},
 
- 
-
 ]
-
-
-export  { publicRouter }
+const privateUserRouter = [
+    {path: `${EHeaderTabKey.ROLE}`, component: User, children: null,layout: DefaultLayout, isBackImgHeader: false, type: ''},
+]
+const privateAdminRouter = [
+    {path: `${EHeaderTabKey.ROLE}`, component: User, children: null,layout: DefaultLayout, isBackImgHeader: false, type: ''},
+]
+export const getRoutes = (dataUser?: any) => {
+    if(!dataUser) return publicRouter
+    const mainRouter = [
+        ...publicRouter
+    ]
+    if(dataUser?.[UserFields.ROLE] === RoleUser.USER) {
+        mainRouter.push(...privateUserRouter)
+    }
+    if(dataUser?.[UserFields.ROLE] === RoleUser.ADMIN) {
+        mainRouter.push(...privateAdminRouter)
+    }
+    return mainRouter
+}

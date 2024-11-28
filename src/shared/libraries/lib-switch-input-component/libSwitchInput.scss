@@ -11,3 +11,8 @@
 .ant-input-outlined:focus {
     border-color: #1677ff !important;
 }
+
+.border-error {
+  outline: 1px solid #FF4C4C;
+  border-radius: 6px;
+}

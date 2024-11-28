@@ -18,13 +18,17 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
   formik,
   onChange: onChange,
 }) => {
+  // check xem có phải error input ko
+  const checkError = (): boolean => {
+    const error = formik?.errors?.[item.value];
+    const touched = formik?.touched?.[item.value];
+
+    // Đảm bảo rằng touched là boolean hoặc được xác định
+    return typeof error === "string" && !!touched;
+  };
   // xử lý message error
   const renderError = () => {
-    if (
-      formik?.errors?.[`${item.value}`] &&
-      typeof formik?.errors?.[`${item.value}`] === "string" &&
-      formik?.touched?.[`${item.value}`]
-    ) {
+    if (checkError()) {
       return <BaseMessageLog text={formik?.errors?.[`${item.value}`] ?? ""} />;
     }
     return null;
@@ -34,7 +38,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
     formik.setFieldTouched(fieldName, true);
   };
   // hàm focus
-  const  handleFocus = (fieldName: string) => {
+  const handleFocus = (fieldName: string) => {
     formik.setFieldTouched(fieldName, false);
   };
 
@@ -42,7 +46,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
     return (
       <div className="w-100">
         <Input
-          className="w-100"
+          className={`w-100 ${checkError() ? "border-error" : ""}`}
           type={item.typeInput}
           name={item.value}
           value={formik.values[item.value] ?? ""}
@@ -57,8 +61,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
     return (
       <div className="w-100">
         <DatePicker
-          className="w-100"
-          
+          className={`w-100 ${checkError() ? "border-error" : ""}`}
           value={
             formik.values?.[item?.value]
               ? dayjs(formik.values[item?.value])
@@ -81,7 +84,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
     return (
       <div className="w-100">
         <Select
-          className="w-100"
+          className={`w-100 ${checkError() ? "border-error" : ""}`}
           showSearch
           value={
             item?.options?.find(
@@ -111,7 +114,9 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
     return (
       <div className="w-100">
         <Input.TextArea
-          className="w-100 custom-textarea"
+          className={`w-100 custom-textarea ${
+            checkError() ? "border-error" : ""
+          }`}
           name={item.value}
           value={formik.values[item.value] ?? ""}
           onChange={formik.handleChange}

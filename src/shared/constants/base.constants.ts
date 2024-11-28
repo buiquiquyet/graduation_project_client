@@ -12,17 +12,14 @@ export function handleResponseInterceptor(
   isToatMessage: boolean = true
 ) {
   // message trong response
-  const messRes = response?.[EAxiosResponse.DATA]?.[EAxiosResponse.MESSAGE]
+  const messRes = response?.[EAxiosResponse.DATA]?.[EAxiosResponse.MESSAGE];
   if (
     [ESuccessCode.OK, ESuccessCode.CREATED].includes(
       response?.[EAxiosResponse.STATUS]
     )
   ) {
-    if (
-      (message && isToatMessage) ||
-      messRes
-    ) {
-      let newMessage = message ?? messRes
+    if ((message && isToatMessage) || messRes) {
+      let newMessage = message ?? messRes;
       ToastMessage.show(ToastStatus.success, newMessage);
     }
     return true;
@@ -30,7 +27,8 @@ export function handleResponseInterceptor(
     ToastMessage.show(
       ToastStatus.error,
       response?.[EAxiosResponse.DATA]?.message ??
-        response?.[EAxiosResponse.MESSAGE]
+        response?.[EAxiosResponse.MESSAGE] ??
+        response?.[EAxiosResponse.DATA]?.error
     );
     return false;
   }

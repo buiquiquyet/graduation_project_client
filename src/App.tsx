@@ -1,5 +1,5 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { publicRouter } from "./app/router/Router";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { getRoutes } from "./app/router/Router";
 import { createContext, useEffect } from "react";
 import { environment } from "./shared/environment/Environment";
 import { useContextCommon } from "./helper/ContextCommon/ContextCommon";
@@ -21,8 +21,9 @@ function App() {
   const navigate = useNavigate();
 
   // loading component
-  const { isLoading, setLoading, isAuthenticated, setDataUser } =
+  const { dataUser, isLoading, setLoading, isAuthenticated, setDataUser } =
     useContextCommon();
+
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -45,7 +46,7 @@ function App() {
         // setDataUser(rs.data.dataUser);
       }
       return;
-    }else {
+    } else {
       navigate(`/${EHeaderTabKey.HOME}`);
     }
   };
@@ -65,7 +66,7 @@ function App() {
   return (
     <div className="">
       <Routes>
-        {publicRouter.map((route, index) => {
+        {getRoutes(dataUser).map((route: any, index: number) => {
           const Page: any = route.component;
           const Layout = route.layout;
           const ChildrenPage: any = route.children;
@@ -91,13 +92,7 @@ function App() {
             />
           );
         })}
-        {/* {
-            dataUser && 
-            <Route
-              path="*"
-              element={<Navigate to="/pageNotFound" replace />} // Navigate to="/" để chuyển hướng, replace để thay thế lịch sử
-            />
-          } */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       {isLoading && <Loading />}
     </div>
