@@ -1,13 +1,12 @@
 import { customRequest } from "@/shared/ultils/request";
 
-const apiCommon = "user"
-// xác thực gmail
-export const validateToken = async (token: string) => {
+// lấy thông tin thành phố
+export const getCitys = async () => {
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest(
       "GET",
-      `/${apiCommon}/validate?token=${token}`
+      `https://open.oapi.vn/location/provinces?page=0&size=64`
     );
 
     return response; // Trả về response chứa status và data
@@ -16,17 +15,13 @@ export const validateToken = async (token: string) => {
     throw error; // Truyền lỗi lên trên để xử lý tiếp
   }
 };
-// update thông tin người dùng
-export const updateUser = async (id: string, body: any) => {
+// lấy thông tin quận huyện
+export const getDistricts = async (provinceId: string|number) => {
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest(
-      "PUT",
-      `/${apiCommon}/${id}`,
-      JSON.stringify(body),
-      {
-        "Content-Type": "application/json", // Đảm bảo content-type là application/json
-      }
+      "GET",
+      `https://open.oapi.vn/location/districts/${provinceId}?page=0&size=64`
     );
 
     return response; // Trả về response chứa status và data
@@ -35,17 +30,13 @@ export const updateUser = async (id: string, body: any) => {
     throw error; // Truyền lỗi lên trên để xử lý tiếp
   }
 };
-// update avatar người dùng
-export const updateAvatarUser = async (id: string, body: any) => {
+// lấy thông tin phường xã
+export const getWards = async (districtId: string|number) => {
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest(
-      "POST",
-      `/${apiCommon}/update-avatar/${id}`,
-      body,
-      {
-        "Content-Type": "multipart/form-data",
-      }
+      "GET",
+      `https://open.oapi.vn/location/wards/${districtId}?page=0&size=64`
     );
 
     return response; // Trả về response chứa status và data

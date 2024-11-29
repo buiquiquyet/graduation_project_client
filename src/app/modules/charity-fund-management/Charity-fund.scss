@@ -1,4 +1,4 @@
-.user-management {
+.charity-fund-management {
   span {
     color: rgb(66, 66, 66);
   }
@@ -53,7 +53,7 @@
     // align-items: start;
     gap: 50px;
     .user-info {
-      width: 50%;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -90,6 +90,11 @@
   @media (max-width: 991.98px) {
     .user-info {
       margin-bottom: 20px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .container {
+        max-width: 1740px !important;
     }
   }
 }

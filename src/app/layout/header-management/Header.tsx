@@ -2,7 +2,7 @@ import { MyContext } from "@/App";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { EHeaderTab } from "./constants/Header.enum";
+import { EHeaderTab, EHeaderTabKey } from "./constants/Header.enum";
 import { HeaderConst } from "./constants/Header.const";
 import "./Header.scss";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
@@ -29,7 +29,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
   // phân quyền
   const [role, setRole] = useState<RoleUser>(RoleUser.NONE);
   const [arrTabHome, setArrTabHome] = useState<any[]>(HeaderConst.arrTabHeader); // mảng tab header Home
-  const arrTabHomeUser = HeaderConst.arrTabHeaderUser; // mảng element tippy user
+  const arrTabHomeUser = HeaderConst.getArrayTippyUser; // mảng element tippy user
   // mảng các tab
   const onClickActiveHeader = (activeTab: EHeaderTab) => {
     setActiveTab(activeTab);
@@ -55,11 +55,23 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
 
   // set active tab
   const getActiveTab = () => {
-    const pathName = location.pathname.replace("/", "");
-    const value = HeaderConst.arrTabHeader?.find(
-      (item: any) => item?.key === pathName
-    )?.value;
-    setActiveTab(value ?? EHeaderTab.HOME);
+    const pathName: EHeaderTabKey = location.pathname.replace(
+      "/",
+      ""
+    ) as EHeaderTabKey;
+    const arrRoleAcitve = [
+      EHeaderTabKey.CHARITY_FUND,
+      EHeaderTabKey.ADMIN,
+      EHeaderTabKey.ROLE,
+    ]; // mảng trong headeTippy user
+    if (arrRoleAcitve.includes(pathName)) {
+      setActiveTab(EHeaderTab.ROLE);
+    } else {
+      const value = HeaderConst.arrTabHeader?.find(
+        (item: any) => item?.key === pathName
+      )?.value;
+      setActiveTab(value ?? EHeaderTab.HOME);
+    }
   };
   useEffect(() => {
     getActiveTab();
@@ -109,7 +121,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                 >
                   {/* headeLess tippy dropdown login */}
                   <HeadeLessTippyComponent widthChildrenMenu={170}>
-                    <div className="nav-item item-user">
+                    <div className="nav-item  item-user">
                       <div className="user-img-home">
                         <img src={getAvatarUser(dataUser)} />
                       </div>
@@ -125,24 +137,26 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                       </div>
                     </div>
                     <MenuHeadeLessTippy>
-                      {arrTabHomeUser?.map((item: any, index: number) => (
-                        <Fragment key={index}>
-                          <Link
-                            className="tippy-header"
-                            to={`/${item?.key}`}
-                            onClick={() => onClickActiveHeader(item?.value)}
-                          >
-                            <div
-                              className={`nav-link `}
-                              style={{ padding: "0" }}
+                      {arrTabHomeUser(dataUser?.[UserFields.ROLE])?.map(
+                        (item: any, index: number) => (
+                          <Fragment key={index}>
+                            <Link
+                              className="tippy-header"
+                              to={`/${item?.key}`}
+                              onClick={() => onClickActiveHeader(item?.value)}
                             >
-                              <span className="span-tippy-header">
-                                {item?.label}
-                              </span>
-                            </div>
-                          </Link>
-                        </Fragment>
-                      ))}
+                              <div
+                                className={`nav-link `}
+                                style={{ padding: "0" }}
+                              >
+                                <span className="span-tippy-header">
+                                  {item?.label}
+                                </span>
+                              </div>
+                            </Link>
+                          </Fragment>
+                        )
+                      )}
                     </MenuHeadeLessTippy>
                   </HeadeLessTippyComponent>
                 </li>

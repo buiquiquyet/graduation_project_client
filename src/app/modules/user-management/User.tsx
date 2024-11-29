@@ -71,7 +71,7 @@ export default function User() {
     }
   };
   return (
-    <div className="user-container">
+    <div className="user-management">
       <div className="user-wrapper">
         <div className="user-avatar">
           <div

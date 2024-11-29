@@ -6,7 +6,7 @@ interface MessageProps {
 const BaseMessageLog: React.FC<MessageProps> = ({text}) => {
 
     return ( 
-        <div className="mess-invalid mt-1">{text}</div>
+        <div className="mess-invalid mt-1 messageLog">{text}</div>
      );
 }
 

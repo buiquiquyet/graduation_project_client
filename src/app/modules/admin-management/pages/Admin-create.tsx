@@ -1,19 +1,12 @@
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { useFormik } from "formik";
-import { UserEditConst } from "../../constants/User-edit.const";
 import { Fragment } from "react/jsx-runtime";
 
 import { useEffect, useState } from "react";
-import {
-  getCitys,
-  getDistricts,
-  getWards,
-} from "../../services/User-edit.services";
+
 import BaseButton from "@/shared/component/base-button/BaseButton";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
-import { updateUser } from "../../services/User.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
-import { UserFields, UsersDTO } from "../../constants/User.interface";
 import "./User-edit.scss";
 import LibSwitchInput from "@/shared/libraries/lib-switch-input-component/LibSwitchInput";
 import { createValidationSchema } from "@/shared/validate";
@@ -21,6 +14,8 @@ import {
   convertToCommonOptions,
   updateOptionsFormInputs,
 } from "@/shared/user-const";
+import { UserFields } from "../../user-management/constants/User.interface";
+import { CharityPost, CharityPostDTO } from "../constants/Admin.interface";
 export default function UserEdit() {
   // check useContext
   const { setLoading, dataUser } = useContextCommon();
@@ -31,34 +26,33 @@ export default function UserEdit() {
   // trả về thông tin user
   const handleGetInfoUser = () => {
     return {
-      [UserFields.FULL_NAME]: dataUser?.[UserFields.FULL_NAME],
-      [UserFields.PASS_WORD]: dataUser?.[UserFields.PASS_WORD],
-      [UserFields.PHONE]: dataUser?.[UserFields.PHONE],
-      [UserFields.GENDER]:
-        dataUser?.[UserFields.GENDER] || UserEditConst.optionGender[0].value,
-      [UserFields.BIRTH_DAY]: dataUser?.[UserFields.BIRTH_DAY] ?? null,
-      [UserFields.CITY]: dataUser?.[UserFields.CITY],
-      [UserFields.WARD]: dataUser?.[UserFields.WARD],
-      [UserFields.DISTRICT]: dataUser?.[UserFields.DISTRICT],
-      [UserFields.ADDRESS]: dataUser?.[UserFields.ADDRESS],
+      [CharityPost.NAME]: dataUser?.[CharityPost.NAME], // tên chiến dịch
+      [CharityPost.FUND_ID]: dataUser?.[CharityPost.FUND_ID], // id quỹ
+      [CharityPost.IMAGES]: dataUser?.[CharityPost.IMAGES], // ảnh
+      [CharityPost.DESCRIPTION]: dataUser?.[CharityPost.DESCRIPTION], // ghi chú
+      [CharityPost.CURRENT_AMOUNT]: dataUser?.[CharityPost.CURRENT_AMOUNT], // số tiền hiện tại
+      [CharityPost.TARGET_AMOUNT]: dataUser?.[CharityPost.TARGET_AMOUNT], // số tiền mục tiêu
+      [CharityPost.START_DATE]: dataUser?.[CharityPost.START_DATE], // ngày bắt đầu
+      [CharityPost.END_DATE]: dataUser?.[CharityPost.END_DATE], // ngày kết thúc
+      
     };
   };
 
   const validationSchema = createValidationSchema(handleGetInfoUser());
 
-  let initialValues: UsersDTO | any = handleGetInfoUser(); // biến gán init của form submit
+  let initialValues: CharityPostDTO | any = handleGetInfoUser(); // biến gán init của form submit
   let formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values: any) => {
       setLoading(true);
-      const res: any = await updateUser(dataUser?.[UserFields.ID] ?? "", {
-        ...(dataUser ?? {}),
-        ...values,
-      });
+    //   const res: any = await updateUser(dataUser?.[UserFields.ID] ?? "", {
+    //     ...(dataUser ?? {}),
+    //     ...values,
+    //   });
       setLoading(false);
-      if (handleResponseInterceptor(res)) {
-      }
+    //   if (handleResponseInterceptor(res)) {
+    //   }
     },
   }); // biến gán form submit
   //=====
@@ -143,7 +137,7 @@ export default function UserEdit() {
         <div className="user-info col-12 col-sm-12 col-md-12 col-lg-6">
           <div className="user-label">
             <FaUser />
-            <h3 className="w-100">Thông tin cá nhân</h3>
+            <span className="w-100">Thông tin cá nhân</span>
           </div>
           {formInputsInfoUser &&
             formInputsInfoUser.length > 0 &&
@@ -163,11 +157,11 @@ export default function UserEdit() {
         <div className="user-info col-12 col-sm-12 col-md-12 col-lg-6">
           <div className="user-label">
             <FaMapMarkerAlt />
-            <h3 className="w-100">Địa chỉ</h3>
+            <span className="w-100">Địa chỉ</span>
           </div>
           {formInputsInfoAddress &&
             formInputsInfoAddress.length > 0 &&
-            formInputsInfoAddress.map((item, index) => (
+            formInputsInfoAddress.map((item: any, index: any) => (
               <Fragment key={index}>
                 <div className="input-label">
                   <span>{item?.label}</span>

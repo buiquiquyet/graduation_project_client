@@ -11,7 +11,7 @@ const { Option } = Select;
 interface CustomInputProps {
   item: ItemLibSwitchInput;
   formik: FormikProps<any>;
-  onChange: (field: any, value: any) => void;
+  onChange?: (field: any, value: any) => void;
 }
 const LibSwitchInput: React.FC<CustomInputProps> = ({
   item,
@@ -44,7 +44,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
 
   if (item.type === InputTypeEnum.INPUT) {
     return (
-      <div className="w-100">
+      <div className="w-100 input-switch">
         <Input
           className={`w-100 ${checkError() ? "border-error" : ""}`}
           type={item.typeInput}
@@ -59,7 +59,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
     );
   } else if (item.type === InputTypeEnum.DATE) {
     return (
-      <div className="w-100">
+      <div className="w-100 input-switch">
         <DatePicker
           className={`w-100 ${checkError() ? "border-error" : ""}`}
           value={
@@ -82,7 +82,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
     );
   } else if (item.type === InputTypeEnum.INPUT_DROPDOWN) {
     return (
-      <div className="w-100">
+      <div className="w-100 input-switch">
         <Select
           className={`w-100 ${checkError() ? "border-error" : ""}`}
           showSearch
@@ -93,7 +93,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
           }
           onChange={(value) => {
             formik.setFieldValue(item.value, value);
-            onChange(item.value, value);
+            onChange?.(item.value, value);
           }}
           onBlur={() => handleBlur(item.value)}
           onFocus={() => handleFocus(item.value)} // Gọi hàm handleFocus nếu có
@@ -112,7 +112,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
     );
   } else if (item.type === InputTypeEnum.TEXT_AREA) {
     return (
-      <div className="w-100">
+      <div className="w-100 input-switch">
         <Input.TextArea
           className={`w-100 custom-textarea ${
             checkError() ? "border-error" : ""
