@@ -51,15 +51,15 @@ export class HeaderConst {
       },
       {
         value: EHeaderTab.LOGIN,
-        label: EHeaderTabText.LOGIN,
+        label: EHeaderTabText.LOGOUT,
         key: EHeaderTabKey.LOGIN,
       },
     ];
     const roleAdmin = [
       {
-        value: EHeaderTab.ADMIN,
-        label: EHeaderTabText.ADMIN,
-        key: EHeaderTabKey.ADMIN,
+        value: EHeaderTab.PROJECT_FUND,
+        label: EHeaderTabText.PROJECT_FUND,
+        key: EHeaderTabKey.PROJECT_FUND,
       },
       {
         value: EHeaderTab.CHARITY_FUND,

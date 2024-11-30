@@ -1,25 +1,37 @@
-.tableContainer {
-  overflow-x: auto; /* Hiển thị thanh cuộn ngang khi table tràn */
-  max-width: 100%; /* Đảm bảo bảng không vượt quá kích thước của container */
-}
+.table-container {
+  .tableContainer {
+    overflow-x: auto; /* Hiển thị thanh cuộn ngang khi table tràn */
+    max-width: 100%; /* Đảm bảo bảng không vượt quá kích thước của container */
+  }
 
-.table {
-  min-width: 700px; /* Đảm bảo bảng có kích thước tối thiểu */
-}
+  .table {
+    min-width: 700px; /* Đảm bảo bảng có kích thước tối thiểu */
+  }
 
-.table th,
-.table td {
-  white-space: nowrap; /* Ngăn chặn các dòng từ việc bị ngắt khi hiển thị */
+  .table th,
+  .table td {
+    white-space: nowrap; /* Ngăn chặn các dòng từ việc bị ngắt khi hiển thị */
+  }
+  .MuiTableCell-head {
+    text-align: center !important;
+  }
+  .status-col {
+    padding: 6px 12px;
+    background-color: red;
+    border-radius: 999px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+  .img-table,
+  .img-table-modal {
+    width: 70px;
+    height: 70px;
+  }
+  .img-table-modal {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+  }
 }
-.MuiTableCell-head {
-  text-align: center !important;
-}
-.status-col {
-  padding: 6px 12px;
-  background-color: red;
-  border-radius: 999px;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-}
-

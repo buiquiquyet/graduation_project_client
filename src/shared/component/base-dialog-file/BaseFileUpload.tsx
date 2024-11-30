@@ -41,20 +41,24 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     const isValid = typeImg.includes(file.type);
     return isValid;
   };
-  console.log(1);
-
   return (
     <ImgCrop rotationSlider>
       <Upload
         // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
         listType="picture-card" // Hiển thị như thẻ hình ảnh
-        fileList={fileList?.map((file: any) => ({
-          uid: file.uid || file.Id,
-          name: file.name || file.ten,
-          url: file.originFileObj ? null : `${config.FILE_URL}${file.ten}`,
-          ...file,
-          status: "done",
-        }))}
+        fileList={
+          fileList && !fileList?.includes(undefined) && fileList?.length > 0
+            ? fileList?.map((file: any) => ({
+                uid: file?.uid || file?.Id,
+                name: file?.name || file?.ten,
+                url: file?.originFileObj
+                  ? null
+                  : `${config.FILE_URL}${file?.ten ?? file}`,
+                ...file,
+                status: "done",
+              }))
+            : []
+        }
         // fileList={fileList}
         // onPreview={onPreview}
         onChange={handleFileChange}

@@ -9,7 +9,7 @@ export enum EHeaderTab {
     CONTACT, // liên lạc
     LOGIN, // đăng ký, đăng nhập
     ROLE, // cá nhân
-    ADMIN, // trang admin tạo bài đăng
+    PROJECT_FUND, // trang admin tạo bài đăng
     CHARITY_FUND, // trang các quỹ đầu tư
 }
 export enum EHeaderTabText {
@@ -22,8 +22,9 @@ export enum EHeaderTabText {
     EVENTS = "Sự kiện", // sự kiện
     CONTACT = "Liên hệ", // liên lạc
     LOGIN = "Đăng ký / Đăng nhập", // đăng ký đăng nhập
+    LOGOUT = "Đăng xuất", // đăng xuất
     ROLE = "Cá nhân", // trang người dùng
-    ADMIN = "Admin", // trang người dùng
+    PROJECT_FUND = "Dự án", // trang người dùng
     CHARITY_FUND = "Quỹ đầu tư" // trang các quỹ đầu tư
 }
 export enum EHeaderTabKey {
@@ -38,6 +39,6 @@ export enum EHeaderTabKey {
     LOGIN = "login", //  đăng nhập
     SIGN_IN = "sign-in", // đăng ký 
     ROLE = "role",
-    ADMIN = "admin",
+    PROJECT_FUND = "project-fund",
     CHARITY_FUND = "charity-fund"
 }

@@ -15,6 +15,9 @@ import "./LibTable.scss";
 import { ETableColumnType } from "./constants/LibTable.enum";
 import BaseOptionSettings from "./base-options-setting/BaseOptionSetting";
 import { MyContext } from "@/App";
+import config from "@/shared/ultils/config";
+import ImageModal from "../gallery-component/Gallery";
+import { getImgCommon } from "@/shared/user-const";
 
 interface PropsTable {
   columns: any[];
@@ -108,8 +111,8 @@ const LibTable: React.FC<PropsTable> = ({
                 <TableRow
                   key={rowIndex}
                   onClick={(event) => {
-                      onRowClick && onRowClick(row.Id); // Gọi hàm khi click vào row
-                      event.stopPropagation(); // Ngừng sự kiện lan truyền khi click vào row
+                    onRowClick && onRowClick(row.Id); // Gọi hàm khi click vào row
+                    event.stopPropagation(); // Ngừng sự kiện lan truyền khi click vào row
                   }}
                   style={{ cursor: "pointer" }} // Thêm con trỏ "pointer" khi hover
                 >
@@ -155,6 +158,20 @@ const LibTable: React.FC<PropsTable> = ({
                           }
                         >
                           {`(${row[column.accessor]}  file)`}
+                        </div>
+                      ) : column.type === ETableColumnType.IMAGE ? (
+                        <div
+                          style={{ cursor: "pointer", position: "relative" }}
+                          onClick={(event) => event.stopPropagation()}
+                        >
+                          <img
+                            className="img-table"
+                            src={config.FILE_URL + row[column.accessor]}
+                          />
+                          <ImageModal
+                            className="img-table-modal"
+                            imgSrcList={[getImgCommon(row[column.accessor])]}
+                          ></ImageModal>
                         </div>
                       ) : column.type === ETableColumnType.NOTE ? (
                         <div

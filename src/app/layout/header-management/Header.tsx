@@ -61,7 +61,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
     ) as EHeaderTabKey;
     const arrRoleAcitve = [
       EHeaderTabKey.CHARITY_FUND,
-      EHeaderTabKey.ADMIN,
+      EHeaderTabKey.PROJECT_FUND,
       EHeaderTabKey.ROLE,
     ]; // mảng trong headeTippy user
     if (arrRoleAcitve.includes(pathName)) {

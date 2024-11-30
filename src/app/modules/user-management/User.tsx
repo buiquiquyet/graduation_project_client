@@ -76,7 +76,7 @@ export default function User() {
         <div className="user-avatar">
           <div
             style={{
-              backgroundImage: `url(${getAvatarUser(dataUser)})`,
+              backgroundImage: `url(${JSON.stringify(getAvatarUser(dataUser))})`,
             }}
             className="user-head"
           >

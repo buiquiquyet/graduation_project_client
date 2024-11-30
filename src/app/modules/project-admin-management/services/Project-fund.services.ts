@@ -2,7 +2,7 @@ import { BuildParams } from "@/shared/ultils/BuildParams";
 import { Page } from "@/shared/ultils/Page";
 import { customRequest } from "@/shared/ultils/request";
 
-const apiCommon = "charity";
+const apiCommon = "project-fund";
 // createa thông tin người dùng
 export const createCharityFund = async (body: any) => {
   try {

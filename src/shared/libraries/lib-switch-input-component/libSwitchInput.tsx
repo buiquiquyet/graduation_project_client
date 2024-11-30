@@ -53,6 +53,9 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
           onChange={formik.handleChange}
           onBlur={() => handleBlur(item.value)}
           onFocus={() => handleFocus(item.value)}
+          {...(item.maxLength && { maxLength: item.maxLength })}
+          {...(item.min ? { min: item.min } : {})}
+          {...(item.max ? { max: item.max } : {})}
         />
         {renderError()}
       </div>
@@ -122,6 +125,9 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
           onChange={formik.handleChange}
           onBlur={() => handleBlur(item.value)}
           onFocus={() => handleFocus(item.value)}
+          {...(item.maxLength && { maxLength: item.maxLength })}
+          {...(item.min ? { min: item.min } : {})}
+          {...(item.max ? { max: item.max } : {})}
         />
         {renderError()}
       </div>

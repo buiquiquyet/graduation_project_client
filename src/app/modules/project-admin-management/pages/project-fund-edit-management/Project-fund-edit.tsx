@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import "./Charity-fund-edit.scss";
+import "./Project-fund-edit.scss";
 import { Fragment } from "react/jsx-runtime";
 
 import BaseButton from "@/shared/component/base-button/BaseButton";
@@ -9,14 +9,14 @@ import { createValidationSchema } from "@/shared/validate";
 
 import {
   CharityFundDTO,
-  CharityFundFields,
-} from "../../constants/charity-fund.interface";
-import { CharityFundEditConst } from "../../constants/charity-fund-edit.const";
+  ProjectFund,
+} from "../../constants/Project-fund.interface";
+import { ProjectFundEditConst } from "../../constants/Project-fund-edit.const";
 import {
   createCharityFund,
   getCharityFund,
   updateCharityFund,
-} from "../../services/Charity-fund.services";
+} from "../../services/Project-fund.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import BaseFileUpload from "@/shared/component/base-dialog-file/BaseFileUpload";
 import { useCallback, useEffect, useState } from "react";
@@ -29,7 +29,8 @@ import {
   addIsEdit,
   addIsSubmitSuccess,
 } from "@/shared/reducer/charity-fund-slice/CharityFundSlice";
-export default function CharityFundEdit() {
+import LibQillComponent from "@/shared/libraries/lib-qill-component/LibQillComponent";
+export default function ProjectFundEdit() {
   // check useContext
   const { setLoading } = useContextCommon();
 
@@ -37,18 +38,21 @@ export default function CharityFundEdit() {
   const reducerCharityFund = useSelector(ReducerCharityFund); // redux của quỹ
 
   const [listFileNames, setListFileNames] = useState<any[]>([]); // mảng file image
+  const [content, setContent] = useState(""); // value của mô tả dự án
   // form input thông tin quỹ
   const formInputsInfoCharityFund: any[] =
-    CharityFundEditConst.arrCharityFundInfo;
-  // trả về thông tin quỹ
+    ProjectFundEditConst.arrProjectFundInfo;
+
+  // trả về thông tin dự án
   const handleGetInfoUser = (data?: any) => {
     return {
-      [CharityFundFields.NAME]: data?.[CharityFundFields.NAME] ?? "",
-      [CharityFundFields.EMAIL]: data?.[CharityFundFields.EMAIL] ?? "",
-      [CharityFundFields.PHONE]: data?.[CharityFundFields.PHONE] ?? "",
-      [CharityFundFields.DESCRIPTION]:
-        data?.[CharityFundFields.DESCRIPTION] ?? "",
-      [CharityFundFields.ADDRESS]: data?.[CharityFundFields.ADDRESS] ?? "",
+      [ProjectFund.NAME]: data?.[ProjectFund.NAME] ?? "",
+      [ProjectFund.FUND_ID]: data?.[ProjectFund.FUND_ID] ?? "",
+      [ProjectFund.TARGET_AMOUNT]: data?.[ProjectFund.TARGET_AMOUNT] ?? "",
+      [ProjectFund.DESCRIPTION]:
+        data?.[ProjectFund.DESCRIPTION] ?? "",
+      [ProjectFund.START_DATE]: data?.[ProjectFund.START_DATE] ?? "",
+      [ProjectFund.END_DATE]: data?.[ProjectFund.END_DATE] ?? "",
     };
   };
 
@@ -63,7 +67,7 @@ export default function CharityFundEdit() {
       // dữ liệu truyền lên
       const requestBody = {
         ...values,
-        [CharityFundFields.IMAGES_IFORM_FILE]: listFileNames[0]?.originFileObj,
+        [ProjectFund.IMAGES]: listFileNames[0]?.originFileObj,
       };
       let res: any = null;
       // nếu đang ở tạo mới quỹ
@@ -106,8 +110,12 @@ export default function CharityFundEdit() {
     setLoading(false);
     if (res) {
       formik.setValues(handleGetInfoUser(res?.data?.data));
-      setListFileNames([res?.data?.data?.[CharityFundFields.IMAGES]]);
+      setListFileNames([res?.data?.data?.[ProjectFund.IMAGES]]);
     }
+  };
+  //========= change value của mô tả dự án
+  const onChangeDescription = (text: string) => {
+    setContent(text);
   };
   useEffect(() => {
     if (
@@ -126,29 +134,43 @@ export default function CharityFundEdit() {
     }
   }, [reducerCharityFund]);
   return (
-    <form onSubmit={formik.handleSubmit} className=" user-inputs w-100">
-      <div className="user-info ">
-        <div className="user-label">
-          <h3 className="w-100">Thêm mới quỹ đầu tư</h3>
+    <form onSubmit={formik.handleSubmit} className=" user-inputs w-100 ">
+      <div className="container row">
+        <div className="user-label " style={{ padding: "0 15px 20px" }}>
+          <h3 className="w-100" style={{ textAlign: "center" }}>
+            Thêm dự án mới
+          </h3>
         </div>
-        {formInputsInfoCharityFund &&
-          formInputsInfoCharityFund.length > 0 &&
-          formInputsInfoCharityFund.map((item, index) => (
-            <Fragment key={index}>
-              <div className="input-label">
-                <span>{item?.label}</span>
-                <LibSwitchInput item={item} formik={formik} />
-              </div>
-            </Fragment>
-          ))}
-        {/* tải ảnh */}
-        <div className="input-label">
-          <span>Ảnh </span>
-          <BaseFileUpload
-            onChange={onChangeImage}
-            fileList={listFileNames}
-            imgLength={1}
-          />
+        <div className="user-info col-12 col-sm-12 col-md-12 col-lg-6 ">
+          {formInputsInfoCharityFund &&
+            formInputsInfoCharityFund.length > 0 &&
+            formInputsInfoCharityFund.map((item, index) => (
+              <Fragment key={index}>
+                <div className="input-label">
+                  <span>{item?.label}</span>
+                  <LibSwitchInput item={item} formik={formik} />
+                </div>
+              </Fragment>
+            ))}
+
+          {/* tải ảnh */}
+          <div className="input-label">
+            <span>Ảnh </span>
+            <BaseFileUpload
+              onChange={onChangeImage}
+              fileList={listFileNames}
+              imgLength={1}
+            />
+          </div>
+        </div>
+        <div
+          className="user-info col-12 col-sm-12 col-md-12 col-lg-6"
+          style={{ gap: "0" }}
+        >
+          <div className="w-100">
+            <span>Mô tả dự án</span>
+          </div>
+          <LibQillComponent content={content} onChange={onChangeDescription} />
         </div>
       </div>
       <div>

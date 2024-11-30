@@ -6,9 +6,9 @@ import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import {
   deleteCharityFunds,
   getListCharityFunds,
-} from "../../services/Charity-fund.services";
+} from "../../services/Project-fund.services";
 import { Page } from "@/shared/ultils/Page";
-import { CharityFundListConst } from "../../constants/charity-fund-list.const";
+import { CharityFundListConst } from "../../constants/Project-fund-list.const";
 
 import BaseButton from "@/shared/component/base-button/BaseButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,7 @@ import {
 import { InitCharityFund } from "@/shared/reducer/charity-fund-slice/InitCharityFundProps";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 
-export default function CharityFundList() {
+export default function ProjectFundList() {
   const { setLoading } = useContextCommon();
   const page: Page = new Page();
   const [dataCharityFunds, setDataCharityFunds] = useState<ApiResponseTable>({
@@ -84,7 +84,7 @@ export default function CharityFundList() {
     <div className="user-inputs">
       <div className="user-info" style={{ textAlign: "center" }}>
         <div className="user-label">
-          <h3 className="w-100">Các quỹ đầu tư</h3>
+          <h3 className="w-100">Các dự án</h3>
         </div>
         {columnTable?.length > 0 && (
           <LibTable

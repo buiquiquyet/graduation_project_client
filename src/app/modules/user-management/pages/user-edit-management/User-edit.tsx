@@ -15,12 +15,12 @@ import { updateUser } from "../../services/User.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import { UserFields, UsersDTO } from "../../constants/User.interface";
 import "./User-edit.scss";
-import LibSwitchInput from "@/shared/libraries/lib-switch-input-component/LibSwitchInput";
 import { createValidationSchema } from "@/shared/validate";
 import {
   convertToCommonOptions,
   updateOptionsFormInputs,
 } from "@/shared/user-const";
+import LibSwitchInput from "@/shared/libraries/lib-switch-input-component/libSwitchInput";
 export default function UserEdit() {
   // check useContext
   const { setLoading, dataUser } = useContextCommon();

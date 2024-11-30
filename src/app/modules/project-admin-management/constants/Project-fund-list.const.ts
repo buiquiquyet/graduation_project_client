@@ -1,5 +1,5 @@
 import { ETableColumnType } from "@/shared/libraries/lib-table-component/constants/LibTable.enum";
-import { CharityFundFields } from "./charity-fund.interface";
+import { CharityFundFields } from "./Project-fund.interface";
 import { ColumnFields } from "@/shared/enums/inputType.enum";
 
 export class CharityFundListConst {
@@ -13,7 +13,7 @@ export class CharityFundListConst {
     {
       label: "Ảnh",
       accessor: CharityFundFields.IMAGES,
-      type: ETableColumnType.IMAGE,
+      type: ETableColumnType.NOTE,
     },
     {
       label: "Email",

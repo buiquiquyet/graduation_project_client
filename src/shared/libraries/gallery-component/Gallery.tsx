@@ -10,12 +10,14 @@ interface ImageModalProps {
   imgSrcList: string[]; // Danh sách các ảnh
   imgAlt?: string;
   indexImg?: number;
+  className?: string
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({
   imgSrcList,
   imgAlt = "Image",
   indexImg = 0,
+  className
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0); // Trạng thái cho chỉ số ảnh hiện tại
@@ -40,14 +42,15 @@ const ImageModal: React.FC<ImageModalProps> = ({
       prevIndex === imgSrcList.length - 1 ? 0 : prevIndex + 1
     );
   };
-
+  
   return (
     <>
       {/* Danh sách ảnh có thể nhấn vào để mở modal */}
       <div
         // style={{ display: 'flex', flexWrap: 'wrap' }}
-        style={{ width: "100%", height: "100%", zIndex: 999 }}
+        // style={{ width: "100%", height: "100%", zIndex: 999 }}
         onClick={() => openModal(indexImg)}
+        className={`${className} div-modal`}
       ></div>
 
       {/* Modal hiển thị ảnh phóng to */}
