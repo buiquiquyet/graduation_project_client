@@ -6,34 +6,40 @@ export class CharityFundListConst {
   public static readonly columnCharityFund = [
     { label: "", accessor: "", type: ETableColumnType.CHECKBOX_ACTION },
     {
-      label: "Tên quỹ",
+      label: "TÊN QUỸ",
       accessor: CharityFundFields.NAME,
       type: ETableColumnType.NOTE,
     },
     {
-      label: "Ảnh",
+      label: "ẢNH",
       accessor: CharityFundFields.IMAGES,
       type: ETableColumnType.IMAGE,
     },
     {
-      label: "Email",
+      label: "EMAIL",
       accessor: CharityFundFields.EMAIL,
       type: ETableColumnType.NOTE,
     },
     {
-      label: "Số điện thoại",
+      label: "SỐ ĐIỆN THOẠI",
       accessor: CharityFundFields.PHONE,
       type: ETableColumnType.NOTE,
     },
     {
-      label: "Mô tả",
+      label: "MÔ TẢ",
       accessor: CharityFundFields.DESCRIPTION,
       type: ETableColumnType.NOTE,
     },
     {
-      label: "Địa chỉ",
+      label: "ĐỊA CHỈ",
       accessor: CharityFundFields.EMAIL,
       type: ETableColumnType.NOTE,
+      
+    },
+    {
+      label: "CẬP NHẬT LÚC",
+      accessor: CharityFundFields.UPDATE_AT,
+      type: ETableColumnType.DATE,
       
     },
 

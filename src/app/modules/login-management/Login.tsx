@@ -25,7 +25,7 @@ import {
   UsersDTO,
 } from "../user-management/constants/User.interface";
 
-export default function Login() {
+export default function LoginComponent() {
   const context = useContext(MyContext);
   if (!context) {
     return null;

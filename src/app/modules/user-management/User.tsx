@@ -10,7 +10,7 @@ import { getImgCommon } from "@/shared/user-const";
 import ImageModal from "@/shared/libraries/gallery-component/Gallery";
 import { updateAvatarUser, validateToken } from "./services/User.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
-export default function User() {
+export default function UserComponent() {
   const context = useContext(MyContext);
   if (!context) {
     return null;

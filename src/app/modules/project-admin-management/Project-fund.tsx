@@ -1,7 +1,7 @@
 import "./Project-fund.scss";
 import ProjectFundEdit from "./pages/project-fund-edit-management/Project-fund-edit";
 import ProjectFundList from "./pages/project-fund-list-management/Project-fund-list";
-export default function ProjectFund() {
+export default function ProjectFundComponent() {
  
   return (
     <div className="project-fund-management">

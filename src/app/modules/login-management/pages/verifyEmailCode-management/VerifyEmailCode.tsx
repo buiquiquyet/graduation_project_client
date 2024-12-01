@@ -5,6 +5,7 @@ import * as ApiServiceLoginSignIn from "./../../services/Login.service";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import { useNavigate } from "react-router-dom";
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
+import { validateToken } from "@/app/modules/user-management/services/User.services";
 interface VerifyEmailCodeProps {
   email: string; // email được gửi xác thực
 }
@@ -15,7 +16,7 @@ export default function VerifyEmailCode({ email }: VerifyEmailCodeProps) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null); // State để lưu trữ timeout
   // load ding
-  const { setLoading } = useContextCommon();
+  const { setLoading, setDataUser } = useContextCommon();
   const navigate = useNavigate();
   const handleChange = (
     index: number,
@@ -101,8 +102,19 @@ export default function VerifyEmailCode({ email }: VerifyEmailCodeProps) {
         joinCodeVerify,
       );
       if (handleResponseInterceptor(res)) {
+        const token = res?.data?.data?.token 
+        // gọi hàm validate người dùng sau khi đăng ký
+        if (token) {
+          const resValidate: any = await validateToken(token);
+          const dataValidate = resValidate?.data?.data;
+          if (!dataValidate?.error) {
+            setDataUser(dataValidate?.dataUser);
+            navigate(`/${EHeaderTabKey.HOME}`);
+          } else {
+            setDataUser(null);
+          }
+        }
         setLoading(false);
-        navigate(`/${EHeaderTabKey.HOME}`);
       }
       setLoading(false);
     }

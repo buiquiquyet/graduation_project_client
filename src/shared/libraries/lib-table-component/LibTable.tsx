@@ -17,7 +17,7 @@ import BaseOptionSettings from "./base-options-setting/BaseOptionSetting";
 import { MyContext } from "@/App";
 import config from "@/shared/ultils/config";
 import ImageModal from "../gallery-component/Gallery";
-import { getImgCommon } from "@/shared/user-const";
+import { convertDate, getImgCommon } from "@/shared/user-const";
 
 interface PropsTable {
   columns: any[];
@@ -166,24 +166,28 @@ const LibTable: React.FC<PropsTable> = ({
                         >
                           <img
                             className="img-table"
-                            src={config.FILE_URL + row[column.accessor]}
+                            src={
+                              Array.isArray(row[column.accessor])
+                                ? config.FILE_URL + row[column.accessor]?.[0] // Nếu là mảng, lấy phần tử đầu tiên
+                                : config.FILE_URL + row[column.accessor] // Nếu là chuỗi, sử dụng chuỗi trực tiếp
+                            }
                           />
                           <ImageModal
                             className="img-table-modal"
-                            imgSrcList={[getImgCommon(row[column.accessor])]}
+                            imgSrcList={
+                              Array.isArray(row[column.accessor])
+                                ? row[column.accessor].map((img: string) =>
+                                    getImgCommon(img)
+                                  ) // Nếu là mảng, xử lý từng phần tử
+                                : [getImgCommon(row[column.accessor])] // Nếu là string, chuyển thành mảng với 1 phần tử
+                            }
                           ></ImageModal>
                         </div>
                       ) : column.type === ETableColumnType.NOTE ? (
                         <div
+                          className="text-note "
                           style={{
-                            cursor: "pointer",
                             padding: row[column.accessor] === "" ? "20px" : "",
-                            wordWrap: "break-word",
-                            width: "120px",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            paddingBlock: "20px",
                           }}
                           onClick={() => {
                             row[column.accessor]
@@ -193,6 +197,13 @@ const LibTable: React.FC<PropsTable> = ({
                         >
                           {row[column.accessor]}{" "}
                         </div>
+                      ) : column.type === ETableColumnType.TEXT_QUILL ? (
+                        <div
+                          className="text-note "
+                          dangerouslySetInnerHTML={{
+                            __html: row[column.accessor],
+                          }}
+                        ></div>
                       ) : column.type === ETableColumnType.STATUS ? (
                         <div>
                           <div
@@ -216,8 +227,12 @@ const LibTable: React.FC<PropsTable> = ({
                               : "Không duyệt"}
                           </div>
                         </div>
+                      ) : column.type === ETableColumnType.DATE ? (
+                        <div>
+                          <div>{convertDate(row[column.accessor])}</div>
+                        </div>
                       ) : (
-                        row[column.accessor]
+                        <div className="text-note">{row[column.accessor]}</div>
                       )}
                     </TableCell>
                   ))}

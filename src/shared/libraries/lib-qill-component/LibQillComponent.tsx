@@ -26,7 +26,9 @@ const LibQillComponent : React.FC<LibQillComponentProps> = ({content, onChange})
                     [{ 'align': [] }],
                     
                     ],
+                   
                 }}
+                
                 formats={[
                     'font', 'size', 'header',
                     'bold', 'italic', 'underline', 'strike', 'blockquote',

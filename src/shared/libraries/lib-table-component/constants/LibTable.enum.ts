@@ -20,4 +20,5 @@ export enum ETableColumnType {
     ACTION_ICON = 'ACTION_ICON',    // (FUNCTION)
     ICON = 'ICON',
     LINK = 'LINK', // TEXT LINK
+    TEXT_QUILL = "TEXT_QUILL", // dạng text react quill
 }

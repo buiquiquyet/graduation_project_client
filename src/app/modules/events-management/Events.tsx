@@ -1,4 +1,4 @@
-function Events() {
+function EventsComponent() {
   return (
     <>
       <section className="ftco-section">
@@ -303,4 +303,4 @@ function Events() {
     </>
   );
 }
-export default Events;
+export default EventsComponent;

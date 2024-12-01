@@ -12,7 +12,7 @@ import LastestDonate from "./lastest-donate/Lastest-donate";
 import { HomeConst } from "../constants/Home.const";
 import ImageGallery from "@/shared/libraries/gallery-component/Gallery";
 
-function Home() {
+function HomeComponent() {
   const context = useContext(MyContext);
   if (!context) {
     return null;
@@ -292,4 +292,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeComponent;

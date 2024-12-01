@@ -1,4 +1,4 @@
-function Blog() {
+function BlogComponent() {
   return (
     <>
       <section className="ftco-section">
@@ -175,4 +175,4 @@ function Blog() {
     </>
   );
 }
-export default Blog;
+export default BlogComponent;

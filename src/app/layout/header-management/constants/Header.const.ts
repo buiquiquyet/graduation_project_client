@@ -66,6 +66,11 @@ export class HeaderConst {
         label: EHeaderTabText.CHARITY_FUND,
         key: EHeaderTabKey.CHARITY_FUND,
       },
+      {
+        value: EHeaderTab.CATEGORY,
+        label: EHeaderTabText.CATEGORY,
+        key: EHeaderTabKey.CATEGORY,
+      },
       ...roleUser
     ]
     return role === RoleUser.ADMIN? roleAdmin : roleUser;

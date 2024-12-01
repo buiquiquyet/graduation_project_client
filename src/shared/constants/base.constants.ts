@@ -8,6 +8,7 @@ import { AxiosResponseObjDTO, EAxiosResponse } from "../ultils/request";
 // hàm trả check trả về của api
 export function handleResponseInterceptor(
   response: AxiosResponseObjDTO<any>,
+  isToastMessage: boolean = true,
   message?: string,
   isToatMessage: boolean = true
 ) {
@@ -20,16 +21,16 @@ export function handleResponseInterceptor(
   ) {
     if ((message && isToatMessage) || messRes) {
       let newMessage = message ?? messRes;
-      ToastMessage.show(ToastStatus.success, newMessage);
+      isToastMessage ? ToastMessage.show(ToastStatus.success, newMessage) : null;
     }
     return true;
   } else if (response?.[EAxiosResponse.STATUS] in EErrorCode) {
-    ToastMessage.show(
+    isToastMessage ? ToastMessage.show(
       ToastStatus.error,
       response?.[EAxiosResponse.DATA]?.message ??
         response?.[EAxiosResponse.MESSAGE] ??
         response?.[EAxiosResponse.DATA]?.error
-    );
+    ) : null;
     return false;
   }
   return false;

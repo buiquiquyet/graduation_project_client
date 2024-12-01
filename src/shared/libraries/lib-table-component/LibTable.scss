@@ -34,4 +34,14 @@
     transform: translate(-50%, -50%);
     left: 50%;
   }
+  .text-note {
+    cursor: pointer;
+    word-wrap: break-word; /* Có thể không cần thiết cho trường hợp này */
+    width: 120px; /* Chiều rộng cố định */
+    overflow: hidden; /* Ẩn nội dung tràn ra */
+    text-overflow: ellipsis; /* Hiển thị dấu ... */
+    white-space: nowrap; /* Không cho phép xuống dòng */
+    padding-block: 20px; /* Khoảng cách trên dưới */
+  }
+  
 }

@@ -11,6 +11,7 @@ export enum EHeaderTab {
     ROLE, // cá nhân
     PROJECT_FUND, // trang admin tạo bài đăng
     CHARITY_FUND, // trang các quỹ đầu tư
+    CATEGORY, // danh mục loại từ thiện vd: trẻ enm, ý tế
 }
 export enum EHeaderTabText {
     HOME = "Trang chủ", // trang chủ
@@ -25,7 +26,8 @@ export enum EHeaderTabText {
     LOGOUT = "Đăng xuất", // đăng xuất
     ROLE = "Cá nhân", // trang người dùng
     PROJECT_FUND = "Dự án", // trang người dùng
-    CHARITY_FUND = "Quỹ đầu tư" // trang các quỹ đầu tư
+    CHARITY_FUND = "Quỹ đầu tư", // trang các quỹ đầu tư
+    CATEGORY = "Danh mục", // trang các quỹ đầu tư
 }
 export enum EHeaderTabKey {
     HOME = "", // trang chủ
@@ -40,5 +42,6 @@ export enum EHeaderTabKey {
     SIGN_IN = "sign-in", // đăng ký 
     ROLE = "role",
     PROJECT_FUND = "project-fund",
-    CHARITY_FUND = "charity-fund"
+    CHARITY_FUND = "charity-fund",
+    CATEGORY = "category",
 }

@@ -1,7 +1,7 @@
 import "./Charity-fund.scss";
 import CharityFundEdit from "./pages/charity-fund-edit-management/Charity-fund-edit";
 import CharityFundList from "./pages/charity-fund-list-management/Charity-fund-list";
-export default function CharityFund() {
+export default function CharityFundComponent() {
   
   return (
     <div className="charity-fund-management">

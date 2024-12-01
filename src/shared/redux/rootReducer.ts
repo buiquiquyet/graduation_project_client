@@ -15,12 +15,16 @@
 // export default rootReducer;
 // // rootReducer.js
 
-import CharityFundReducer from '../reducer/charity-fund-slice/CharityFundSlice'
+import CharityFundReducer from '@/shared/reducer/charity-fund-slice/CharityFundSlice'
+import ProjectFundReducer from '@/shared/reducer/project-fund-slice/ProjectFundSlice'
+import CategoryReducer from '@/shared/reducer/category-slice/CategorySlice'
 import { combineReducers } from '@reduxjs/toolkit';
 
 
 const rootReducer = combineReducers({
   charityFund: CharityFundReducer,
+  projectFund: ProjectFundReducer,
+  category: CategoryReducer,
  
 });
 

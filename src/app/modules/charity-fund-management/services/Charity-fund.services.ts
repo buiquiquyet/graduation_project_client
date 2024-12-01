@@ -30,7 +30,22 @@ export const getListCharityFunds = async (page: Page) => {
     throw error; // Truyền lỗi lên trên để xử lý tiếp
   }
 };
+// get list các quỹ cho options
+export const getListCharityFundsForOptions = async (page: Page) => {
+  const params = BuildParams.Params(page);
+  try {
+    // Gọi customRequest với phương thức POST, đường dẫn, body và headers
+    const response = await customRequest(
+      "GET",
+      `/${apiCommon}/selectionOptions${params}`
+    );
 
+    return response; // Trả về response chứa status và data
+  } catch (error) {
+    // Ném ra lỗi đã xử lý từ customRequest
+    throw error; // Truyền lỗi lên trên để xử lý tiếp
+  }
+};
 // get 1 các quỹ
 export const getCharityFund = async (idFund: string) => {
   try {

@@ -36,7 +36,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
       prevIndex === 0 ? imgSrcList.length - 1 : prevIndex - 1
     );
   };
-
+  
   const goToNext = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === imgSrcList.length - 1 ? 0 : prevIndex + 1
@@ -99,7 +99,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
               }}
               className="button-gallery"
             >
-              <FaChevronLeft /> {/* Biểu tượng mũi tên trái */}
+              <FaChevronLeft color="white" style={{width:'40px', height:'40px'}} /> {/* Biểu tượng mũi tên trái */}
             </button>
           )}
           {/* Ảnh được hiển thị ở giữa modal với kích thước cố định */}
@@ -127,7 +127,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
                 right: "15px",
               }}
             >
-              <FaChevronRight /> {/* Biểu tượng mũi tên phải */}
+              <FaChevronRight  color="white" style={{width:'40px', height:'40px'}}/> {/* Biểu tượng mũi tên phải */}
             </button>
           )}
         </div>

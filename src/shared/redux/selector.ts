@@ -8,3 +8,5 @@
 // export const LoadingTotalNewFeedCountFeedSlice = (state) => state.loading.totalNewFeedCount;
 
 export const ReducerCharityFund = (state: any) => state.charityFund;
+export const ReducerProjectFund = (state: any) => state.projectFund;
+export const ReducerCategory = (state: any) => state.category;

@@ -2,39 +2,38 @@ import {
   InputTypeEnum,
   ItemLibSwitchInput,
 } from "@/shared/enums/inputType.enum";
-import { ProjectFund } from "./Project-fund.interface";
+import { ProjectFundFields } from "./Project-fund.interface";
 
 export class ProjectFundEditConst {
   // mảng thông tin dự án
   public static readonly arrProjectFundInfo = [
     {
       label: "Tên dự án",
-      value: ProjectFund.NAME,
+      value: ProjectFundFields.NAME,
       typeInput: "text",
       type: InputTypeEnum.INPUT,
       maxLength: 80,
     },
     {
       label: "Tên quỹ",
-      value: ProjectFund.FUND_ID,
-      typeInput: "number",
+      value: ProjectFundFields.FUND_ID,
       type: InputTypeEnum.INPUT_DROPDOWN,
       // maxLength: 12
     },
     {
       label: "Số tiền mục tiêu",
-      value: ProjectFund.TARGET_AMOUNT,
+      value: ProjectFundFields.TARGET_AMOUNT,
       type: InputTypeEnum.INPUT,
     },
     {
       label: "Ngày bắt đầu",
-      value: ProjectFund.START_DATE,
+      value: ProjectFundFields.START_DATE,
       typeInput: "text",
       type: InputTypeEnum.DATE,
     },
     {
       label: "Ngày kết thúc",
-      value: ProjectFund.END_DATE,
+      value: ProjectFundFields.END_DATE,
       typeInput: "text",
       type: InputTypeEnum.DATE,
     },

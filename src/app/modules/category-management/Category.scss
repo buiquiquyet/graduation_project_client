@@ -1,4 +1,4 @@
-.project-fund-management {
+.category-management {
   span {
     color: rgb(66, 66, 66);
   }
@@ -51,7 +51,7 @@
     align-items: center;
     justify-content: center;
     // align-items: start;
-    gap: 80px;
+    gap: 50px;
     .user-info {
       width: 100%;
       display: flex;
@@ -71,7 +71,7 @@
     }
     .input-label {
       display: flex;
-      width: 100%;
+      width: 70%;
       flex-direction: column;
     }
   }

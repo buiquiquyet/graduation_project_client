@@ -7,6 +7,7 @@ export enum CharityFundFields {
   DESCRIPTION = "description",
   ADDRESS = "address",
   PHONE = "phone",
+  UPDATE_AT = "updatedAt",
 }
 
 export interface CharityFundDTO {

@@ -2,7 +2,7 @@ import { MyContext } from "@/App";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import { useContext } from "react";
 
-const About = () => {
+const AboutComponent = () => {
   const context = useContext(MyContext);
   if (!context) {
     return null;
@@ -209,4 +209,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutComponent;

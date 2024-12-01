@@ -7,92 +7,111 @@ import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import LibSwitchInput from "@/shared/libraries/lib-switch-input-component/libSwitchInput";
 import { createValidationSchema } from "@/shared/validate";
 
-import {
-  CharityFundDTO,
-  ProjectFund,
-} from "../../constants/Project-fund.interface";
 import { ProjectFundEditConst } from "../../constants/Project-fund-edit.const";
 import {
-  createCharityFund,
-  getCharityFund,
-  updateCharityFund,
+  createProjectFund,
+  getProjectFund,
+  updateProjectFund,
 } from "../../services/Project-fund.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import BaseFileUpload from "@/shared/component/base-dialog-file/BaseFileUpload";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReducerCharityFund } from "@/shared/redux/selector";
-import { InitCharityFund } from "@/shared/reducer/charity-fund-slice/InitCharityFundProps";
-import {
-  addIdRow,
-  addIsDelSuccess,
-  addIsEdit,
-  addIsSubmitSuccess,
-} from "@/shared/reducer/charity-fund-slice/CharityFundSlice";
+import { ReducerProjectFund } from "@/shared/redux/selector";
+
 import LibQillComponent from "@/shared/libraries/lib-qill-component/LibQillComponent";
+import { getListCharityFundsForOptions } from "@/app/modules/charity-fund-management/services/Charity-fund.services";
+import { Page } from "@/shared/ultils/Page";
+import {
+  convertToCommonOptions,
+  updateOptionsFormInputs,
+} from "@/shared/user-const";
+import {
+  ProjectFundDTO,
+  ProjectFundFields,
+} from "../../constants/Project-fund.interface";
+import { InitProjectFund } from "@/shared/reducer/project-fund-slice/InitProjectFundProps";
+import {
+  addIdRowProjectFund,
+  addIsDelSuccessProjectFund,
+  addIsEditProjectFund,
+  addIsSubmitSuccessProjectFund,
+} from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
 export default function ProjectFundEdit() {
   // check useContext
   const { setLoading } = useContextCommon();
 
   const dispatch = useDispatch();
-  const reducerCharityFund = useSelector(ReducerCharityFund); // redux của quỹ
+  const reducerProjectFund = useSelector(ReducerProjectFund); // redux của dự án
 
   const [listFileNames, setListFileNames] = useState<any[]>([]); // mảng file image
   const [content, setContent] = useState(""); // value của mô tả dự án
-  // form input thông tin quỹ
-  const formInputsInfoCharityFund: any[] =
-    ProjectFundEditConst.arrProjectFundInfo;
+  const [formInputsProjectFund, setFormInputsProjectFund] = useState(
+    ProjectFundEditConst.arrProjectFundInfo
+  ); // form input thông tin dự án
 
   // trả về thông tin dự án
   const handleGetInfoUser = (data?: any) => {
     return {
-      [ProjectFund.NAME]: data?.[ProjectFund.NAME] ?? "",
-      [ProjectFund.FUND_ID]: data?.[ProjectFund.FUND_ID] ?? "",
-      [ProjectFund.TARGET_AMOUNT]: data?.[ProjectFund.TARGET_AMOUNT] ?? "",
-      [ProjectFund.DESCRIPTION]:
-        data?.[ProjectFund.DESCRIPTION] ?? "",
-      [ProjectFund.START_DATE]: data?.[ProjectFund.START_DATE] ?? "",
-      [ProjectFund.END_DATE]: data?.[ProjectFund.END_DATE] ?? "",
+      [ProjectFundFields.NAME]: data?.[ProjectFundFields.NAME] ?? "",
+      [ProjectFundFields.FUND_ID]: data?.[ProjectFundFields.FUND_ID] ?? "",
+      [ProjectFundFields.TARGET_AMOUNT]:
+        data?.[ProjectFundFields.TARGET_AMOUNT] ?? "",
+      [ProjectFundFields.START_DATE]:
+        data?.[ProjectFundFields.START_DATE] ?? "",
+      [ProjectFundFields.END_DATE]: data?.[ProjectFundFields.END_DATE] ?? "",
     };
   };
 
   const validationSchema = createValidationSchema(handleGetInfoUser());
 
-  let initialValues: CharityFundDTO | any = handleGetInfoUser(); // biến gán init của form submit
+  let initialValues: ProjectFundDTO | any = handleGetInfoUser(); // biến gán init của form submit
   let formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values: any) => {
       setLoading(true);
       // dữ liệu truyền lên
-      const requestBody = {
-        ...values,
-        [ProjectFund.IMAGES]: listFileNames[0]?.originFileObj,
-      };
-      let res: any = null;
-      // nếu đang ở tạo mới quỹ
-      if (!reducerCharityFund?.[InitCharityFund.IS_EDIT]) {
-        res = await createCharityFund(requestBody);
+      const formData = new FormData();
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key]);
+      });
 
-        // cập nhật quỹ
+      // Thêm hình ảnh từ listFileNames vào FormData
+      if (listFileNames.length > 0) {
+        listFileNames.forEach((file: any) => {
+          formData.append(
+            ProjectFundFields.IMAGES_IFORM_FILE,
+            file.originFileObj
+          );
+        });
+      }
+      formData.set(ProjectFundFields.DESCRIPTION, content); // dữ liệu của mô tả dự án
+      let res: any = null;
+      // nếu đang ở tạo mới dự án
+      if (!reducerProjectFund?.[InitProjectFund.IS_EDIT]) {
+        res = await createProjectFund(formData);
+
+        // cập nhật dự án
       } else {
-        res = await updateCharityFund(
-          reducerCharityFund?.[InitCharityFund.ID_ROW],
-          requestBody
+        res = await updateProjectFund(
+          reducerProjectFund?.[InitProjectFund.ID_ROW],
+          formData
         );
       }
       // nếu thành công gửi redux
       if (handleResponseInterceptor(res)) {
         dispatch(
-          addIsSubmitSuccess(
-            !reducerCharityFund?.[InitCharityFund.IS_SUBMIT_SUCCESS]
+          addIsSubmitSuccessProjectFund(
+            !reducerProjectFund?.[InitProjectFund.IS_SUBMIT_SUCCESS]
           )
         );
+        setContent(""); // set nội dung mô tả sau khi submit thành công
         // set lại form rỗng khi submit thành công
         formik.resetForm();
         setListFileNames([]);
-        dispatch(addIdRow("")); // set lại id row = ""
-        dispatch(addIsEdit(false)); // set lại trạng thái edit  = false
+        dispatch(addIdRowProjectFund("")); // set lại id row = ""
+        dispatch(addIsEditProjectFund(false)); // set lại trạng thái edit  = false
       }
       setLoading(false);
     },
@@ -103,14 +122,32 @@ export default function ProjectFundEdit() {
     setListFileNames(newFileList);
   }, []);
 
-  // lấy bản ghi của 1 quỹ thông qua id
-  const handleCallApiGetCharityFund = async (idFund: string) => {
+  // lấy bản ghi của 1 dự án thông qua id
+  const handleCallApiGetProjectFund = async (idFund: string) => {
     setLoading(true);
-    const res: any = await getCharityFund(idFund);
+    const res: any = await getProjectFund(idFund);
     setLoading(false);
     if (res) {
       formik.setValues(handleGetInfoUser(res?.data?.data));
-      setListFileNames([res?.data?.data?.[ProjectFund.IMAGES]]);
+      setListFileNames(res?.data?.data?.[ProjectFundFields.IMAGES]); // SET LẠI FILE IMAGE
+      setContent(res?.data?.data?.[ProjectFundFields.DESCRIPTION]); // set lại content mô tả dự án
+    }
+  };
+  //==== Lấy option của list dự án
+  const handleCallListProjectFund = async () => {
+    let page: Page = new Page();
+    page = { ...page, pageSize: 9999 };
+    setLoading(true);
+    const res: any = await getListCharityFundsForOptions(page);
+    setLoading(false);
+    if (handleResponseInterceptor(res, false)) {
+      setFormInputsProjectFund((prevState) =>
+        updateOptionsFormInputs(
+          prevState,
+          ProjectFundFields.FUND_ID,
+          convertToCommonOptions(res?.data?.datas)
+        )
+      );
     }
   };
   //========= change value của mô tả dự án
@@ -119,32 +156,35 @@ export default function ProjectFundEdit() {
   };
   useEffect(() => {
     if (
-      reducerCharityFund?.[InitCharityFund.ID_ROW] &&
-      !reducerCharityFund?.[InitCharityFund.IS_DEL_SUCCESS]
+      reducerProjectFund?.[InitProjectFund.ID_ROW] &&
+      !reducerProjectFund?.[InitProjectFund.IS_DEL_SUCCESS]
     ) {
-      handleCallApiGetCharityFund(reducerCharityFund?.[InitCharityFund.ID_ROW]);
+      handleCallApiGetProjectFund(reducerProjectFund?.[InitProjectFund.ID_ROW]);
     }
-    if (reducerCharityFund?.[InitCharityFund.IS_DEL_SUCCESS]) {
+    if (reducerProjectFund?.[InitProjectFund.IS_DEL_SUCCESS]) {
       // set lại form rỗng khi submit delete thành công
       formik.resetForm();
       setListFileNames([]);
-      dispatch(addIsDelSuccess(false)); // set lại trạng thái submit delete  = false
-      dispatch(addIdRow("")); // set lại id row = ""
-      dispatch(addIsEdit(false)); // set lại trạng thái edit  = false
+      dispatch(addIsDelSuccessProjectFund(false)); // set lại trạng thái submit delete  = false
+      dispatch(addIdRowProjectFund("")); // set lại id row = ""
+      dispatch(addIsEditProjectFund(false)); // set lại trạng thái edit  = false
     }
-  }, [reducerCharityFund]);
+  }, [reducerProjectFund]);
+  useEffect(() => {
+    handleCallListProjectFund();
+  }, []);
   return (
     <form onSubmit={formik.handleSubmit} className=" user-inputs w-100 ">
       <div className="container row">
         <div className="user-label " style={{ padding: "0 15px 20px" }}>
           <h3 className="w-100" style={{ textAlign: "center" }}>
-            Thêm dự án mới
+            Thêm mới
           </h3>
         </div>
         <div className="user-info col-12 col-sm-12 col-md-12 col-lg-6 ">
-          {formInputsInfoCharityFund &&
-            formInputsInfoCharityFund.length > 0 &&
-            formInputsInfoCharityFund.map((item, index) => (
+          {formInputsProjectFund &&
+            formInputsProjectFund.length > 0 &&
+            formInputsProjectFund.map((item, index) => (
               <Fragment key={index}>
                 <div className="input-label">
                   <span>{item?.label}</span>
@@ -159,7 +199,7 @@ export default function ProjectFundEdit() {
             <BaseFileUpload
               onChange={onChangeImage}
               fileList={listFileNames}
-              imgLength={1}
+              imgLength={4}
             />
           </div>
         </div>
@@ -176,10 +216,12 @@ export default function ProjectFundEdit() {
       <div>
         <BaseButton
           disabled={
-            listFileNames?.length === 0 || listFileNames?.includes(undefined)
+            listFileNames?.length === 0 ||
+            listFileNames?.includes(undefined) ||
+            !content
           }
           title={`${
-            reducerCharityFund?.[InitCharityFund.IS_EDIT]
+            reducerProjectFund?.[InitProjectFund.IS_EDIT]
               ? "Cập nhật"
               : "Thêm mới"
           }`}

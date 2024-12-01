@@ -1,7 +1,7 @@
 import { MyContext } from "@/App";
 import { useContext } from "react";
 
-function Contact() {
+function ContactComponent() {
     const context = useContext(MyContext);
     if (!context) {
         return null;
@@ -94,4 +94,4 @@ function Contact() {
     </>
   );
 }
-export default Contact;
+export default ContactComponent;

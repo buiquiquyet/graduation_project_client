@@ -129,7 +129,7 @@ export default function CharityFundEdit() {
     <form onSubmit={formik.handleSubmit} className=" user-inputs w-100">
       <div className="user-info ">
         <div className="user-label">
-          <h3 className="w-100">Thêm mới quỹ đầu tư</h3>
+          <h3 className="w-100">Thêm mới</h3>
         </div>
         {formInputsInfoCharityFund &&
           formInputsInfoCharityFund.length > 0 &&

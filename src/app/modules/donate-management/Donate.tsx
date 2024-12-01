@@ -2,7 +2,7 @@ import { MyContext } from "@/App";
 import { useContext } from "react";
 import { DonateConst } from "./constants/Donate.const";
 
-function Donate() {
+function DonateComponent() {
   const context = useContext(MyContext);
   if (!context) {
     return null;
@@ -132,4 +132,4 @@ function Donate() {
     </>
   );
 }
-export default Donate;
+export default DonateComponent;
