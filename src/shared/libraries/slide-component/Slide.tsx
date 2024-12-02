@@ -14,11 +14,12 @@ interface PropsSlide {
 const Slide: React.FC<PropsSlide> = ({ slidesPerView = 4, autoPlay = 2500, children }) => {
   return (
     <Swiper
+    style={{zIndex: '998'}}
       spaceBetween={10}
       slidesPerView={slidesPerView} // Show 4 slides at once
       pagination={{ clickable: true }} // Add pagination
       autoplay={{ delay: autoPlay, disableOnInteraction: false }} // Auto-slide with delay
-      // loop // Enable infinite loop
+      loop // Enable infinite loop
       modules={[Pagination, Autoplay]} // Include necessary modules
       className="carousel-cause"
       breakpoints={{

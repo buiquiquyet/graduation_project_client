@@ -23,12 +23,12 @@ export class ProjectFundListConst {
     {
       label: "SỐ TIỀN MỤC TIÊU",
       accessor: ProjectFundFields.TARGET_AMOUNT,
-      type: ETableColumnType.NOTE,
+      type: ETableColumnType.NUMBER,
     },
     {
       label: "SỐ TIỀN HIỆN TẠI",
       accessor: ProjectFundFields.CURRENT_AMOUNT,
-      type: ETableColumnType.NOTE,
+      type: ETableColumnType.NUMBER,
     },
     {
       label: "NGÀY BẮT ĐẦU",

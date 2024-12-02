@@ -8,49 +8,81 @@ import { FormikProps } from "formik";
 import BaseMessageLog from "../message-log-text-component/MessageLogText";
 import "./libSwitchInput.scss";
 const { Option } = Select;
+
 interface CustomInputProps {
   item: ItemLibSwitchInput;
   formik: FormikProps<any>;
   onChange?: (field: any, value: any) => void;
 }
+
 const LibSwitchInput: React.FC<CustomInputProps> = ({
   item,
   formik,
   onChange: onChange,
 }) => {
-  // check xem có phải error input ko
+  // Check if there is an error for the input field
   const checkError = (): boolean => {
     const error = formik?.errors?.[item.value];
     const touched = formik?.touched?.[item.value];
 
-    // Đảm bảo rằng touched là boolean hoặc được xác định
+    // Ensure that touched is either boolean or defined
     return typeof error === "string" && !!touched;
   };
-  // xử lý message error
+
+  // Render error message
   const renderError = () => {
     if (checkError()) {
       return <BaseMessageLog text={formik?.errors?.[`${item.value}`] ?? ""} />;
     }
     return null;
   };
-  // hàm blur
+
+  // Handle onBlur event
   const handleBlur = (fieldName: string) => {
     formik.setFieldTouched(fieldName, true);
   };
-  // hàm focus
+
+  // Handle onFocus event
   const handleFocus = (fieldName: string) => {
     formik.setFieldTouched(fieldName, false);
   };
 
+  // Format number by adding thousand separators
+  const formatNumber = (num: string) => {
+    if (!num) return "";
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
+  // Handle number change only if the input type is 'number'
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Lấy giá trị nhập vào và loại bỏ dấu chấm
+    let rawValue = e.target.value.replace(/\./g, "");
+
+    // Kiểm tra xem giá trị có phải là một số hợp lệ hay không
+    if (!isNaN(Number(rawValue)) || rawValue === "") {
+      // Nếu là số hợp lệ hoặc là chuỗi trống, cập nhật giá trị vào formik
+      formik.setFieldValue(item.value, rawValue);
+    }
+  };
+
+  // If input type is 'number', apply number formatting
   if (item.type === InputTypeEnum.INPUT) {
     return (
       <div className="w-100 input-switch">
         <Input
           className={`w-100 ${checkError() ? "border-error" : ""}`}
-          type={item.typeInput}
+          type="text" // Ensure input type is 'text' to handle formatting
           name={item.value}
-          value={formik.values[item.value] ?? ""}
-          onChange={formik.handleChange}
+          value={
+            item.typeInput === "number"
+              ? formatNumber(formik.values[item.value] ?? "")
+              : formik.values[item.value] ?? ""
+          }
+          onChange={
+            item.typeInput === "number"
+              ? handleNumberChange
+              : formik.handleChange
+          } // Apply number change handler only for type 'number'
           onBlur={() => handleBlur(item.value)}
           onFocus={() => handleFocus(item.value)}
           {...(item.maxLength && { maxLength: item.maxLength })}
@@ -77,7 +109,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
             )
           }
           onBlur={() => handleBlur(item.value)}
-          onFocus={() => handleFocus(item.value)} // Gọi hàm handleFocus nếu có
+          onFocus={() => handleFocus(item.value)} // Call handleFocus if defined
           format="DD-MM-YYYY"
         />
         {renderError()}
@@ -99,7 +131,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
             onChange?.(item.value, value);
           }}
           onBlur={() => handleBlur(item.value)}
-          onFocus={() => handleFocus(item.value)} // Gọi hàm handleFocus nếu có
+          onFocus={() => handleFocus(item.value)} // Call handleFocus if defined
           filterOption={(input, option: any) =>
             option?.children?.toLowerCase().includes(input.toLowerCase())
           }

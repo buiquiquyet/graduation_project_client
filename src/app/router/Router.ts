@@ -14,6 +14,7 @@ import { RoleUser } from "@/helper/ContextCommon/ContextCommon.enum";
 import CharityFundComponent from "../modules/charity-fund-management/Charity-fund";
 import ProjectFundComponent from "../modules/project-admin-management/Project-fund";
 import CategoryComponent from "../modules/category-management/Category";
+import ProjectFundDetailComponent from "../modules/project-fund-detail-management/ProjectFundDetail";
 const publicRouter = [
   {
     path: `${EHeaderTabKey.HOME}`,
@@ -69,9 +70,17 @@ const publicRouter = [
     children: null,
     type: "",
   },
-
+  {
+    path: `${EHeaderTabKey.PROJECT_FUND_DETAIL}/:projectFundId`,
+    component: ProjectFundDetailComponent,
+    children: null,
+    layout: DefaultLayout,
+    isBackImgHeader: false,
+    type: "",
+  },
   // {path: '/pageNotFound',  component: PageNotFound, type: 'pageNotFound'},
 ];
+// router của người dùng đã đăng nhậP
 const privateUserRouter = [
   {
     path: `${EHeaderTabKey.ROLE}`,
@@ -82,6 +91,7 @@ const privateUserRouter = [
     type: "",
   },
 ];
+// router của admin
 const privateAdminRouter = [
   {
     path: `${EHeaderTabKey.PROJECT_FUND}`,
@@ -127,7 +137,7 @@ export const getRoutes = (dataUser?: any) => {
     }
     return publicRouter;
   }
-  const mainRouter = [...publicRouter];
+  const mainRouter: any[] = [...publicRouter];
   if (dataUser?.[UserFields.ROLE] === RoleUser.USER) {
     mainRouter.push(...privateUserRouter);
   }

@@ -17,7 +17,7 @@ import BaseOptionSettings from "./base-options-setting/BaseOptionSetting";
 import { MyContext } from "@/App";
 import config from "@/shared/ultils/config";
 import ImageModal from "../gallery-component/Gallery";
-import { convertDate, getImgCommon } from "@/shared/user-const";
+import { convertDate, formatCurrency, getImgCommon } from "@/shared/user-const";
 
 interface PropsTable {
   columns: any[];
@@ -176,10 +176,8 @@ const LibTable: React.FC<PropsTable> = ({
                             className="img-table-modal"
                             imgSrcList={
                               Array.isArray(row[column.accessor])
-                                ? row[column.accessor].map((img: string) =>
-                                    getImgCommon(img)
-                                  ) // Nếu là mảng, xử lý từng phần tử
-                                : [getImgCommon(row[column.accessor])] // Nếu là string, chuyển thành mảng với 1 phần tử
+                                ? row[column.accessor].map((img: string) => img) // Nếu là mảng, xử lý từng phần tử
+                                : [row[column.accessor]] // Nếu là string, chuyển thành mảng với 1 phần tử
                             }
                           ></ImageModal>
                         </div>
@@ -189,13 +187,27 @@ const LibTable: React.FC<PropsTable> = ({
                           style={{
                             padding: row[column.accessor] === "" ? "20px" : "",
                           }}
-                          onClick={() => {
-                            row[column.accessor]
-                              ? onClickOpenNote?.(row.Id)
-                              : null;
-                          }}
+                          // onClick={() => {
+                          //   row[column.accessor]
+                          //     ? onClickOpenNote?.(row.Id)
+                          //     : null;
+                          // }}
                         >
-                          {row[column.accessor]}{" "}
+                          {row[column.accessor]}
+                        </div>
+                      ) : column.type === ETableColumnType.NUMBER ? (
+                        <div
+                          className="text-note "
+                          style={{
+                            padding: row[column.accessor] === "" ? "20px" : "",
+                          }}
+                          // onClick={() => {
+                          //   row[column.accessor]
+                          //     ? onClickOpenNote?.(row.Id)
+                          //     : null;
+                          // }}
+                        >
+                          {formatCurrency(row[column.accessor])}
                         </div>
                       ) : column.type === ETableColumnType.TEXT_QUILL ? (
                         <div

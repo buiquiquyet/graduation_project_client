@@ -11,8 +11,9 @@ import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { Link } from "react-router-dom";
 import config from "@/shared/ultils/config";
 import "./SlideHome.scss";
-import { formatCurrency } from "@/shared/user-const";
+import { formatCurrency, getImgCommon } from "@/shared/user-const";
 import { ProjectFundFields } from "../../project-admin-management/constants/Project-fund.interface";
+import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
 // Example public URL
 
 const SlideHomeComponent = () => {
@@ -45,32 +46,38 @@ const SlideHomeComponent = () => {
               <div className="cause-entry">
                 <div className="image-item">
                   <Link
-                    to={""}
+                    to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}/${
+                      slide?.[ProjectFundFields.ID]
+                    }`}
                     className="img"
                     style={{
-                      backgroundImage: `url(${
-                        config.FILE_URL + slide?.[ProjectFundFields.IMAGES][0]
-                      })`,
+                      backgroundImage: `url(${getImgCommon(
+                        slide?.[ProjectFundFields.IMAGES][0]
+                      )})`,
                     }}
                   />
                   <div className="image-fund">
                     <img
-                      src={
-                        config.FILE_URL + slide?.[ProjectFundFields.IMAGES][0]
-                      }
+                      src={getImgCommon(slide?.[ProjectFundFields.IMAGES_FUND])}
                     />
                   </div>
                 </div>
                 <div className="text p-3 p-md-4">
                   <div className="mb-2 mt-2">
-                    <Link to={""} >
-                      <div className="mb-4 text-charity-fund">
+                    <Link
+                      to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}/${
+                        slide?.[ProjectFundFields.ID]
+                      }`}
+                    >
+                      <div className="mb-4 text-charity-fund w-100">
                         {slide?.[ProjectFundFields.FUND_NAME]}
                       </div>
                     </Link>
                   </div>
-                  <Link to={""}>
-                    <h3 className="text-project-fund">{slide?.[ProjectFundFields.NAME]}</h3>
+                  <Link to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}`}>
+                    <h3 className="text-project-fund w-100">
+                      {slide?.[ProjectFundFields.NAME]}
+                    </h3>
                   </Link>
                   <span className="donation-time mb-3 d-block"></span>
                   <div className="progress custom-progress-success">
@@ -85,7 +92,7 @@ const SlideHomeComponent = () => {
                       aria-valuemax={100}
                     />
                   </div>
-                  <span className="fund-raised d-block">
+                  <div className="fund-raised d-block w-100">
                     <span className="cost-slide">
                       {formatCurrency(
                         slide?.[ProjectFundFields.CURRENT_AMOUNT] ?? 0
@@ -96,7 +103,7 @@ const SlideHomeComponent = () => {
                       {" "}
                       {formatCurrency(slide?.[ProjectFundFields.TARGET_AMOUNT])}
                     </span>
-                  </span>
+                  </div>
                 </div>
               </div>
             </SwiperSlide>

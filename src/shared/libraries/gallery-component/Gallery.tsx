@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Modal from "react-modal";
 import "./Gallery.scss";
+import { getImgCommon } from "@/shared/user-const";
 // Đặt phần tử root cho modal
 Modal.setAppElement("#root");
 
@@ -104,7 +105,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
           )}
           {/* Ảnh được hiển thị ở giữa modal với kích thước cố định */}
           <img
-            src={imgSrcList[currentIndex]} // Hiển thị ảnh dựa trên chỉ số hiện tại
+            src={getImgCommon(imgSrcList[currentIndex])} // Hiển thị ảnh dựa trên chỉ số hiện tại
             alt={imgAlt}
             style={{
               width: "80vw",

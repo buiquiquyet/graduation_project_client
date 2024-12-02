@@ -28,7 +28,13 @@ export const convertToCommonOptions = (options: any[]) => {
 };
 // hàm lấy ảnh
 export const getImgCommon = (avatar: string) => {
+  return config.FILE_URL + avatar.replace(/\s/g, '%20');
+
+  return config.FILE_URL + encodeURI(avatar);
   return config.FILE_URL + avatar;
+
+  return `${JSON.stringify(config.FILE_URL + avatar)}`;
+  // return config.FILE_URL + encodeURIComponent(avatar);
 };
 // hàm convert date
 export const convertDate = (dateString: string) => {
@@ -89,7 +95,8 @@ export const mockFileData = (fileName: string) => {
   };
 };
 // chuyển đổi tiền tệ
-export const formatCurrency = (amount: number | string): string => {
+export const formatCurrency = (amount: number | string): string | number => {
+  if (!amount) return "0đ";
   // Chuyển số thành chuỗi
   let amountStr = amount.toString();
 

@@ -109,7 +109,7 @@ export default function ProjectFundList() {
         <div className="user-label">
           <h3 className="w-100">Các dự án</h3>
         </div>
-        <div>
+        <div className="w-100">
           <div className="w-100 mb-4 d-flex align-item-start tab-list-project-fund ">
             <h5
               className={`tab ${

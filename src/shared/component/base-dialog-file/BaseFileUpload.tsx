@@ -27,8 +27,6 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     // }));
     onChange(newFileList); // Gọi lại onChange để cập nhật file list từ bên ngoài
   };
-  console.log(fileList);
-  
   // Xử lý sự kiện xóa file
   const handleRemove = (file: any) => {
     // Khi xóa file, gọi lại onChange để cập nhật danh sách file mới

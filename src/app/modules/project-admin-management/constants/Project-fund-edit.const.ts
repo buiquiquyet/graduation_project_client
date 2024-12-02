@@ -30,6 +30,8 @@ export class ProjectFundEditConst {
       label: "Số tiền mục tiêu",
       value: ProjectFundFields.TARGET_AMOUNT,
       type: InputTypeEnum.INPUT,
+      typeInput: "number",
+      maxLength: 1000000000
     },
     {
       label: "Ngày bắt đầu",
@@ -43,7 +45,6 @@ export class ProjectFundEditConst {
       typeInput: "text",
       type: InputTypeEnum.DATE,
     },
-    
   ] as ItemLibSwitchInput[];
   // // mảng thông tin dự án
   // public static readonly arrProjectFundInfoV2 = [

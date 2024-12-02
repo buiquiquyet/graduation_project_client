@@ -3,6 +3,11 @@
     font-weight: bold;
     font-size: 16px;
     color: #5c5c5c;
+    word-wrap: break-word; /* Có thể không cần thiết cho trường hợp này */
+    width: 120px; /* Chiều rộng cố định */
+    overflow: hidden; /* Ẩn nội dung tràn ra */
+    text-overflow: ellipsis; /* Hiển thị dấu ... */
+    white-space: nowrap; /* Không cho phép xuống dòng */
   }
   .text-project-fund {
     cursor: pointer;
@@ -14,12 +19,17 @@
   .cost-slide {
     font-size: 18px;
     color: #f86f2d;
+    word-wrap: break-word; /* Có thể không cần thiết cho trường hợp này */
+    width: 120px; /* Chiều rộng cố định */
+    overflow: hidden; /* Ẩn nội dung tràn ra */
+    text-overflow: ellipsis; /* Hiển thị dấu ... */
+    white-space: nowrap; /* Không cho phép xuống dòng */
   }
   .image-item {
     // position: relative;
     .image-fund {
       position: absolute;
-      top: 48%;
+      top: 44%;
       left: 46px;
       img {
         width: 50px;
@@ -28,5 +38,14 @@
         box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
       }
     }
+  }
+  .fund-raised {
+    width: 100%;
+    word-wrap: break-word; /* Có thể không cần thiết cho trường hợp này */
+    width: 120px; /* Chiều rộng cố định */
+    overflow: hidden; /* Ẩn nội dung tràn ra */
+    text-overflow: ellipsis; /* Hiển thị dấu ... */
+    white-space: nowrap; /* Không cho phép xuống dòng */
+    padding-block: 20px; /* Khoảng cách trên dưới */
   }
 }

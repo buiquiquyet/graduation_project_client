@@ -1,7 +1,7 @@
 
 
 export enum ProjectFundFields{
-  ID = "id",
+  ID = "Id",
   FUND_ID = "idFund", // id của quỹ
   FUND_NAME = "nameFund", // tên của quỹ
   CATEGORY_ID = "idCategory", // id của danh mục
@@ -15,7 +15,10 @@ export enum ProjectFundFields{
   START_DATE = "startDate", // ngày bắt đầu
   END_DATE = "endDate", // ngày kết thúc
   UPDATE_AT = "updatedAt",
+  //== 
   PERCENT = "percent", // phần trăm tiền
+  IMAGES_FUND = "imageFund", // ảnh chiến dịch
+
 }
 
 export interface ProjectFundDTO {

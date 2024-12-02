@@ -12,6 +12,7 @@ export enum EHeaderTab {
     PROJECT_FUND, // trang admin tạo bài đăng
     CHARITY_FUND, // trang các quỹ đầu tư
     CATEGORY, // danh mục loại từ thiện vd: trẻ enm, ý tế
+    PROJECT_FUND_DETAIL, // danh mục loại từ thiện vd: trẻ enm, ý tế
 }
 export enum EHeaderTabText {
     HOME = "Trang chủ", // trang chủ
@@ -44,4 +45,5 @@ export enum EHeaderTabKey {
     PROJECT_FUND = "project-fund",
     CHARITY_FUND = "charity-fund",
     CATEGORY = "category",
+    PROJECT_FUND_DETAIL = "project-fund-detail",
 }
