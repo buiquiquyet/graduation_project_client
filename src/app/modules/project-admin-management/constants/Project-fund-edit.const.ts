@@ -21,6 +21,12 @@ export class ProjectFundEditConst {
       // maxLength: 12
     },
     {
+      label: "Danh mục",
+      value: ProjectFundFields.CATEGORY_ID,
+      type: InputTypeEnum.INPUT_DROPDOWN,
+      // maxLength: 12
+    },
+    {
       label: "Số tiền mục tiêu",
       value: ProjectFundFields.TARGET_AMOUNT,
       type: InputTypeEnum.INPUT,

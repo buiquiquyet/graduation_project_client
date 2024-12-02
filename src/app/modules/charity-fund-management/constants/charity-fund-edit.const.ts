@@ -33,14 +33,14 @@ export class CharityFundEditConst {
       label: "Mô tả",
       value: CharityFundFields.DESCRIPTION,
       type: InputTypeEnum.TEXT_AREA,
-      maxLength: 300
+      // maxLength: 300
     },
     {
       label: "Địa chỉ",
       value: CharityFundFields.ADDRESS,
       typeInput: "text",
       type: InputTypeEnum.TEXT_AREA,
-      maxLength: 300
+      // maxLength: 300
     },
   ] as ItemLibSwitchInput[];
   

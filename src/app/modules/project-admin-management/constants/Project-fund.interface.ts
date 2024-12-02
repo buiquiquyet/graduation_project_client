@@ -14,7 +14,8 @@ export enum ProjectFundFields{
   CURRENT_AMOUNT = "currentAmount", // số tiền hiện tại
   START_DATE = "startDate", // ngày bắt đầu
   END_DATE = "endDate", // ngày kết thúc
-  UPDATE_AT = "updatedAt"
+  UPDATE_AT = "updatedAt",
+  PERCENT = "percent", // phần trăm tiền
 }
 
 export interface ProjectFundDTO {

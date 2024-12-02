@@ -24,6 +24,7 @@ import { getListCharityFundsForOptions } from "@/app/modules/charity-fund-manage
 import { Page } from "@/shared/ultils/Page";
 import {
   convertToCommonOptions,
+  mockFileData,
   updateOptionsFormInputs,
 } from "@/shared/user-const";
 import {
@@ -37,6 +38,7 @@ import {
   addIsEditProjectFund,
   addIsSubmitSuccessProjectFund,
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
+import { getListCategorys } from "@/app/modules/category-management/services/Category.services";
 export default function ProjectFundEdit() {
   // check useContext
   const { setLoading } = useContextCommon();
@@ -55,6 +57,7 @@ export default function ProjectFundEdit() {
     return {
       [ProjectFundFields.NAME]: data?.[ProjectFundFields.NAME] ?? "",
       [ProjectFundFields.FUND_ID]: data?.[ProjectFundFields.FUND_ID] ?? "",
+      [ProjectFundFields.CATEGORY_ID]: data?.[ProjectFundFields.CATEGORY_ID] ?? "",
       [ProjectFundFields.TARGET_AMOUNT]:
         data?.[ProjectFundFields.TARGET_AMOUNT] ?? "",
       [ProjectFundFields.START_DATE]:
@@ -128,13 +131,15 @@ export default function ProjectFundEdit() {
     const res: any = await getProjectFund(idFund);
     setLoading(false);
     if (res) {
-      formik.setValues(handleGetInfoUser(res?.data?.data));
-      setListFileNames(res?.data?.data?.[ProjectFundFields.IMAGES]); // SET LẠI FILE IMAGE
-      setContent(res?.data?.data?.[ProjectFundFields.DESCRIPTION]); // set lại content mô tả dự án
+      const data = res?.data?.data
+      formik.setValues(handleGetInfoUser(data));
+      const fileListRes = data?.[ProjectFundFields.IMAGES]?.map((fileName: string) => mockFileData(fileName))
+      setListFileNames(fileListRes); // SET LẠI FILE IMAGE
+      setContent(data?.[ProjectFundFields.DESCRIPTION]); // set lại content mô tả dự án
     }
   };
   //==== Lấy option của list dự án
-  const handleCallListProjectFund = async () => {
+  const handleCallListCharityFund = async () => {
     let page: Page = new Page();
     page = { ...page, pageSize: 9999 };
     setLoading(true);
@@ -145,6 +150,23 @@ export default function ProjectFundEdit() {
         updateOptionsFormInputs(
           prevState,
           ProjectFundFields.FUND_ID,
+          convertToCommonOptions(res?.data?.datas)
+        )
+      );
+    }
+  };
+  //==== Lấy option của list danh mục
+  const handleCallListCategory = async () => {
+    let page: Page = new Page();
+    page = { ...page, pageSize: 9999 };
+    setLoading(true);
+    const res: any = await getListCategorys(page);
+    setLoading(false);
+    if (handleResponseInterceptor(res, false)) {
+      setFormInputsProjectFund((prevState) =>
+        updateOptionsFormInputs(
+          prevState,
+          ProjectFundFields.CATEGORY_ID,
           convertToCommonOptions(res?.data?.datas)
         )
       );
@@ -171,7 +193,8 @@ export default function ProjectFundEdit() {
     }
   }, [reducerProjectFund]);
   useEffect(() => {
-    handleCallListProjectFund();
+    handleCallListCharityFund();
+    handleCallListCategory();
   }, []);
   return (
     <form onSubmit={formik.handleSubmit} className=" user-inputs w-100 ">

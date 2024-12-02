@@ -54,5 +54,48 @@ export const convertDate = (dateString: string) => {
     return `${day}/${month}/${year}`; // Trả về định dạng "dd/mm/yyyy"
   }
 };
+// convert từ image vd .jpg sang định dạng file upload
+export const mockFileData = (fileName: string) => {
+  // Tạo UID duy nhất cho mỗi file (cải tiến để đảm bảo uniqueness)
+  const uid = `rc-upload-${Date.now()}-${Math.random()
+    .toString(36)
+    .substring(2)}`;
+  const now = new Date();
 
+  // Giả lập kích thước file ngẫu nhiên (50,000 đến 150,000 bytes)
+  const size = Math.floor(Math.random() * 100000) + 50000;
 
+  // Tạo một Blob trống (nội dung của file)
+  const fileContent = new Blob([], { type: "image/jpeg" });
+
+  // Tạo một đối tượng File từ Blob
+  const originFileObj = new File([fileContent], fileName, {
+    type: "image/jpeg",
+    lastModified: now.getTime(),
+  });
+
+  // Trả về đối tượng file giả lập với các thuộc tính
+  return {
+    uid: uid, // Gán uid duy nhất
+    lastModified: now.getTime(), // Thời gian lastModified
+    lastModifiedDate: now.toISOString(), // Chuyển thành ISO string
+    name: fileName, // Tên file
+    size: size, // Kích thước giả lập
+    type: "image/jpeg", // Loại file giả lập
+    percent: 0, // Tỷ lệ tải lên (0% khi mới bắt đầu)
+    originFileObj: originFileObj, // Tạo file từ Blob
+    status: "uploading", // Trạng thái tải lên
+    url: `${config.FILE_URL}${fileName}`, // Đường dẫn giả lập
+  };
+};
+// chuyển đổi tiền tệ
+export const formatCurrency = (amount: number | string): string => {
+  // Chuyển số thành chuỗi
+  let amountStr = amount.toString();
+
+  // Sử dụng biểu thức chính quy để thêm dấu chấm phân cách hàng nghìn
+  amountStr = amountStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // Thêm ký hiệu "đ" vào cuối chuỗi
+  return amountStr + "đ";
+};

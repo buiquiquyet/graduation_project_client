@@ -1,6 +1,6 @@
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import "./Home.scss";
-import SlideHome from "../slide-management/SlideHome";
+import SlideHomeComponent from "../slide-management/SlideHome";
 import { MyContext } from "@/App";
 import { useContext, useEffect, useState } from "react";
 // import * as ApiServiceHome from "../services/Home.service";
@@ -168,7 +168,7 @@ function HomeComponent() {
           </LazyLoadComponent>
           {/* slide */}
           <LazyLoadComponent>
-            <SlideHome />
+            <SlideHomeComponent />
           </LazyLoadComponent>
         </div>
       </section>

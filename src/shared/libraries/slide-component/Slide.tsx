@@ -3,6 +3,7 @@ import "swiper/css"; // Import Swiper styles
 import "swiper/css/navigation"; // Import Swiper Navigation styles
 import "swiper/css/pagination"; // Import Swiper Pagination styles
 import { Autoplay, Pagination } from "swiper/modules";
+import { memo } from "react";
 
 // Example public URL
 interface PropsSlide {
@@ -17,7 +18,7 @@ const Slide: React.FC<PropsSlide> = ({ slidesPerView = 4, autoPlay = 2500, child
       slidesPerView={slidesPerView} // Show 4 slides at once
       pagination={{ clickable: true }} // Add pagination
       autoplay={{ delay: autoPlay, disableOnInteraction: false }} // Auto-slide with delay
-      loop // Enable infinite loop
+      // loop // Enable infinite loop
       modules={[Pagination, Autoplay]} // Include necessary modules
       className="carousel-cause"
       breakpoints={{
@@ -48,4 +49,4 @@ const Slide: React.FC<PropsSlide> = ({ slidesPerView = 4, autoPlay = 2500, child
   );
 };
 
-export default Slide;
+export default memo(Slide);

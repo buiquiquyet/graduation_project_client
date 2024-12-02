@@ -16,6 +16,11 @@ export class ProjectFundListConst {
       type: ETableColumnType.NOTE,
     },
     {
+      label: "DANH MỤC",
+      accessor: ProjectFundFields.CATEGORY_NAME,
+      type: ETableColumnType.NOTE,
+    },
+    {
       label: "SỐ TIỀN MỤC TIÊU",
       accessor: ProjectFundFields.TARGET_AMOUNT,
       type: ETableColumnType.NOTE,
