@@ -4,7 +4,7 @@ interface BaseDialogProps {
   onClickHideDialog?: () => void;
   label?: string,
   children?: any;
-  style?: any
+  style?: React.CSSProperties
 }
 function BaseDialog({ onClickHideDialog, children, label, style }: BaseDialogProps) {
   return (

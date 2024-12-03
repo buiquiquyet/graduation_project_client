@@ -16,7 +16,8 @@ export interface ItemLibSwitchInput {
   options?: any[];
   maxLength?: number,
   min?: number,
-  max?: number
+  max?: number,
+  style?: React.CSSProperties
 }
 // base table
 export interface ColumnFields {

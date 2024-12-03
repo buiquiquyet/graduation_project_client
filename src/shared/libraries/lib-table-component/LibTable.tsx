@@ -17,7 +17,7 @@ import BaseOptionSettings from "./base-options-setting/BaseOptionSetting";
 import { MyContext } from "@/App";
 import config from "@/shared/ultils/config";
 import ImageModal from "../gallery-component/Gallery";
-import { convertDate, formatCurrency, getImgCommon } from "@/shared/user-const";
+import { convertDate, formatCurrency } from "@/shared/user-const";
 
 interface PropsTable {
   columns: any[];

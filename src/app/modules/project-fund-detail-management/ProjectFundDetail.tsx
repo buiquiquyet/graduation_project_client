@@ -11,6 +11,7 @@ import { ProjectFundFields } from "../project-admin-management/constants/Project
 import { formatCurrency, getImgCommon } from "@/shared/user-const";
 import { ButtonColor } from "@/shared/constants/button.const";
 import ImageModal from "@/shared/libraries/gallery-component/Gallery";
+import ProjectFundDialogDonate from "./pages/ProjecFundDialogDonate/ProjectFundDialogDonate";
 const ProjectFundDetailComponent = () => {
   const context = useContext(MyContext);
   if (!context) {
@@ -19,6 +20,7 @@ const ProjectFundDetailComponent = () => {
   const { setLoading } = useContextCommon();
   const { projectFundId } = useParams();
   const [dataDetail, setDataDetail] = useState<any>(); // dữ liệu detail
+  const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false); // open dialog từ thiện
   const [fileRes, setFileRes] = useState<any>(); // dữ liệu detail file
   const handleCallApiProjectFundDetail = async (projectFundId: string) => {
     setLoading(true);
@@ -33,6 +35,10 @@ const ProjectFundDetailComponent = () => {
   // set fileName
   const handleChangeFileRes = (fileName: string) => {
     setFileRes(fileName);
+  };
+  // show dialog donate
+  const onClickDialogDonate = () => {
+    setIsOpenDialog(!isOpenDialog);
   };
   useEffect(() => {
     if (projectFundId) {
@@ -63,7 +69,7 @@ const ProjectFundDetailComponent = () => {
                           <div
                             key={index}
                             className="image-item"
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer", width: "25%" }}
                             onClick={() =>
                               handleChangeFileRes(
                                 dataDetail?.[ProjectFundFields.IMAGES][index]
@@ -144,14 +150,18 @@ const ProjectFundDetailComponent = () => {
                     style={{ gap: "10px" }}
                   >
                     <div className="d-flex align-items-center">
-                      VNĐ{" "}
+                      <span>VNĐ</span>
                       <Input
                         style={{ marginLeft: "6px", width: "180px" }}
                         maxLength={10}
                         type="number"
                       />
                     </div>
-                    <BaseButton color={ButtonColor.Error} title="Ủng hộ ngay" />
+                    <BaseButton
+                      color={ButtonColor.Error}
+                      onClick={onClickDialogDonate}
+                      title="Ủng hộ ngay"
+                    />
                     <BaseButton title="Trở thành sứ giả" />
                   </div>
                 </div>
@@ -159,6 +169,12 @@ const ProjectFundDetailComponent = () => {
             )}
           </div>
         </div>
+      {isOpenDialog && (
+        <ProjectFundDialogDonate
+          onClickDialogDonate={onClickDialogDonate}
+          isOpenDialog={isOpenDialog}
+        />
+      )}
       </div>
     </div>
   );

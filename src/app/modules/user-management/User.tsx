@@ -37,7 +37,7 @@ export default function UserComponent() {
   // render hình ảnh avatar
   const getAvatarUser = (dataUser: any) => {
     if (dataUser?.[UserFields?.AVATAR]) {
-      return getImgCommon(dataUser?.[UserFields?.AVATAR]);
+      return dataUser?.[UserFields?.AVATAR];
     }
     return publicUrl + "/images/avatar.png";
   };
@@ -53,7 +53,7 @@ export default function UserComponent() {
         formData
       );
       if (handleResponseInterceptor(res)) {
-        handleIsHidenDialogFile()
+        handleIsHidenDialogFile();
         const token = localStorage.getItem("token");
         if (token) {
           const res: any = await validateToken(token);
@@ -63,7 +63,6 @@ export default function UserComponent() {
             return;
           } else {
             setDataUser(null);
-            
           }
           return;
         }
@@ -76,7 +75,9 @@ export default function UserComponent() {
         <div className="user-avatar">
           <div
             style={{
-              backgroundImage: `url(${JSON.stringify(getAvatarUser(dataUser))})`,
+              backgroundImage: `url(${
+                getImgCommon(getAvatarUser(dataUser))
+              })`,
             }}
             className="user-head"
           >
