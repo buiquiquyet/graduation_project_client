@@ -1,6 +1,8 @@
 import { MyContext } from "@/App";
 import { useContext } from "react";
 import { DonateConst } from "./constants/Donate.const";
+import { createPayment, getPayment } from "./services/Donate.service";
+import BaseButton from "@/shared/component/base-button/BaseButton";
 
 function DonateComponent() {
   const context = useContext(MyContext);
@@ -8,10 +10,43 @@ function DonateComponent() {
     return null;
   }
   const { publicUrl } = context;
+  const handleCallApiCreatePayment = async () => {
+    const orderInfo = {
+      "FullName": "215215215215",
+      "UserId": "11",
+      "OrderId": "124214215125",
+      "OrderInfo": "125125215125125215",
+      "Amount": "1000000"
+    }
+    const res: any = await createPayment(orderInfo)
+    const data = res?.data?.data
+    if(data?.response) {
+
+      window.location.href = data?.response?.PayUrl;
+    }
+  }
+  const handleCallApiGetPayment = async () => {
+    
+    const res: any = await getPayment("1", "2", "3")
+    if(res) {
+      // window.location.href = res?.data?.data;
+    }
+  }
   return (
     <>
       <section className="ftco-section bg-light">
-        <div className="container">
+
+
+        <div>
+          <BaseButton onClick={handleCallApiCreatePayment}/>
+        </div>
+        <div>
+          <BaseButton onClick={handleCallApiGetPayment}/>
+        </div>
+
+
+
+        {/* <div className="container">
           <div className="row">
             {Array(9)
               .fill(null)
@@ -73,9 +108,9 @@ function DonateComponent() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
-      <section
+      {/* <section
         className="ftco-section-3 img"
         style={{ backgroundImage: `url(${publicUrl + "images/bg_3.jpg);"})` }}
       >
@@ -128,7 +163,7 @@ function DonateComponent() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }
