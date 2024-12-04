@@ -11,15 +11,18 @@ import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyCompo
 import LibTable from "@/shared/libraries/lib-table-component/LibTable";
 import { ProjectFundContentAndListConst } from "../../constants/ProjectFundContentAndList.const";
 import LibCommentComponent from "@/shared/libraries/lib-comment-component/LibCommnet";
+import { UserFields } from "@/app/modules/user-management/constants/User.interface";
 interface ProjectFundContentAndListProps {
   idFund: string;
   projectFundDescription: string;
+  projectFundId: string | undefined;
 }
 const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
   idFund,
   projectFundDescription,
+  projectFundId,
 }) => {
-  const { setLoading } = useContextCommon();
+  const { setLoading, dataUser } = useContextCommon();
   const [dataDetailFund, setDataDetailFund] = useState<any>(); // dữ liệu detail quỹ
   const [activeTab, setActiveTab] = useState<ProjectFundContentAndListAcitve>(
     ProjectFundContentAndListAcitve.CONTENT
@@ -90,7 +93,10 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                     style={{ overflow: "hidden" }}
                   ></div>
                   <div>
-                    <LibCommentComponent />
+                    <LibCommentComponent
+                      userId={dataUser?.[UserFields.ID] ?? ""}
+                      projectFundId={projectFundId ?? ""}
+                    />
                   </div>
                 </div>
                 <div className="col-12 col-sm-12 col-md-12 col-lg-4 fund-content">

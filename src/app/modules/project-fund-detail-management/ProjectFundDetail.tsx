@@ -15,6 +15,7 @@ import ProjectFundDialogDonate from "./pages/ProjecFundDialogDonate/ProjectFundD
 import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
 import ProjectFundContentAndList from "./pages/ProjectFundContentAndList/ProjectFundContentAndList";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
+import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
 const ProjectFundDetailComponent = () => {
   const context = useContext(MyContext);
   if (!context) {
@@ -68,6 +69,7 @@ const ProjectFundDetailComponent = () => {
                           dataDetailProjectFund?.[ProjectFundFields.IMAGES] // Nếu là string, chuyển thành mảng với 1 phần tử
                         }
                       ></ImageModal>
+                      <LibCategoryAbsolute value={dataDetailProjectFund?.[ProjectFundFields.CATEGORY_NAME]}/>
                     </div>
                     <div className="mt-3 d-flex w-100 justify-content-between">
                       {dataDetailProjectFund?.[ProjectFundFields.IMAGES]
@@ -172,24 +174,28 @@ const ProjectFundDetailComponent = () => {
                         </span>
                       </div>
                     </div>
-                    <div
-                      className="d-flex justify-content-between"
-                      style={{ gap: "10px" }}
-                    >
-                      <div className="d-flex align-items-center">
-                        <span>VNĐ</span>
-                        <Input
-                          style={{ marginLeft: "6px", width: "180px" }}
-                          maxLength={10}
-                          type="number"
-                        />
+                    <div className="container  " style={{ gap: "10px" }}>
+                      <div className="row justify-content-between align-items-center">
+                        <div className="d-flex align-items-center mt-2  col-12 col-sm-12 col-md-4 col-lg-4">
+                          {/* <span>VNĐ</span>
+                          <Input
+                            style={{ marginLeft: "6px", width: "200px" }}
+                            maxLength={10}
+                            type="number"
+                          /> */}
+                        </div>
+                        <div
+                          className="d-flex justify-content-end col-12 col-sm-12 col-md-12 col-lg-12 "
+                          style={{ gap: "10px" }}
+                        >
+                          <BaseButton
+                            color={ButtonColor.Error}
+                            onClick={onClickDialogDonate}
+                            title="Ủng hộ ngay"
+                          />
+                          <BaseButton title="Trở thành sứ giả" />
+                        </div>
                       </div>
-                      <BaseButton
-                        color={ButtonColor.Error}
-                        onClick={onClickDialogDonate}
-                        title="Ủng hộ ngay"
-                      />
-                      <BaseButton title="Trở thành sứ giả" />
                     </div>
                   </div>
                 </div>
@@ -202,6 +208,7 @@ const ProjectFundDetailComponent = () => {
               projectFundDescription={
                 dataDetailProjectFund?.[ProjectFundFields.DESCRIPTION]
               }
+              projectFundId={projectFundId}
             />
           )}
         </div>

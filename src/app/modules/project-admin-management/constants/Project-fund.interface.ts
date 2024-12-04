@@ -6,6 +6,7 @@ export enum ProjectFundFields{
   FUND_NAME = "nameFund", // tên của quỹ
   CATEGORY_ID = "idCategory", // id của danh mục
   CATEGORY_NAME = "nameCategory", // id của danh mục
+  EVALUATE = "evaluate", // lượt like
   NAME = "name", // tên chiến dịch
   IMAGES = "images", // ảnh chiến dịch
   IMAGES_IFORM_FILE = "imagesIFormFile", // ảnh chiến dịch
@@ -26,6 +27,7 @@ export interface ProjectFundDTO {
   [ProjectFundFields.FUND_ID]: string | null; // Id của quỹ từ thiện
   [ProjectFundFields.NAME]: string | null; // Tên dự án
   [ProjectFundFields.FUND_NAME]: string | null; // Tên quỹ
+  [ProjectFundFields.EVALUATE]?: number; // Tên quỹ
   [ProjectFundFields.IMAGES]: string | null; // Ảnh dự án
   [ProjectFundFields.DESCRIPTION]: string | null; // Mô tả dự án
   [ProjectFundFields.TARGET_AMOUNT]: number | null; // Số tiền cần quyên góp

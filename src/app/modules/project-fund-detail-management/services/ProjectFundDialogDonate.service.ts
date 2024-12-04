@@ -1,8 +1,7 @@
 import { customRequest } from "@/shared/ultils/request";
-import { ProjectFundDialogDonateDTO } from "../interfaces/ProjectFundDialogDonate.interface";
 
 const apiCommon = "payment";
-export const createPayment = async (body: ProjectFundDialogDonateDTO) => {
+export const createPayment = async (body: any) => {
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest(

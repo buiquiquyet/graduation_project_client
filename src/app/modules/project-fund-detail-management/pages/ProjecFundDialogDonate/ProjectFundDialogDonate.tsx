@@ -52,18 +52,17 @@ const ProjectFundDialogDonate: React.FC<ProjectFundDialogDonateProps> = ({
     validationSchema,
     onSubmit: async (values: any) => {
       const newValues = {
-        ...values,
-        [ProjectFundDialogDonateFields.PROJECT_FUND_ID]: projectFundId ?? "",
-        [ProjectFundDialogDonateFields.UserId]: dataUser?.[UserFields.ID] ?? "12421412",
-        OrderId: "12312"
+        [ProjectFundDialogDonateFields.PROJECT_FUND_ID]: projectFundId ?? "", 
+        [ProjectFundDialogDonateFields.USER_NAME]:
+          values?.[ProjectFundDialogDonateFields.USER_NAME] ?? "",
+        [ProjectFundDialogDonateFields.DONATION_AMOUNT]:
+          values?.[ProjectFundDialogDonateFields.DONATION_AMOUNT] ?? "",
+        [ProjectFundDialogDonateFields.UserId]: dataUser?.[UserFields.ID] ?? "",
       };
       await handleCallApiCreatePayment(newValues);
-      
     },
   }); // biến gán form submit
-  const handleCallApiCreatePayment = async (
-    values: ProjectFundDialogDonateDTO
-  ) => {
+  const handleCallApiCreatePayment = async (values: any) => {
     const res: any = await createPayment(values);
     const data = res?.data?.data;
     if (data?.response?.ErrorCode !== 0) {

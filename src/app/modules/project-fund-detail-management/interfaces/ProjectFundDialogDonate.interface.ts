@@ -4,7 +4,7 @@ export enum ProjectFundDialogDonateFields {
     USER_PHONE = "UserPhone",
     USER_ADDRESS = "UserAddress",
     DONATION_AMOUNT = "Amount",
-    PROJECT_FUND_ID = "ProjectFundId" ,// id của bản ghi từ thiện
+    PROJECT_FUND_ID = "OrderInfo" ,// id của bản ghi từ thiện
     UserId = "UserId", // id của người dùng nếu có
 }
 

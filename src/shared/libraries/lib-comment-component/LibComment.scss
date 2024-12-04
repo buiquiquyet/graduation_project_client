@@ -5,7 +5,49 @@
   margin-top: 20px;
   padding: 34px 24px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
- 
+  .content-comment {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+    .item-info {
+      padding: 10px 0px;
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .item-avatar {
+      img {
+        width: 46px;
+        height: 46px;
+        border-radius: 999px;
+      }
+    }
+    .item-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .item-name {
+      .item-name-text {
+        color: #f86f2d !important;
+        font-size: 18px;
+      }
+      .item-date {
+        color: #707070;
+        font-size: 13px;
+      }
+    }
+    .item-text {
+      span{
+        font-size: 15px;
+        color: black;
+        word-wrap: break-word;   /* Cho phép các từ dài xuống dòng */
+        overflow-wrap: break-word; /* Tương tự như word-wrap */
+        white-space: normal;     /* Đảm bảo văn bản có thể xuống dòng */
+        word-break: break-word; 
+      }
+    }
+  }
   .input-comment {
     width: 100%;
     img {
@@ -15,6 +57,9 @@
       border-radius: 999px;
     }
     .form-submit-comment {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
       .button-submit {
         text-align: end;
       }
