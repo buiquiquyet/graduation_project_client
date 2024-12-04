@@ -1,4 +1,4 @@
-import { EErrorCode, ESuccessCode } from "../enums/responseDataDTO.enum";
+import { EErrorCode, ESuccessCode, ResponseDTOKey } from "../enums/responseDataDTO.enum";
 import {
   ToastMessage,
   ToastStatus,
@@ -34,4 +34,9 @@ export function handleResponseInterceptor(
     return false;
   }
   return false;
+}
+// check response success
+export function handleCheckSuccessResponse(res: any) {
+  if(res?.data?.[EAxiosResponse.MESSAGE] === ResponseDTOKey.SUCCESS) return true 
+  return false
 }

@@ -16,16 +16,7 @@ export class ProjectFundDialogDonateConst {
         fontSize: '16px'
       },
     },
-    {
-      label: "Email",
-      value: ProjectFundDialogDonateFields.USER_EMAIL,
-      typeInput: "text",
-      type: InputTypeEnum.INPUT,
-      style: {
-        padding: "8px",
-        fontSize: '16px'
-      },
-    },
+   
     {
       label: "Số điện thoại",
       value: ProjectFundDialogDonateFields.USER_PHONE,
@@ -45,6 +36,16 @@ export class ProjectFundDialogDonateConst {
         fontSize: '16px'
       },
     },
+    {
+      label: "Lời nhắn",
+      value: ProjectFundDialogDonateFields.DECRIPTION,
+      typeInput: "text",
+      type: InputTypeEnum.INPUT,
+      style: {
+        padding: "8px",
+        fontSize: '16px'
+      },
+    }
   ] as ItemLibSwitchInput[];
   // 1 input
   public static readonly formInputDonateAmout = [

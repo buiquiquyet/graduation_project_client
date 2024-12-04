@@ -1,0 +1,23 @@
+.lib-comment {
+  border: 1px solid #f5f5f5;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+  padding: 34px 24px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+ 
+  .input-comment {
+    width: 100%;
+    img {
+      height: 46px;
+      width: 46px;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+    }
+    .form-submit-comment {
+      .button-submit {
+        text-align: end;
+      }
+    }
+  }
+}

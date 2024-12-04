@@ -9,26 +9,38 @@ import BaseButton from "@/shared/component/base-button/BaseButton";
 import { ButtonColor } from "@/shared/constants/button.const";
 import { ProjectFundDialogDonateConst } from "../../constants/ProjectFundDialogDonate.const";
 import LibSwitchInput from "@/shared/libraries/lib-switch-input-component/libSwitchInput";
-import { Input } from "antd";
-import './ProjectFundDialogDonate.scss'
+import "./ProjectFundDialogDonate.scss";
+import { createPayment } from "../../services/ProjectFundDialogDonate.service";
+import {
+  ToastMessage,
+  ToastStatus,
+} from "@/shared/libraries/message-log-component/MessageLog";
+import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
+import { UserFields } from "@/app/modules/user-management/constants/User.interface";
 interface ProjectFundDialogDonateProps {
   isOpenDialog: boolean;
   onClickDialogDonate: () => void;
+  projectFundId: string | undefined;
 }
 const ProjectFundDialogDonate: React.FC<ProjectFundDialogDonateProps> = ({
   isOpenDialog,
   onClickDialogDonate,
+  projectFundId,
 }) => {
+  const { dataUser } = useContextCommon();
+
   const formInputsInfoDonate: any[] =
     ProjectFundDialogDonateConst.formInputDonate; // form input donate
-    const formInputsInfoDonateAmout =  ProjectFundDialogDonateConst.formInputDonateAmout; // form input donate amount
+  const formInputsInfoDonateAmout =
+    ProjectFundDialogDonateConst.formInputDonateAmout; // form input donate amount
+
   const handleGetInfoDonate = () => {
     return {
-      [ProjectFundDialogDonateFields.USER_NAME]: "",
-      [ProjectFundDialogDonateFields.USER_EMAIL]: "",
-      [ProjectFundDialogDonateFields.USER_PHONE]: "",
-      [ProjectFundDialogDonateFields.USER_ADDRESS]: "",
-      [ProjectFundDialogDonateFields.DONATION_AMOUNT]: "",
+      [ProjectFundDialogDonateFields.USER_NAME]: "123123",
+      [ProjectFundDialogDonateFields.DECRIPTION]: "123123",
+      [ProjectFundDialogDonateFields.USER_PHONE]: "123",
+      [ProjectFundDialogDonateFields.USER_ADDRESS]: "1123",
+      [ProjectFundDialogDonateFields.DONATION_AMOUNT]: "10000",
     };
   };
 
@@ -39,16 +51,27 @@ const ProjectFundDialogDonate: React.FC<ProjectFundDialogDonateProps> = ({
     initialValues,
     validationSchema,
     onSubmit: async (values: any) => {
-      //   setLoading(true);
-      //   const res: any = await updateUser(dataUser?.[ProjectFundDialogDonateFields.ID] ?? "", {
-      //     ...(dataUser ?? {}),
-      //     ...values,
-      //   });
-      //   setLoading(false);
-      //   if (handleResponseInterceptor(res)) {
-      //   }
+      const newValues = {
+        ...values,
+        [ProjectFundDialogDonateFields.PROJECT_FUND_ID]: projectFundId ?? "",
+        [ProjectFundDialogDonateFields.UserId]: dataUser?.[UserFields.ID] ?? "12421412",
+        OrderId: "12312"
+      };
+      await handleCallApiCreatePayment(newValues);
+      
     },
   }); // biến gán form submit
+  const handleCallApiCreatePayment = async (
+    values: ProjectFundDialogDonateDTO
+  ) => {
+    const res: any = await createPayment(values);
+    const data = res?.data?.data;
+    if (data?.response?.ErrorCode !== 0) {
+      ToastMessage.show(ToastStatus.error, data?.response?.LocalMessage);
+    } else {
+      window.location.href = data?.response?.PayUrl;
+    }
+  };
   return (
     <div className="project-dialog-donate">
       {isOpenDialog && (
@@ -90,22 +113,24 @@ const ProjectFundDialogDonate: React.FC<ProjectFundDialogDonateProps> = ({
               {formInputsInfoDonateAmout &&
                 formInputsInfoDonateAmout.length > 0 &&
                 formInputsInfoDonateAmout.map((item, index) => (
-                  <div
-                    key={index}
-                  >
+                  <div key={index}>
                     <div className="">
                       <span style={{ fontSize: "16px" }}>{item?.label}</span>
                       <LibSwitchInput item={item} formik={formik} />
                     </div>
                   </div>
                 ))}
-             
             </div>
             <div className="w-100">
-              <BaseButton title="Ủng hộ" color={ButtonColor.Error} style={{width: '100%', padding: '10px'}} />
+              <BaseButton
+                title="Ủng hộ"
+                color={ButtonColor.Error}
+                style={{ width: "100%", padding: "10px" }}
+              />
             </div>
             <div className="clause">
-                Chúng tôi xác nhận là bạn đã đồng ý với <span>Điều khoản</span> của chúng tôi
+              Chúng tôi xác nhận là bạn đã đồng ý với <span>Điều khoản</span>{" "}
+              của chúng tôi
             </div>
           </form>
         </BaseDialog>
