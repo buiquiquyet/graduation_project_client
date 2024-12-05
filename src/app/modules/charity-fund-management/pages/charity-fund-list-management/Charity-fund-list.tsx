@@ -1,6 +1,6 @@
 import LibTable from "@/shared/libraries/lib-table-component/LibTable";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import {
@@ -21,7 +21,7 @@ import {
 import { InitCharityFund } from "@/shared/reducer/charity-fund-slice/InitCharityFundProps";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 
-export default function CharityFundList() {
+export default memo(function CharityFundList() {
   const { setLoading } = useContextCommon();
 
   const [dataCharityFunds, setDataCharityFunds] = useState<ApiResponseTable>({
@@ -88,13 +88,15 @@ export default function CharityFundList() {
           <h3 className="w-100">Các quỹ đầu tư</h3>
         </div>
         {columnTable?.length > 0 && (
-          <LibTable
-            columns={columnTable}
-            data={dataCharityFunds && dataCharityFunds.datas}
-            rowIdSelects={rowIdSelects}
-            setRowIdSelects={setRowIdSelects}
-            onRowClick={onRowClick}
-          />
+          <div className="w-100">
+            <LibTable
+              columns={columnTable}
+              data={dataCharityFunds && dataCharityFunds.datas}
+              rowIdSelects={rowIdSelects}
+              setRowIdSelects={setRowIdSelects}
+              onRowClick={onRowClick}
+            />
+          </div>
         )}
         <div>
           <BaseButton
@@ -106,4 +108,4 @@ export default function CharityFundList() {
       </div>
     </div>
   );
-}
+});

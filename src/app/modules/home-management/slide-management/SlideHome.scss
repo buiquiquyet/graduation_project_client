@@ -18,7 +18,7 @@
   }
   .cost-slide {
     font-size: 18px;
-    color: #f86f2d;
+    
     word-wrap: break-word; /* Có thể không cần thiết cho trường hợp này */
     width: 120px; /* Chiều rộng cố định */
     overflow: hidden; /* Ẩn nội dung tràn ra */
@@ -29,7 +29,7 @@
     // position: relative;
     .image-fund {
       position: absolute;
-      top: 44%;
+      top: 42%;
       left: 46px;
       img {
         width: 50px;

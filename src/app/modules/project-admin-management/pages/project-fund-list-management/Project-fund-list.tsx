@@ -1,6 +1,6 @@
 import LibTable from "@/shared/libraries/lib-table-component/LibTable";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import {
@@ -14,19 +14,19 @@ import BaseButton from "@/shared/component/base-button/BaseButton";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducerProjectFund } from "@/shared/redux/selector";
 
-import { handleResponseInterceptor } from "@/shared/constants/base.constants";
+import {
+  handleCheckSuccessResponse,
+  handleResponseInterceptor,
+} from "@/shared/constants/base.constants";
 import { InitProjectFund } from "@/shared/reducer/project-fund-slice/InitProjectFundProps";
 import {
   addIdRowProjectFund,
   addIsDelSuccessProjectFund,
   addIsEditProjectFund,
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
-import {
-  FilterTabList,
-  TabListProjectFund,
-} from "../../constants/Project-fund.enum";
+import { TabListProjectFund } from "../../constants/Project-fund.enum";
 
-export default function ProjectFundList() {
+export default memo(function ProjectFundList() {
   const { setLoading } = useContextCommon();
   const page: Page = new Page();
   const [dataProjectFunds, setDataProjectFunds] = useState<ApiResponseTable>({
@@ -36,28 +36,34 @@ export default function ProjectFundList() {
     totalPages: 0,
     totalRecords: 0,
   }); // data trả về
-  const [filterTabList, setFilterTabList] = useState<FilterTabList>(
-    FilterTabList.IN_PROCESSING
-  ); // tab list đang active
+
   const reducerProjectFund = useSelector(ReducerProjectFund); // redux dự án
   const dispatch = useDispatch(); // action redux
 
   const [rowIdSelects, setRowIdSelects] = useState<string[]>([]); // mảng id khi checkbox
   const [rowId, setRowId] = useState<string>(""); // id khi click vào 1 row
-  const [tabList, setTabList] = useState<string>(
+  const [tabList, setTabList] = useState<TabListProjectFund>(
     TabListProjectFund.IN_PROCESSING
   ); // tab đang diễn ra và đã kết thúc
   const columnTable = ProjectFundListConst.columnProjectFund; // column table
   // call api get list dự án
   const handleCallApiProjectFundsList = async (
     page: Page,
-    filterTabList: FilterTabList
+    filterTabList: TabListProjectFund
   ) => {
     setLoading(true);
     const res: any = await getListProjectFunds(page, filterTabList);
     setLoading(false);
-    if (res) {
+    if (handleCheckSuccessResponse(res)) {
       setDataProjectFunds(res?.data);
+    } else {
+      setDataProjectFunds({
+        currentPage: 1,
+        datas: [],
+        message: "",
+        totalPages: 0,
+        totalRecords: 0,
+      });
     }
   };
   // call api xóa dự án
@@ -73,7 +79,7 @@ export default function ProjectFundList() {
         ) {
           dispatch(addIsDelSuccessProjectFund(true));
         } else {
-          handleCallApiProjectFundsList(page, filterTabList);
+          handleCallApiProjectFundsList(page, tabList);
         }
 
         setRowIdSelects([]);
@@ -89,17 +95,13 @@ export default function ProjectFundList() {
     }
   };
   // thay đổi tab list
-  const handleChangeTabList = (
-    tabList: TabListProjectFund,
-    filterTabList: FilterTabList
-  ) => {
-    setFilterTabList(filterTabList); // set filter list
+  const handleChangeTabList = (tabList: TabListProjectFund) => {
     setTabList(tabList); // set thay đổi tab list
-    handleCallApiProjectFundsList(page, filterTabList); // gọi api khi thay đổi tab list
+    handleCallApiProjectFundsList(page, tabList); // gọi api khi thay đổi tab list
   };
   useEffect(() => {
     if (!rowId || !reducerProjectFund?.[InitProjectFund.ID_ROW]) {
-      handleCallApiProjectFundsList(page, filterTabList);
+      handleCallApiProjectFundsList(page, tabList);
     }
   }, [reducerProjectFund]);
 
@@ -116,10 +118,7 @@ export default function ProjectFundList() {
                 tabList === TabListProjectFund.IN_PROCESSING ? "active-tab" : ""
               }`}
               onClick={() =>
-                handleChangeTabList(
-                  TabListProjectFund.IN_PROCESSING,
-                  FilterTabList.IN_PROCESSING
-                )
+                handleChangeTabList(TabListProjectFund.IN_PROCESSING)
               }
             >
               Đang diễn ra
@@ -128,12 +127,7 @@ export default function ProjectFundList() {
               className={`tab ${
                 tabList === TabListProjectFund.ENDED ? "active-tab" : ""
               }`}
-              onClick={() =>
-                handleChangeTabList(
-                  TabListProjectFund.ENDED,
-                  FilterTabList.ENDED
-                )
-              }
+              onClick={() => handleChangeTabList(TabListProjectFund.ENDED)}
             >
               Đã kết thúc
             </h5>
@@ -160,4 +154,4 @@ export default function ProjectFundList() {
       </div>
     </div>
   );
-}
+});

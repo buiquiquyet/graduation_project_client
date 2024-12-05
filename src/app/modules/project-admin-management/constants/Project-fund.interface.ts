@@ -19,6 +19,7 @@ export enum ProjectFundFields{
   //== 
   PERCENT = "percent", // phần trăm tiền
   IMAGES_FUND = "imageFund", // ảnh chiến dịch
+  NUMBER_OF_DONATE = "numberOfDonate", // số người ủng hộ
 
 }
 

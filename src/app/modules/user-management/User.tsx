@@ -1,6 +1,6 @@
 import { MyContext } from "@/App";
 import "./User.scss";
-import { useContext, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { UserFields } from "./constants/User.interface";
 import UserEdit from "./pages/user-edit-management/User-edit";
@@ -10,7 +10,7 @@ import { getImgCommon } from "@/shared/user-const";
 import ImageModal from "@/shared/libraries/gallery-component/Gallery";
 import { updateAvatarUser, validateToken } from "./services/User.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
-export default function UserComponent() {
+export default memo(function UserComponent() {
   const context = useContext(MyContext);
   if (!context) {
     return null;
@@ -109,4 +109,4 @@ export default function UserComponent() {
       </div>
     </div>
   );
-}
+})

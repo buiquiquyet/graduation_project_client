@@ -2,7 +2,7 @@ import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyCompo
 import "./Home.scss";
 import SlideHomeComponent from "../slide-management/SlideHome";
 import { MyContext } from "@/App";
-import { useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 // import * as ApiServiceHome from "../services/Home.service";
 import { Link } from "react-router-dom";
 import { CountChildWorld } from "../constants/Home.enum";
@@ -158,11 +158,8 @@ function HomeComponent() {
           <LazyLoadComponent>
             <div className="row justify-content-center mb-5 pb-3">
               <div className="col-md-5 heading-section  text-center">
-                <h2 className="mb-4">NGUYÊN NHÂN</h2>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia and Consonantia, there live the blind texts.
-                </p>
+                <h2 className="mb-4">Các dự án đang gây quỹ</h2>
+                <h5>Hãy lựa chọn đồng hành cùng dự án mà bạn quan tâm</h5>
               </div>
             </div>
           </LazyLoadComponent>
@@ -292,4 +289,4 @@ function HomeComponent() {
   );
 }
 
-export default HomeComponent;
+export default memo(HomeComponent);

@@ -1,4 +1,8 @@
-import { EErrorCode, ESuccessCode, ResponseDTOKey } from "../enums/responseDataDTO.enum";
+import {
+  EErrorCode,
+  ESuccessCode,
+  ResponseDTOKey,
+} from "../enums/responseDataDTO.enum";
 import {
   ToastMessage,
   ToastStatus,
@@ -21,22 +25,30 @@ export function handleResponseInterceptor(
   ) {
     if ((message && isToatMessage) || messRes) {
       let newMessage = message ?? messRes;
-      isToastMessage ? ToastMessage.show(ToastStatus.success, newMessage) : null;
+      isToastMessage
+        ? ToastMessage.show(ToastStatus.success, newMessage)
+        : null;
     }
     return true;
   } else if (response?.[EAxiosResponse.STATUS] in EErrorCode) {
-    isToastMessage ? ToastMessage.show(
-      ToastStatus.error,
-      response?.[EAxiosResponse.DATA]?.message ??
-        response?.[EAxiosResponse.MESSAGE] ??
-        response?.[EAxiosResponse.DATA]?.error
-    ) : null;
+    isToastMessage
+      ? ToastMessage.show(
+          ToastStatus.error,
+          response?.[EAxiosResponse.DATA]?.message ??
+            response?.[EAxiosResponse.MESSAGE] ??
+            response?.[EAxiosResponse.DATA]?.error
+        )
+      : null;
     return false;
   }
   return false;
 }
 // check response success
 export function handleCheckSuccessResponse(res: any) {
-  if(res?.data?.[EAxiosResponse.MESSAGE] === ResponseDTOKey.SUCCESS) return true 
-  return false
+  if (
+    res?.data?.[EAxiosResponse.MESSAGE] === ResponseDTOKey.SUCCESS ||
+    res?.data?.[EAxiosResponse.MESSAGE] === ResponseDTOKey.SUCCESS_V2
+  )
+    return true;
+  return false;
 }

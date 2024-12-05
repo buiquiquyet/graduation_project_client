@@ -1,111 +1,94 @@
-import { MyContext } from "@/App";
+import { ProjectFundDialogDonateFields } from "@/app/modules/project-fund-detail-management/interfaces/ProjectFundDialogDonate.interface";
+import { getTop3Donors } from "@/app/modules/project-fund-detail-management/services/ProjectFundContentAndList.service";
+import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
+import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { formatCurrency, getImgCommon } from "@/shared/user-const";
+import { memo, useEffect, useState } from "react";
 
-export default function LastestDonate() {
-  const context = useContext(MyContext);
-  if (!context) {
-    return null;
-  }
-  const { publicUrl } = context;
+function LastestDonate() {
+  const { setLoading } = useContextCommon();
+
+  const [data3Donors, setData3Donors] = useState([]); // list 3 người donate nhiều nhất
+  const handleCallApiGetTop3Donors = async () => {
+    setLoading(true);
+    const res: any = await getTop3Donors();
+    setLoading(false);
+    if (handleCheckSuccessResponse(res)) {
+      let datas = res?.data?.data?.topDonors
+      setData3Donors(datas);
+    }
+  };
+  useEffect(() => {
+    handleCallApiGetTop3Donors();
+  }, []);
+
   return (
-    <section className="ftco-section">
-        <div className="container">
-          <LazyLoadComponent>
-            <div className="row justify-content-center mb-5 pb-3">
-              <div className="col-md-7 heading-section  text-center">
-                <h2 className="mb-4">QUYÊN GÓP NHIỀU NHẤT</h2>
-                <p>
-                  Khi ta giúp đỡ người khác, ta cũng đang giúp chính mình trở
-                  nên giàu có hơn về tinh thần.
-                </p>
-              </div>
-            </div>
-          </LazyLoadComponent>
-          <LazyLoadComponent>
-            <div className="row">
-              <div className="col-lg-4 d-flex mb-sm-4 ">
-                <div className="staff">
-                  <div className="d-flex mb-4">
-                    <div
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/person_1.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="info ml-4">
-                      <h3>
-                        <Link to={""}>Ivan Jacobson</Link>
-                      </h3>
-                      <span className="position">Donated Just now</span>
-                      <div className="text">
-                        <p>
-                          Donated <span>$300</span> for{" "}
-                          <Link to={""}>Children Needs Food</Link>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+    <>
+      {data3Donors?.length > 0 && (
+        <section className="ftco-section">
+          <div className="container">
+            <LazyLoadComponent>
+              <div className="row justify-content-center mb-5 pb-3 d-flex">
+                <div className="col-md-7 heading-section  text-center">
+                  <h2 className="mb-4">QUYÊN GÓP NHIỀU NHẤT</h2>
+                  <h5>
+                    Khi ta giúp đỡ người khác, ta cũng đang giúp chính mình trở
+                    nên giàu có hơn về tinh thần.
+                  </h5>
                 </div>
               </div>
-              <div className="col-lg-4 d-flex mb-sm-4 ">
-                <div className="staff">
-                  <div className="d-flex mb-4">
+            </LazyLoadComponent>
+            <LazyLoadComponent>
+              <div className="container">
+                <div className="row d-flex">
+                  {data3Donors?.map((item: any, index: number) => (
                     <div
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/person_2.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="info ml-4">
-                      <h3>
-                        <Link to={""}>Ivan Jacobson</Link>
-                      </h3>
-                      <span className="position">Donated Just now</span>
-                      <div className="text">
-                        <p>
-                          Donated <span>$150</span> for{" "}
-                          <Link to={""}>Children Needs Food</Link>
-                        </p>
+                      key={index}
+                      className={`col-12 col-sm-12 col-md-6 col-lg-${
+                        12 / data3Donors?.length
+                      }  mb-sm-4`}
+                    >
+                      <div className="staff">
+                        <div className="d-flex mb-4">
+                          <div
+                            className="img"
+                            style={{
+                              backgroundImage: `url(${getImgCommon(
+                                item?.[ProjectFundDialogDonateFields.AVATAR]
+                              )})`,
+                            }}
+                          />
+                          <div className="info ml-4">
+                            <h5>
+                              {item?.[ProjectFundDialogDonateFields.USER_NAME]}
+                            </h5>
+                            <div className="text mt-3">
+                              <p>
+                                Đã quyên góp tổng{" "}
+                                <span>
+                                  {" "}
+                                  {formatCurrency(
+                                    item?.[
+                                      ProjectFundDialogDonateFields
+                                        .DONATION_AMOUNT
+                                    ]
+                                  )}
+                                </span>{" "}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-              <div className="col-lg-4 d-flex mb-sm-4 ">
-                <div className="staff">
-                  <div className="d-flex mb-4">
-                    <div
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/person_3.jpg"
-                        })`,
-                      }}
-                    />
-                    <div className="info ml-4">
-                      <h3>
-                        <Link to={""}>Ivan Jacobson</Link>
-                      </h3>
-                      <span className="position">Donated Just now</span>
-                      <div className="text">
-                        <p>
-                          Donated <span>$250</span> for{" "}
-                          <Link to={""}>Children Needs Food</Link>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </LazyLoadComponent>
-        </div>
-      </section>
+            </LazyLoadComponent>
+          </div>
+        </section>
+      )}
+    </>
   );
 }
+export default memo(LastestDonate);

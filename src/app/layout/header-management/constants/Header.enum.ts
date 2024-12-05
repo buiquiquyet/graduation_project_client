@@ -19,7 +19,7 @@ export enum EHeaderTabText {
     ABOUT = "Giới thiệu", // về chúng tôi
     CAUSES = "Nguyên nhân", // nguyên nhân
     DONATE = "Quyên góp", // quyên góp
-    BLOG = "Bài đăng", // các bài viết
+    BLOG = "Dự án", // các bài viết
     GALLEY = "Bằng chứng", // bằng chứng
     EVENTS = "Sự kiện", // sự kiện
     CONTACT = "Liên hệ", // liên lạc

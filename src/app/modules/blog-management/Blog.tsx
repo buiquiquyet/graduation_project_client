@@ -1,178 +1,209 @@
+import { memo, useEffect, useState } from "react";
+import "./Blog.scss";
+import { TabListProjectFund } from "../project-admin-management/constants/Project-fund.enum";
+import { Link } from "react-router-dom";
+import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
+import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
+import { ApiResponseTable } from "@/shared/constants/api-response-table";
+import { Page } from "@/shared/ultils/Page";
+import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
+import { getListProjectFunds } from "../project-admin-management/services/Project-fund.services";
+import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
+import { ProjectFundFields } from "../project-admin-management/constants/Project-fund.interface";
+import { formatCurrency, getImgCommon } from "@/shared/user-const";
+// dự án
 function BlogComponent() {
+  const { setLoading } = useContextCommon();
+  const page: Page = new Page();
+  const [dataProjectFunds, setDataProjectFunds] = useState<ApiResponseTable>({
+    currentPage: 1,
+    datas: [],
+    message: "",
+    totalPages: 0,
+    totalRecords: 0,
+  }); // data trả về
+  const [activeTab, setAcitveTab] = useState<TabListProjectFund>(
+    TabListProjectFund.IN_PROCESSING
+  );
+  const handleChangeTabActive = (tab: TabListProjectFund) => {
+    setAcitveTab(tab);
+    handleCallApiProjectFundsList(page, tab); // gọi api khi thay đổi tab list
+  };
+  // call api get list dự án
+  const handleCallApiProjectFundsList = async (
+    page: Page,
+    activeTab: TabListProjectFund
+  ) => {
+    setLoading(true);
+    const res: any = await getListProjectFunds(page, activeTab);
+    setLoading(false);
+    if (handleCheckSuccessResponse(res)) {
+      setDataProjectFunds(res?.data);
+    } else {
+      setDataProjectFunds({
+        currentPage: 1,
+        datas: [],
+        message: "",
+        totalPages: 0,
+        totalRecords: 0,
+      });
+    }
+  };
+  useEffect(() => {
+    handleCallApiProjectFundsList(page, activeTab);
+  }, []);
   return (
-    <>
-      <section className="ftco-section">
-        <div className="container">
-          <div className="row d-flex">
-            <div className="col-md-6 d-flex">
-              <div
-                className="img img-about align-self-stretch"
-                style={{
-                  backgroundImage: "url(images/bg_3.jpg)",
-                  width: "100%",
-                }}
-              ></div>
+    <div className="blog-component">
+      <div className="d-flex flex-column" style={{ gap: "50px" }}>
+        <section className="">
+          <div className="d-flex justify-content-between ">
+            <div
+              className={`d-flex align-items-center justify-content-center w-50 p-4 project-processing ${
+                activeTab === TabListProjectFund.IN_PROCESSING
+                  ? "active-header-project"
+                  : ""
+              }`}
+              onClick={() =>
+                handleChangeTabActive(TabListProjectFund.IN_PROCESSING)
+              }
+            >
+              <h5>Dự án đang gây quỹ</h5>
             </div>
-            <div className="col-md-6 pl-md-5">
-              <h2 className="mb-4">Welcome to Welfare Stablished Since 1898</h2>
-              <p>
-                The Big Oxmox advised her not to do so, because there were
-                thousands of bad Commas, wild Question Marks and devious
-                Semikoli, but the Little Blind Text didn’t listen. She packed
-                her seven versalia, put her initial into the belt and made
-                herself on the way.
-              </p>
-              <p>
-                On her way she met a copy. The copy warned the Little Blind
-                Text, that where it came from it would have been rewritten a
-                thousand times and everything that was left from its origin
-                would be the word "and" and the Little Blind Text should turn
-                around and return to its own, safe country. But nothing the copy
-                said could convince her and so it didn’t take long until a few
-                insidious Copy Writers ambushed her, made her drunk with Longe
-                and Parole and dragged her into their agency, where they abused
-                her for their.
-              </p>
+            <div
+              className={`d-flex align-items-center justify-content-center w-50 p-4 project-processing ${
+                activeTab === TabListProjectFund.ENDED
+                  ? "active-header-project"
+                  : ""
+              }`}
+              onClick={() => handleChangeTabActive(TabListProjectFund.ENDED)}
+            >
+              <h5>Dự án đã kết thúc</h5>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+        {/* list dự án */}
+        <section className="list-project-fund mb-5">
+          <div className="container">
+            <div className="mb-5 d-flex flex-column align-items-center">
+              <h1 className="text-body">
+                {activeTab === TabListProjectFund.ENDED
+                  ? "Các dự án đã kết thúc gây quỹ"
+                  : "Các dự án đang gây quỹ"}
+              </h1>
+              <h4 className="text-subBody">
+                Hãy lựa chọn dự án trong lĩnh vực mà bạn quan tâm nhất
+              </h4>
+            </div>
+            <div className="row">
+              {dataProjectFunds.datas?.length > 0 ? (
+                dataProjectFunds.datas?.map((item: any, index: number) => (
+                  <div
+                    key={index}
+                    className="col-12 col-sm-12 col-md-6 col-lg-4 mb-4 px-3"
+                  >
+                    <div className="cause-entry ">
+                      <div className="image-item ">
+                        <Link
+                          to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}/${
+                            item?.[ProjectFundFields.ID]
+                          }`}
+                          className="img"
+                          style={{
+                            backgroundImage: `url(${getImgCommon(
+                              item?.[ProjectFundFields.IMAGES][0]
+                            )})`,
+                          }}
+                        />
+                        <LibCategoryAbsolute
+                          value={item?.[ProjectFundFields.CATEGORY_NAME]}
+                        />
+                        <div className="image-fund">
+                          <img
+                            src={getImgCommon(
+                              item?.[ProjectFundFields.IMAGES_FUND]
+                            )}
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className="text p-3 p-md-4">
+                        <div className="mb-2 mt-2">
+                          <Link
+                            to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}/${
+                              item?.[ProjectFundFields.ID]
+                            }`}
+                          >
+                            <div className="mb-4 text-charity-fund w-100">
+                              {item?.[ProjectFundFields.FUND_NAME]}
+                            </div>
+                          </Link>
+                        </div>
+                        <Link to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}`}>
+                          <h3 className="text-project-fund w-100">
+                            {item?.[ProjectFundFields.NAME]}
+                          </h3>
+                        </Link>
+                        <span className="donation-time mb-3 d-block"></span>
+                        <div className="progress custom-progress-success">
+                          <div
+                            className="progress-bar bg-primary"
+                            role="progressbar"
+                            style={{
+                              width: `${
+                                parseFloat(item?.[ProjectFundFields.PERCENT]) ??
+                                0
+                              }%`,
+                            }}
+                            aria-valuenow={
+                              parseFloat(item?.[ProjectFundFields.PERCENT]) ?? 0
+                            }
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                          />
+                        </div>
+                        <div className="fund-raised d-block w-100">
+                          <div className="cost-slide w-100 d-flex justify-content-between">
+                            <span
+                              style={{ color: "#f86f2d", fontWeight: "bold" }}
+                            >
+                              {formatCurrency(
+                                item?.[ProjectFundFields.CURRENT_AMOUNT] ?? 0
+                              )}
+                            </span>
+                            <span style={{ color: "#F9153E" }}>
+                              {item?.[ProjectFundFields.PERCENT]}%
+                            </span>
+                          </div>
 
-      <section
-        className="ftco-counter ftco-intro ftco-intro-2"
-        id="section-counter"
-      >
-        <div className="container">
-          <div className="row no-gutters">
-            <div className="col-md-5 d-flex justify-content-center counter-wrap">
-              <div className="block-18 color-1 align-items-stretch">
-                <div className="text">
-                  <span>Served Over</span>
-                  <strong className="number" data-number="1432805">
-                    0
-                  </strong>
-                  <span>Children in 190 countries in the world</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-md d-flex justify-content-center counter-wrap">
-              <div className="block-18 color-2 align-items-stretch">
-                <div className="text">
-                  <h3 className="mb-4">Donate Money</h3>
-                  <p>
-                    Even the all-powerful Pointing has no control about the
-                    blind texts.
-                  </p>
-                  <p>
-                    <a href="#" className="btn btn-white px-3 py-2 mt-2">
-                      Donate Now
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md d-flex justify-content-center counter-wrap">
-              <div className="block-18 color-3 align-items-stretch">
-                <div className="text">
-                  <h3 className="mb-4">Be a Volunteer</h3>
-                  <p>
-                    Even the all-powerful Pointing has no control about the
-                    blind texts.
-                  </p>
-                  <p>
-                    <a href="#" className="btn btn-white px-3 py-2 mt-2">
-                      Be A Volunteer
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="ftco-section bg-light">
-        <div className="container">
-          <div className="row justify-content-center mb-5 pb-3">
-            <div className="col-md-7 heading-section text-center">
-              <h2 className="mb-4">Latest Donations</h2>
-              <p>
-                Far far away, behind the word mountains, far from the countries
-                Vokalia and Consonantia, there live the blind texts.
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 d-flex mb-sm-4">
-              <div className="staff">
-                <div className="d-flex mb-4">
-                  <div
-                    className="img"
-                    style={{ backgroundImage: "url(images/person_1.jpg)" }}
-                  ></div>
-                  <div className="info ml-4">
-                    <h3>
-                      <a href="teacher-single.html">Ivan Jacobson</a>
-                    </h3>
-                    <span className="position">Donated Just now</span>
-                    <div className="text">
-                      <p>
-                        Donated <span>$300</span> for
-                        <a href="#">Children Needs Food</a>
-                      </p>
+                          <div className="cost-slide w-100">
+                            <span
+                              style={{ color: "#696969", fontSize: "16px" }}
+                            >
+                              với mục tiêu{" "}
+                            </span>{" "}
+                            <span style={{ color: "black" }}>
+                              {formatCurrency(
+                                item?.[ProjectFundFields.TARGET_AMOUNT]
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="w-100" style={{ padding: "15px" }}>
+                  <h5 className="w-100  d-flex align-items-center" style={{fontWeight:'bold'}}>
+                    Chưa có thông tin dự án.
+                  </h5>
                 </div>
-              </div>
-            </div>
-            <div className="col-lg-4 d-flex mb-sm-4">
-              <div className="staff">
-                <div className="d-flex mb-4">
-                  <div
-                    className="img"
-                    style={{ backgroundImage: "url(images/person_2.jpg)" }}
-                  ></div>
-                  <div className="info ml-4">
-                    <h3>
-                      <a href="teacher-single.html">Ivan Jacobson</a>
-                    </h3>
-                    <span className="position">Donated Just now</span>
-                    <div className="text">
-                      <p>
-                        Donated <span>$150</span> for
-                        <a href="#">Children Needs Food</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 d-flex mb-sm-4">
-              <div className="staff">
-                <div className="d-flex mb-4">
-                  <div
-                    className="img"
-                    style={{ backgroundImage: "url(images/person_3.jpg)" }}
-                  ></div>
-                  <div className="info ml-4">
-                    <h3>
-                      <a href="teacher-single.html">Ivan Jacobson</a>
-                    </h3>
-                    <span className="position">Donated Just now</span>
-                    <div className="text">
-                      <p>
-                        Donated <span>$250</span> for
-                        <a href="#">Children Needs Food</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </div>
+    </div>
   );
 }
-export default BlogComponent;
+export default memo(BlogComponent);

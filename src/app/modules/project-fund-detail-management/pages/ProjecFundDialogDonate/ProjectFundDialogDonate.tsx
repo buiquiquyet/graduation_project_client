@@ -17,6 +17,7 @@ import {
 } from "@/shared/libraries/message-log-component/MessageLog";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { UserFields } from "@/app/modules/user-management/constants/User.interface";
+import { memo } from "react";
 interface ProjectFundDialogDonateProps {
   isOpenDialog: boolean;
   onClickDialogDonate: () => void;
@@ -36,10 +37,10 @@ const ProjectFundDialogDonate: React.FC<ProjectFundDialogDonateProps> = ({
 
   const handleGetInfoDonate = () => {
     return {
-      [ProjectFundDialogDonateFields.USER_NAME]: "123123",
-      [ProjectFundDialogDonateFields.DECRIPTION]: "123123",
-      [ProjectFundDialogDonateFields.USER_PHONE]: "123",
-      [ProjectFundDialogDonateFields.USER_ADDRESS]: "1123",
+      [ProjectFundDialogDonateFields.USER_NAME]: dataUser?.[UserFields.FULL_NAME] ?? "",
+      [ProjectFundDialogDonateFields.DECRIPTION]: "",
+      [ProjectFundDialogDonateFields.USER_PHONE]: dataUser?.[UserFields.PHONE] ?? "",
+      [ProjectFundDialogDonateFields.USER_ADDRESS]: dataUser?.[UserFields.ADDRESS] ?? "",
       [ProjectFundDialogDonateFields.DONATION_AMOUNT]: "10000",
     };
   };
@@ -138,4 +139,4 @@ const ProjectFundDialogDonate: React.FC<ProjectFundDialogDonateProps> = ({
   );
 };
 
-export default ProjectFundDialogDonate;
+export default memo(ProjectFundDialogDonate);

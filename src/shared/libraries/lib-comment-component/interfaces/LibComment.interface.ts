@@ -1,5 +1,6 @@
 
 export enum CommentFields {
+    ID = "Id",// id comment
     CONTENT = "content",// nội dung comment
     USER_ID = "userId",// ID NGƯỜI DÙNG
     PROJECT_FUND_ID = "projectFundId",// ID item từ thiện

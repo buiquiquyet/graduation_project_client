@@ -17,13 +17,18 @@ import {
   updateCategory,
 } from "../../services/Category.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
-import {  useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducerCategory } from "@/shared/redux/selector";
 
 import { InitCategory } from "@/shared/reducer/category-slice/InitCategoryProps";
-import { addIdRowCategory, addIsDelSuccessCategory, addIsEditCategory, addIsSubmitSuccessCategory } from "@/shared/reducer/category-slice/CategorySlice";
-export default function CategoryEdit() {
+import {
+  addIdRowCategory,
+  addIsDelSuccessCategory,
+  addIsEditCategory,
+  addIsSubmitSuccessCategory,
+} from "@/shared/reducer/category-slice/CategorySlice";
+export default memo(function CategoryEdit() {
   // check useContext
   const { setLoading } = useContextCommon();
 
@@ -31,8 +36,7 @@ export default function CategoryEdit() {
   const reducerCategory = useSelector(ReducerCategory); // redux của quỹ
 
   // form input thông tin quỹ
-  const formInputsInfoCharityFund: any[] =
-    CategoryEditConst.arrCategoryInfo;
+  const formInputsInfoCharityFund: any[] = CategoryEditConst.arrCategoryInfo;
   // trả về thông tin quỹ
   const handleGetInfoUser = (data?: any) => {
     return {
@@ -81,7 +85,7 @@ export default function CategoryEdit() {
   }); // biến gán form submit
   //=====
   // cập nhật list file image
- 
+
   // lấy bản ghi của 1 quỹ thông qua id
   const handleCallApiGetCharityFund = async (idFund: string) => {
     setLoading(true);
@@ -122,17 +126,14 @@ export default function CategoryEdit() {
               </div>
             </Fragment>
           ))}
-       
       </div>
       <div>
         <BaseButton
           title={`${
-            reducerCategory?.[InitCategory.IS_EDIT]
-              ? "Cập nhật"
-              : "Thêm mới"
+            reducerCategory?.[InitCategory.IS_EDIT] ? "Cập nhật" : "Thêm mới"
           }`}
         />
       </div>
     </form>
   );
-}
+});

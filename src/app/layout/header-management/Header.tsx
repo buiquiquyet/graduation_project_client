@@ -83,11 +83,13 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
         id="ftco-navbar"
       >
         <div className="container">
-          <Link to={"/"} className="navbar-brand label-title">
-            <div className="img-header-logo">
-              <img src={`${publicUrl + "/images/logoMain2.png"}`} />
-            </div>
-          </Link>
+          <div onClick={() => onClickActiveHeader(EHeaderTab.HOME)}>
+            <Link to={"/"} className="navbar-brand label-title">
+              <div className="img-header-logo">
+                <img src={`${publicUrl + "/images/logoMain2.png"}`} />
+              </div>
+            </Link>
+          </div>
           <button
             className="navbar-toggler"
             type="button"

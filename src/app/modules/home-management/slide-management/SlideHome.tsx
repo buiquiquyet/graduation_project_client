@@ -6,26 +6,30 @@ import Slide from "@/shared/libraries/slide-component/Slide";
 import { memo, useEffect, useState } from "react";
 import { getListProjectFunds } from "../../project-admin-management/services/Project-fund.services";
 import { Page } from "@/shared/ultils/Page";
-import { FilterTabList } from "../../project-admin-management/constants/Project-fund.enum";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { Link } from "react-router-dom";
-import config from "@/shared/ultils/config";
 import "./SlideHome.scss";
 import { formatCurrency, getImgCommon } from "@/shared/user-const";
 import { ProjectFundFields } from "../../project-admin-management/constants/Project-fund.interface";
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
+import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
+import { TabListProjectFund } from "../../project-admin-management/constants/Project-fund.enum";
 // Example public URL
-
-const SlideHomeComponent = () => {
+interface SlideHomeComponentProps {
+  slidesPerView?: number;
+}
+const SlideHomeComponent: React.FC<SlideHomeComponentProps> = ({
+  slidesPerView,
+}) => {
   const { setLoading } = useContextCommon();
 
-  const [listProjectFund, setListProjectFund] = useState<[]>([]); // danh sách các
+  const [listProjectFund, setListProjectFund] = useState<[]>([]); // danh sách các dự án
   const handleCallApiGetListProjectFunds = async () => {
     let page: Page = new Page();
     setLoading(true);
     const res: any = await getListProjectFunds(
       page,
-      FilterTabList.IN_PROCESSING
+      TabListProjectFund.IN_PROCESSING
     );
     setLoading(false);
     if (res) {
@@ -38,7 +42,7 @@ const SlideHomeComponent = () => {
   }, []);
   return (
     <div className="slide-home-project-fund">
-      <Slide slidesPerView={4}>
+      <Slide slidesPerView={slidesPerView ?? 4}>
         {listProjectFund &&
           listProjectFund?.length > 0 &&
           listProjectFund.map((slide, index) => (
@@ -56,10 +60,15 @@ const SlideHomeComponent = () => {
                       )})`,
                     }}
                   />
+                   <LibCategoryAbsolute
+                      value={slide?.[ProjectFundFields.CATEGORY_NAME]}
+                    />
                   <div className="image-fund">
                     <img
                       src={getImgCommon(slide?.[ProjectFundFields.IMAGES_FUND])}
+                      alt=""
                     />
+                   
                   </div>
                 </div>
                 <div className="text p-3 p-md-4">
@@ -85,24 +94,39 @@ const SlideHomeComponent = () => {
                       className="progress-bar bg-primary"
                       role="progressbar"
                       style={{
-                        width: `${slide?.[ProjectFundFields.PERCENT] ?? 20}%`,
+                        width: `${
+                          parseFloat(slide?.[ProjectFundFields.PERCENT]) ?? 0
+                        }%`,
                       }}
-                      aria-valuenow={slide?.[ProjectFundFields.PERCENT] ?? 20}
+                      aria-valuenow={
+                        parseFloat(slide?.[ProjectFundFields.PERCENT]) ?? 0
+                      }
                       aria-valuemin={0}
                       aria-valuemax={100}
                     />
                   </div>
                   <div className="fund-raised d-block w-100">
-                    <span className="cost-slide">
-                      {formatCurrency(
-                        slide?.[ProjectFundFields.CURRENT_AMOUNT] ?? 0
-                      )}
-                    </span>{" "}
-                    trên mục tiêu{" "}
-                    <span className="cost-slide">
-                      {" "}
-                      {formatCurrency(slide?.[ProjectFundFields.TARGET_AMOUNT])}
-                    </span>
+                    <div className="cost-slide w-100 d-flex justify-content-between">
+                      <span style={{ color: "#f86f2d", fontWeight: "bold" }}>
+                        {formatCurrency(
+                          slide?.[ProjectFundFields.CURRENT_AMOUNT] ?? 0
+                        )}
+                      </span>
+                      <span style={{ color: "#F9153E" }}>
+                        {slide?.[ProjectFundFields.PERCENT]}%
+                      </span>
+                    </div>
+
+                    <div className="cost-slide w-100">
+                      <span style={{ color: "#696969", fontSize: "16px" }}>
+                        với mục tiêu{" "}
+                      </span>{" "}
+                      <span style={{ color: "black" }}>
+                        {formatCurrency(
+                          slide?.[ProjectFundFields.TARGET_AMOUNT]
+                        )}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

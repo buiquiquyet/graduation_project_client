@@ -1,6 +1,6 @@
 import LibTable from "@/shared/libraries/lib-table-component/LibTable";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import {
@@ -16,9 +16,13 @@ import { ReducerCategory } from "@/shared/redux/selector";
 
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import { InitCategory } from "@/shared/reducer/category-slice/InitCategoryProps";
-import { addIdRowCategory, addIsDelSuccessCategory, addIsEditCategory } from "@/shared/reducer/category-slice/CategorySlice";
+import {
+  addIdRowCategory,
+  addIsDelSuccessCategory,
+  addIsEditCategory,
+} from "@/shared/reducer/category-slice/CategorySlice";
 
-export default function CategoryList() {
+export default memo(function CategoryList() {
   const { setLoading } = useContextCommon();
 
   const [dataCategorys, setDataCategorys] = useState<ApiResponseTable>({
@@ -53,9 +57,7 @@ export default function CategoryList() {
       setLoading(false);
       if (handleResponseInterceptor(res)) {
         // set lại redux của biến button success để gọi lại list và cập nhật lại form edit
-        if (
-          rowIdSelects?.includes(reducerCategory?.[InitCategory.ID_ROW])
-        ) {
+        if (rowIdSelects?.includes(reducerCategory?.[InitCategory.ID_ROW])) {
           dispatch(addIsDelSuccessCategory(true));
         } else {
           handleCallApiCategorysList();
@@ -80,7 +82,7 @@ export default function CategoryList() {
   }, [reducerCategory]);
   return (
     <div className="user-inputs">
-      <div className="user-info" style={{  alignItems:'start' }}>
+      <div className="user-info" style={{ alignItems: "start" }}>
         <div className="user-label">
           <h3 className="w-100">Các danh mục</h3>
         </div>
@@ -103,4 +105,4 @@ export default function CategoryList() {
       </div>
     </div>
   );
-}
+});

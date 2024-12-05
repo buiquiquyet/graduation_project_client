@@ -19,7 +19,7 @@ import {
 } from "../../services/Charity-fund.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import BaseFileUpload from "@/shared/component/base-dialog-file/BaseFileUpload";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducerCharityFund } from "@/shared/redux/selector";
 import { InitCharityFund } from "@/shared/reducer/charity-fund-slice/InitCharityFundProps";
@@ -29,7 +29,7 @@ import {
   addIsEdit,
   addIsSubmitSuccess,
 } from "@/shared/reducer/charity-fund-slice/CharityFundSlice";
-export default function CharityFundEdit() {
+export default memo(function CharityFundEdit() {
   // check useContext
   const { setLoading } = useContextCommon();
 
@@ -165,4 +165,4 @@ export default function CharityFundEdit() {
       </div>
     </form>
   );
-}
+});

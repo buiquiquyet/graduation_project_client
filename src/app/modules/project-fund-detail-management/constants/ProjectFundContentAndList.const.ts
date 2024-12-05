@@ -1,22 +1,23 @@
 import { ColumnFields } from "@/shared/enums/inputType.enum";
 import { ETableColumnType } from "@/shared/libraries/lib-table-component/constants/LibTable.enum";
+import { FieldColumnDonates } from "../interfaces/ProjectFundContentAndList.enum";
 
 export class ProjectFundContentAndListConst {
     public static readonly coloumnTable = [
       {
         label: "NGƯỜI ỦNG HỘ",
-        accessor: 'NAME',
-        type: ETableColumnType.NOTE,
+        accessor: FieldColumnDonates.FULL_NAME,
+        type: ETableColumnType.TEXT,
       },
       {
         label: "SỐ TIỀN",
-        accessor: "AMOUNT",
-        type: ETableColumnType.NOTE,
+        accessor: FieldColumnDonates.AMOUNT,
+        type: ETableColumnType.NUMBER,
       },
       {
         label: "THỜI GIAN",
-        accessor: "TIME",
-        type: ETableColumnType.NOTE,
+        accessor: FieldColumnDonates.CREATED_AT,
+        type: ETableColumnType.DATE,
       },
       
   

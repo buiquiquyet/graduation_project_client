@@ -1,7 +1,7 @@
 import { BuildParams } from "@/shared/ultils/BuildParams";
 import { Page } from "@/shared/ultils/Page";
 import { customRequest } from "@/shared/ultils/request";
-import { FilterTabList } from "../constants/Project-fund.enum";
+import { TabListProjectFund } from "../constants/Project-fund.enum";
 
 const apiCommon = "project-fund";
 // createa thông tin người dùng
@@ -19,7 +19,7 @@ export const createProjectFund = async (body: any) => {
   }
 };
 // get list các quỹ
-export const getListProjectFunds = async (page: Page, filterTabList?: FilterTabList) => {
+export const getListProjectFunds = async (page: Page, filterTabList?: TabListProjectFund) => {
   let additionalParams = { filterType: filterTabList}; 
   let params = BuildParams.Params(page,additionalParams);
   try {

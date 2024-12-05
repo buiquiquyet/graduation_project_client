@@ -28,7 +28,7 @@ export const convertToCommonOptions = (options: any[]) => {
 };
 // hàm lấy ảnh
 export const getImgCommon = (avatar: string) => {
-  return config.FILE_URL + avatar.replace(/\s/g, '%20');
+  return config.FILE_URL + avatar?.replace(/\s/g, '%20');
 
   return config.FILE_URL + encodeURI(avatar);
   return config.FILE_URL + avatar;

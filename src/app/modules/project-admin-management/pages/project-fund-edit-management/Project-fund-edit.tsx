@@ -15,7 +15,7 @@ import {
 } from "../../services/Project-fund.services";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import BaseFileUpload from "@/shared/component/base-dialog-file/BaseFileUpload";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducerProjectFund } from "@/shared/redux/selector";
 
@@ -39,7 +39,7 @@ import {
   addIsSubmitSuccessProjectFund,
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
 import { getListCategorys } from "@/app/modules/category-management/services/Category.services";
-export default function ProjectFundEdit() {
+export default memo(function ProjectFundEdit() {
   // check useContext
   const { setLoading } = useContextCommon();
 
@@ -57,7 +57,8 @@ export default function ProjectFundEdit() {
     return {
       [ProjectFundFields.NAME]: data?.[ProjectFundFields.NAME] ?? "",
       [ProjectFundFields.FUND_ID]: data?.[ProjectFundFields.FUND_ID] ?? "",
-      [ProjectFundFields.CATEGORY_ID]: data?.[ProjectFundFields.CATEGORY_ID] ?? "",
+      [ProjectFundFields.CATEGORY_ID]:
+        data?.[ProjectFundFields.CATEGORY_ID] ?? "",
       [ProjectFundFields.TARGET_AMOUNT]:
         data?.[ProjectFundFields.TARGET_AMOUNT] ?? "",
       [ProjectFundFields.START_DATE]:
@@ -131,9 +132,11 @@ export default function ProjectFundEdit() {
     const res: any = await getProjectFund(idFund);
     setLoading(false);
     if (res) {
-      const data = res?.data?.data
+      const data = res?.data?.data;
       formik.setValues(handleGetInfoUser(data));
-      const fileListRes = data?.[ProjectFundFields.IMAGES]?.map((fileName: string) => mockFileData(fileName))
+      const fileListRes = data?.[ProjectFundFields.IMAGES]?.map(
+        (fileName: string) => mockFileData(fileName)
+      );
       setListFileNames(fileListRes); // SET LẠI FILE IMAGE
       setContent(data?.[ProjectFundFields.DESCRIPTION]); // set lại content mô tả dự án
     }
@@ -252,4 +255,4 @@ export default function ProjectFundEdit() {
       </div>
     </form>
   );
-}
+});

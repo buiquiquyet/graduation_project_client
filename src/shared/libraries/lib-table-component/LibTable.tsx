@@ -106,7 +106,7 @@ const LibTable: React.FC<PropsTable> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data ? (
+            {data && data.length > 0 ? (
               data?.map((row, rowIndex) => (
                 <TableRow
                   key={rowIndex}

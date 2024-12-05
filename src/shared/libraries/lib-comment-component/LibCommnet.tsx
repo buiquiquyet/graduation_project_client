@@ -9,7 +9,11 @@ import { createValidationSchema } from "@/shared/validate";
 import { Fragment, useEffect, useState } from "react";
 import { LibCommentConst } from "./constants/LibComment.const";
 import BaseButton from "@/shared/component/base-button/BaseButton";
-import { createComment, getListComments } from "./services/LibComment.service";
+import {
+  createComment,
+  deleteComment,
+  getListComments,
+} from "./services/LibComment.service";
 import {
   handleCheckSuccessResponse,
   handleResponseInterceptor,
@@ -17,6 +21,7 @@ import {
 import { Page } from "@/shared/ultils/Page";
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import LibBasePagination from "../LibBasePagination/LibBasePagination";
+import { RoleUser } from "@/helper/ContextCommon/ContextCommon.enum";
 interface LibCommnetComponentProps {
   projectFundId: string; // id của từ thiện item
   userId: string; // id của người dùng
@@ -25,7 +30,6 @@ const LibCommentComponent: React.FC<LibCommnetComponentProps> = ({
   userId,
   projectFundId,
 }) => {
-  let pages: Page = new Page();
   const { dataUser, setLoading } = useContextCommon();
   const [dataComments, setDataComments] = useState<ApiResponseTable>({
     currentPage: 1,
@@ -34,6 +38,7 @@ const LibCommentComponent: React.FC<LibCommnetComponentProps> = ({
     totalPages: 0,
     totalRecords: 0,
   }); // data trả về
+  let pages: Page = new Page();
   const [page, setPages] = useState(pages); // page của table
   const formInputComment = LibCommentConst.arrInputComment;
   let initialValues: CommentDTO | any = {
@@ -69,6 +74,14 @@ const LibCommentComponent: React.FC<LibCommnetComponentProps> = ({
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
       setDataComments(res?.data);
+    }else {
+      setDataComments({
+        currentPage: 1,
+        datas: [],
+        message: "",
+        totalPages: 0,
+        totalRecords: 0,
+      });
     }
   };
   // change page table
@@ -78,72 +91,104 @@ const LibCommentComponent: React.FC<LibCommnetComponentProps> = ({
       pageNumber: newPage,
     });
   };
+  // Delete comment
+  const handleCallApiDeleteComment = async (idComment: string) => {
+    setLoading(true);
+    const res: any = await deleteComment(idComment);
+    setLoading(false);
+    if (handleResponseInterceptor(res)) {
+      handleCallApiCommentList(projectFundId, page);
+    }
+  };
   useEffect(() => {
     if (projectFundId || page) {
       handleCallApiCommentList(projectFundId, page);
     }
   }, [projectFundId, page]);
   return (
-    <div className="lib-comment w-100">
-      <div className="mb-4">
-        <div className="content-comment">
-          {dataComments &&
-            dataComments.datas?.length > 0 &&
-            dataComments?.datas?.map((item: any, index: number) => (
-              <div key={index} className="item-info w-100">
-                <div className="item-avatar">
-                  <img src={getImgCommon(item?.[CommentFields.USER_AVATAR])} />
-                </div>
-                <div className="item-content ">
-                  <div className="item-name d-flex align-items-center">
-                    <span className="item-name-text">
-                      {item?.[CommentFields.USER_NAME]}
-                    </span>
-                    <span className="item-date ml-3">
-                      {convertDate(item?.[CommentFields.UPDATED_AT])}
-                    </span>
+    <>
+      {(dataComments?.datas?.length > 0 || userId) && (
+        <div className="lib-comment w-100">
+          <div className="mb-4">
+            <div className="content-comment">
+              {dataComments &&
+                dataComments.datas?.length > 0 &&
+                dataComments?.datas?.map((item: any, index: number) => (
+                  <div key={index} className="item-info w-100">
+                    <div className="item-avatar">
+                      <img
+                        src={getImgCommon(item?.[CommentFields.USER_AVATAR])}
+                        alt=""
+                      />
+                    </div>
+                    <div className="item-content ">
+                      <div className="item-name d-flex align-items-center">
+                        <span className="item-name-text">
+                          {item?.[CommentFields.USER_NAME]}
+                        </span>
+                        <span className="item-date ml-3">
+                          {convertDate(item?.[CommentFields.UPDATED_AT])}
+                        </span>
+                        {dataUser &&
+                          dataUser?.[UserFields.ROLE] === RoleUser.ADMIN && (
+                            <span
+                              className="ml-4 d-flex delete-comment"
+                              onClick={() =>
+                                handleCallApiDeleteComment(
+                                  item?.[CommentFields.ID]
+                                )
+                              }
+                            >
+                              Xóa
+                            </span>
+                          )}
+                      </div>
+                      <div className="item-text ">
+                        <span>{item?.[CommentFields.CONTENT]}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="item-text ">
-                    <span>{item?.[CommentFields.CONTENT]}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
-        {dataComments.datas &&
-          dataComments.totalRecords > page.perPageOptions[0] && (
-            <LibBasePagination
-              totalPage={dataComments.totalPages}
-              onClick={(event, newPage) => handleChangePage(event, newPage)}
-              totalRecords={dataComments.totalRecords}
-              pageNumber={page.pageNumber}
-              isShowTotalRecord={false}
-            />
-          )}
-      </div>
-      {userId && (
-        <div className="input-comment">
-          <form onSubmit={formik.handleSubmit} className="form-submit-comment">
-            <div className="d-flex" style={{ gap: "10px" }}>
-              <img
-                src={getImgCommon(dataUser?.[UserFields.AVATAR] ?? "")}
-                alt=""
-              />
-              <div className="  w-100">
-                {formInputComment.map((item, index) => (
-                  <Fragment key={index}>
-                    <LibSwitchInput item={item} formik={formik} />
-                  </Fragment>
                 ))}
-              </div>
             </div>
-            <div className="button-submit">
-              <BaseButton title="Bình luận" />
+            {dataComments.datas &&
+              dataComments.totalRecords > page.perPageOptions[0] && (
+                <LibBasePagination
+                  totalPage={dataComments.totalPages}
+                  onClick={(event, newPage) => handleChangePage(event, newPage)}
+                  totalRecords={dataComments.totalRecords}
+                  pageNumber={page.pageNumber}
+                  isShowTotalRecord={false}
+                />
+              )}
+          </div>
+          {userId && (
+            <div className="input-comment">
+              <form
+                onSubmit={formik.handleSubmit}
+                className="form-submit-comment"
+              >
+                <div className="d-flex" style={{ gap: "10px" }}>
+                  <img
+                    src={getImgCommon(dataUser?.[UserFields.AVATAR] ?? "")}
+                    alt=""
+                  />
+                  <div className="  w-100">
+                    {formInputComment.map((item, index) => (
+                      <Fragment key={index}>
+                        <LibSwitchInput item={item} formik={formik} />
+                      </Fragment>
+                    ))}
+                  </div>
+                </div>
+                <div className="button-submit">
+                  <BaseButton title="Bình luận" />
+                </div>
+              </form>
             </div>
-          </form>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 export default LibCommentComponent;

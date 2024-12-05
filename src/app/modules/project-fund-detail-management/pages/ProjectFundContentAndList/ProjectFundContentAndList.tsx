@@ -1,7 +1,7 @@
 import { getCharityFund } from "@/app/modules/charity-fund-management/services/Charity-fund.services";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { ProjectFundContentAndListAcitve } from "../../interfaces/ProjectFundContentAndList.enum";
 import "./ProjectFundContentAndList.scss";
 import { CharityFundFields } from "@/app/modules/charity-fund-management/constants/charity-fund.interface";
@@ -12,6 +12,10 @@ import LibTable from "@/shared/libraries/lib-table-component/LibTable";
 import { ProjectFundContentAndListConst } from "../../constants/ProjectFundContentAndList.const";
 import LibCommentComponent from "@/shared/libraries/lib-comment-component/LibCommnet";
 import { UserFields } from "@/app/modules/user-management/constants/User.interface";
+import { Page } from "@/shared/ultils/Page";
+import { getListDonates } from "../../services/ProjectFundContentAndList.service";
+import { ApiResponseTable } from "@/shared/constants/api-response-table";
+import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
 interface ProjectFundContentAndListProps {
   idFund: string;
   projectFundDescription: string;
@@ -24,6 +28,17 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
 }) => {
   const { setLoading, dataUser } = useContextCommon();
   const [dataDetailFund, setDataDetailFund] = useState<any>(); // dữ liệu detail quỹ
+
+  /// danh sách list donate
+  let pages: Page = new Page();
+  const [page, setPages] = useState(pages); // page của table
+  const [dataListDonates, setDataListDonates] = useState<ApiResponseTable>({
+    currentPage: 1,
+    datas: [],
+    message: "",
+    totalPages: 0,
+    totalRecords: 0,
+  }); // dữ liệu list donate
   const [activeTab, setActiveTab] = useState<ProjectFundContentAndListAcitve>(
     ProjectFundContentAndListAcitve.CONTENT
   ); // set tab nào đang active
@@ -43,11 +58,32 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
   const handleChangeContentList = (value: ProjectFundContentAndListAcitve) => {
     setActiveTab(value);
   };
+  // call api list donate
+  const handleCallApiDonateList = async (page: Page, projectFundId: string) => {
+    setLoading(true);
+    const res: any = await getListDonates(page, projectFundId);
+    setLoading(false);
+    if(handleCheckSuccessResponse(res)) {
+      setDataListDonates(res?.data)
+    }
+  }
+   // change page table
+   const handleChangePage = (event: any, newPage: any) => {
+    setPages({
+      ...page,
+      pageNumber: newPage,
+    });
+  };
   useEffect(() => {
     if (idFund) {
       handleCallApiFundDetail(idFund);
     }
   }, [idFund]);
+  useEffect(() => {
+    if(projectFundId) {
+      handleCallApiDonateList(page, projectFundId);
+    }
+  }, [page, projectFundId]);
   return (
     <div>
       <div className="container p-5  project-fund-content-list">
@@ -164,7 +200,17 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
         {activeTab === ProjectFundContentAndListAcitve.LIST && (
           <LazyLoadComponent>
             <div className="container project-fund-content-list w-100 p-0">
-              <LibTable columns={columnTable} data={[dataDetailFund]} />
+              <LibTable columns={columnTable} data={dataListDonates?.datas} />
+              {dataListDonates.datas &&
+              dataListDonates.totalRecords > page.perPageOptions[1] && (
+                <LibBasePagination
+                  totalPage={dataListDonates.totalPages}
+                  onClick={(event, newPage) => handleChangePage(event, newPage)}
+                  totalRecords={dataListDonates.totalRecords}
+                  pageNumber={page.pageNumber}
+                  isShowTotalRecord={false}
+                />
+              )}
             </div>
           </LazyLoadComponent>
         )}
@@ -173,4 +219,4 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
   );
 };
 
-export default ProjectFundContentAndList;
+export default memo(ProjectFundContentAndList);

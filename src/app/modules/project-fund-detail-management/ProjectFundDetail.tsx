@@ -1,9 +1,8 @@
 import { MyContext } from "@/App";
 import BaseButton from "@/shared/component/base-button/BaseButton";
-import { useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import "./ProjectFundDetail.scss";
-import { Input } from "antd";
 import { useParams } from "react-router-dom";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { getProjectFund } from "../project-admin-management/services/Project-fund.services";
@@ -16,6 +15,7 @@ import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
 import ProjectFundContentAndList from "./pages/ProjectFundContentAndList/ProjectFundContentAndList";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
+import SlideHomeComponent from "@/app/modules/home-management/slide-management/SlideHome";
 const ProjectFundDetailComponent = () => {
   const context = useContext(MyContext);
   if (!context) {
@@ -46,14 +46,21 @@ const ProjectFundDetailComponent = () => {
   const onClickDialogDonate = () => {
     setIsOpenDialog(!isOpenDialog);
   };
-
   useEffect(() => {
     if (projectFundId) {
       handleCallApiProjectFundDetail(projectFundId);
     }
   }, [projectFundId]);
+  const topElementRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // Cuộn đến phần tử đầu tiên khi component được render lại
+    if (topElementRef.current) {
+      topElementRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);  // Mảng phụ thuộc rỗng, chỉ chạy một lần khi component được mount
+
   return (
-    <div className="project-fund-detail">
+    <div className="project-fund-detail" ref={topElementRef}>
       <div className="w-100">
         <div className="w-100">
           <LazyLoadComponent>
@@ -69,7 +76,13 @@ const ProjectFundDetailComponent = () => {
                           dataDetailProjectFund?.[ProjectFundFields.IMAGES] // Nếu là string, chuyển thành mảng với 1 phần tử
                         }
                       ></ImageModal>
-                      <LibCategoryAbsolute value={dataDetailProjectFund?.[ProjectFundFields.CATEGORY_NAME]}/>
+                      <LibCategoryAbsolute
+                        value={
+                          dataDetailProjectFund?.[
+                            ProjectFundFields.CATEGORY_NAME
+                          ]
+                        }
+                      />
                     </div>
                     <div className="mt-3 d-flex w-100 justify-content-between">
                       {dataDetailProjectFund?.[ProjectFundFields.IMAGES]
@@ -131,7 +144,12 @@ const ProjectFundDetailComponent = () => {
                         <div className="container p-0 align-items-center">
                           <div className="row align-items-center justify-content-end">
                             <FaUser />
-                            <div className="ml-2 pt-1">47 người ủng hộ</div>
+                            <div className="ml-2 pt-1">
+                              {dataDetailProjectFund?.[
+                                ProjectFundFields.NUMBER_OF_DONATE
+                              ] + " "}{" "}
+                              người ủng hộ
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -153,9 +171,13 @@ const ProjectFundDetailComponent = () => {
                           className="progress-bar bg-primary"
                           role="progressbar"
                           style={{
-                            width: `${20}%`,
+                            width: `${parseFloat(
+                              dataDetailProjectFund?.[ProjectFundFields.PERCENT]
+                            )}%`,
                           }}
-                          aria-valuenow={20}
+                          aria-valuenow={parseFloat(
+                            dataDetailProjectFund?.[ProjectFundFields.PERCENT]
+                          )}
                           aria-valuemin={0}
                           aria-valuemax={100}
                         />
@@ -212,6 +234,20 @@ const ProjectFundDetailComponent = () => {
             />
           )}
         </div>
+        {/* danh sách list các dự án khác */}
+        <div className="container-more-project">
+          <div className="container">
+            <div className="pt-5 w-100">
+              <div className="p-5 w-100 d-flex flex-column align-items-center ">
+                <div className="other-project mb-4">Các dự án khác</div>
+                <div className="w-100">
+                  {" "}
+                  <SlideHomeComponent slidesPerView={3}/>{" "}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {isOpenDialog && (
           <ProjectFundDialogDonate
             onClickDialogDonate={onClickDialogDonate}
@@ -223,4 +259,4 @@ const ProjectFundDetailComponent = () => {
     </div>
   );
 };
-export default ProjectFundDetailComponent;
+export default memo(ProjectFundDetailComponent);

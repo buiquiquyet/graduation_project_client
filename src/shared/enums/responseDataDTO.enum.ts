@@ -1,6 +1,7 @@
 export enum ResponseDTOKey {
     ERROR = "error",
     SUCCESS = "success",
+    SUCCESS_V2 = "Success",
     DATA = "data"
 }
 export enum ESuccessCode {

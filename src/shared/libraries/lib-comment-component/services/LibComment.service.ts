@@ -33,7 +33,21 @@ export const getListComments = async (page: Page, projectFundId?: string) => {
     throw error; // Truyền lỗi lên trên để xử lý tiếp
   }
 };
+// xoá comment
+export const deleteComment = async (id: string) => {
+  try {
+    // Gọi customRequest với phương thức POST, đường dẫn, body và headers
+    const response = await customRequest(
+      "DELETE",
+      `/${apiCommon}/${id}`,
+    );
 
+    return response; // Trả về response chứa status và data
+  } catch (error) {
+    // Ném ra lỗi đã xử lý từ customRequest
+    throw error; // Truyền lỗi lên trên để xử lý tiếp
+  }
+};
 // // get 1 các quỹ
 // export const getProjectFund = async (idFund: string) => {
 //   try {
@@ -61,22 +75,4 @@ export const getListComments = async (page: Page, projectFundId?: string) => {
 //   }
 // };
 
-// // xoá nhiều quỹ
-// export const deleteProjectFunds = async (ids: any[]) => {
-//   try {
-//     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
-//     const response = await customRequest(
-//       "DELETE",
-//       `/${apiCommon}/deleteByIds`,
-//       JSON.stringify(ids),
-//       {
-//         "Content-Type": "application/json",
-//       }
-//     );
 
-//     return response; // Trả về response chứa status và data
-//   } catch (error) {
-//     // Ném ra lỗi đã xử lý từ customRequest
-//     throw error; // Truyền lỗi lên trên để xử lý tiếp
-//   }
-// };

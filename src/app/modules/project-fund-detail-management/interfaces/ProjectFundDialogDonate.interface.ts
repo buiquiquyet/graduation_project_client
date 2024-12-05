@@ -6,6 +6,7 @@ export enum ProjectFundDialogDonateFields {
     DONATION_AMOUNT = "Amount",
     PROJECT_FUND_ID = "OrderInfo" ,// id của bản ghi từ thiện
     UserId = "UserId", // id của người dùng nếu có
+    AVATAR = "Avatar", // avatar người dùng
 }
 
 export interface ProjectFundDialogDonateDTO {

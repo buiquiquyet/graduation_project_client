@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { UserEditConst } from "../../constants/User-edit.const";
 import { Fragment } from "react/jsx-runtime";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import {
   getCitys,
   getDistricts,
@@ -21,7 +21,7 @@ import {
   updateOptionsFormInputs,
 } from "@/shared/user-const";
 import LibSwitchInput from "@/shared/libraries/lib-switch-input-component/libSwitchInput";
-export default function UserEdit() {
+export default memo(function UserEdit() {
   // check useContext
   const { setLoading, dataUser } = useContextCommon();
   const [formInputsInfoAddress, setFormInputsInfoAddress] = useState(
@@ -186,4 +186,4 @@ export default function UserEdit() {
       </div>
     </form>
   );
-}
+})
