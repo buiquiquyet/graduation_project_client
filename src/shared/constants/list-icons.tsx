@@ -23,7 +23,7 @@ export class ListIcons {
     },
     {
       icon: "/icons/download.svg",
-      label: ["Xuất Excel", "Xuất File"],
+      label: ["Xuất Excel", "Xuất File", "Xuất lịch sử ủng hộ"],
     },
   ];
 

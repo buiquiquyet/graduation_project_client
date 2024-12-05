@@ -29,7 +29,6 @@ import { ItemOptionsKey } from "@/shared/constants/item-options-setting";
 import { ListIcons } from "@/shared/constants/list-icons";
 import { exportListDonates } from "@/app/modules/project-fund-detail-management/services/ProjectFundContentAndList.service";
 import { downloadExcelFile } from "@/shared/constants/export-excel";
-import axios from "axios";
 
 export default memo(function ProjectFundList() {
   const { setLoading } = useContextCommon();
@@ -42,7 +41,7 @@ export default memo(function ProjectFundList() {
     totalRecords: 0,
   }); // data trả về
   const itemOptions = [
-    { key: ItemOptionsKey.EXPORT, label: ListIcons.getIcon("Xuất Excel") },
+    { key: ItemOptionsKey.EXPORT, label: ListIcons.getIcon("Xuất lịch sử ủng hộ") },
   ];
   const reducerProjectFund = useSelector(ReducerProjectFund); // redux dự án
   const dispatch = useDispatch(); // action redux
