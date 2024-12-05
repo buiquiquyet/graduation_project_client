@@ -11,8 +11,8 @@ export default memo(function CategoryComponent() {
             <h1>Danh sách các danh mục thiện nguyện</h1>
           </div>
         </div>
-        <div className="container row d-flex">
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
+        <div className="container row d-flex flex-column align-items-center">
+          <div className="col-12 col-sm-12 col-md-12 col-lg-6 mb-5">
             <CategoryEdit />
           </div>
           <div className="col-12 col-sm-12 col-md-12 col-lg-6">

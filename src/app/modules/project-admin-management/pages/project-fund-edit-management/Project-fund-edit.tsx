@@ -198,6 +198,9 @@ export default memo(function ProjectFundEdit() {
   useEffect(() => {
     handleCallListCharityFund();
     handleCallListCategory();
+    return () => {
+      formik.resetForm(); // Reset form khi component unmount
+    };
   }, []);
   return (
     <form onSubmit={formik.handleSubmit} className=" user-inputs w-100 ">

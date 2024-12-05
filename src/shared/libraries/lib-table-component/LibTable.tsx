@@ -25,7 +25,7 @@ interface PropsTable {
   itemOptions?: any[];
   setRowIdSelects?: any;
   rowIdSelects?: any;
-  onClickShowOptios?: (key: any, id: any) => void;
+  onClickShowOptios?: (key: string, id: string) => void;
   onClickOpenFile?: (id: string) => void;
   onClickOpenNote?: (id: string) => void;
   onRowClick?: (id: string) => void;
@@ -97,7 +97,13 @@ const LibTable: React.FC<PropsTable> = ({
                       checked={selectAll}
                     />
                   ) : column.type === ETableColumnType.ICON ? (
-                    <SVG src={publicUrl + "/icons/setting.svg"}></SVG>
+                    <div
+                      onClick={(event) => {
+                        event.stopPropagation(); // Ngừng sự kiện lan truyền khi click vào row
+                      }}
+                    >
+                      <SVG src={publicUrl + "/icons/setting.svg"}></SVG>
+                    </div>
                   ) : (
                     column.label
                   )}
@@ -136,7 +142,12 @@ const LibTable: React.FC<PropsTable> = ({
                           />
                         </div>
                       ) : column.type === ETableColumnType.ICON ? (
-                        <div style={{ textAlign: "center" }}>
+                        <div
+                          onClick={(event) => {
+                            event.stopPropagation(); // Ngừng sự kiện lan truyền khi click vào row
+                          }}
+                          style={{ textAlign: "center" }}
+                        >
                           <BaseOptionSettings
                             idItem={row.Id}
                             onClick={onClickShowOptios}

@@ -57,6 +57,12 @@ export class ProjectFundListConst {
       type: ETableColumnType.DATE,
       
     },
+    {
+      label: "",
+      accessor: "",
+      type: ETableColumnType.ICON,
+      
+    },
 
   ] as ColumnFields[];
 }

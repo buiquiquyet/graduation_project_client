@@ -25,6 +25,11 @@ import {
   addIsEditProjectFund,
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
 import { TabListProjectFund } from "../../constants/Project-fund.enum";
+import { ItemOptionsKey } from "@/shared/constants/item-options-setting";
+import { ListIcons } from "@/shared/constants/list-icons";
+import { exportListDonates } from "@/app/modules/project-fund-detail-management/services/ProjectFundContentAndList.service";
+import { downloadExcelFile } from "@/shared/constants/export-excel";
+import axios from "axios";
 
 export default memo(function ProjectFundList() {
   const { setLoading } = useContextCommon();
@@ -36,7 +41,9 @@ export default memo(function ProjectFundList() {
     totalPages: 0,
     totalRecords: 0,
   }); // data trả về
-
+  const itemOptions = [
+    { key: ItemOptionsKey.EXPORT, label: ListIcons.getIcon("Xuất Excel") },
+  ];
   const reducerProjectFund = useSelector(ReducerProjectFund); // redux dự án
   const dispatch = useDispatch(); // action redux
 
@@ -94,6 +101,20 @@ export default memo(function ProjectFundList() {
       dispatch(addIsEditProjectFund(true));
     }
   };
+  // click vào setting option row
+  const handleShowSetting = async (key: any, id: any) => {
+    if (key?.key === ItemOptionsKey.EXPORT) {
+      // export excel
+      setLoading(true);
+      let newPage = { ...page, pageSize: 999 };
+      const res: any = await exportListDonates(newPage, id);
+      if(res?.data) {
+        downloadExcelFile(res?.data)
+      }
+      setLoading(false);
+      
+    }
+  };
   // thay đổi tab list
   const handleChangeTabList = (tabList: TabListProjectFund) => {
     setTabList(tabList); // set thay đổi tab list
@@ -135,21 +156,32 @@ export default memo(function ProjectFundList() {
           <div>
             {columnTable?.length > 0 && (
               <LibTable
+                onClickShowOptios={handleShowSetting}
                 columns={columnTable}
                 data={dataProjectFunds && dataProjectFunds.datas}
                 rowIdSelects={rowIdSelects}
                 setRowIdSelects={setRowIdSelects}
                 onRowClick={onRowClick}
+                itemOptions={itemOptions}
               />
             )}
           </div>
         </div>
-        <div>
-          <BaseButton
-            disabled={rowIdSelects?.length === 0}
-            title="Xóa dự án"
-            onClick={handleCallApiProjectFundsDeletes}
-          />
+        <div className="d-flex " style={{ gap: "20px" }}>
+          <div>
+            <BaseButton
+              disabled={rowIdSelects?.length === 0}
+              title="Xóa dự án"
+              onClick={handleCallApiProjectFundsDeletes}
+            />
+          </div>
+          <div>
+            <BaseButton
+              disabled={rowIdSelects?.length === 0}
+              title="Xuất lịch sử ủng hộ"
+              onClick={handleCallApiProjectFundsDeletes}
+            />
+          </div>
         </div>
       </div>
     </div>

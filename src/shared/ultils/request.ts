@@ -43,7 +43,8 @@ export const customRequest = async (
   method: "GET" | "POST" | "PUT" | "DELETE",
   url: string,
   body?: any,
-  headers?: any
+  headers?: any,
+  responseType: "json" | "blob" = "json" // Default to 'json' for regular requests
 ) => {
   const config: AxiosRequestConfig = {
     method,
@@ -52,6 +53,7 @@ export const customRequest = async (
       "Content-Type": "application/json", // Mặc định là application/json
       ...headers, // Thêm các headers tùy chỉnh
     },
+    responseType,
     [EAxiosResponse.DATA]: body, // Dữ liệu cho body
   };
 

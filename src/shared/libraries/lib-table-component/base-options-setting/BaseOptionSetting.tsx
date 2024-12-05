@@ -2,7 +2,7 @@ import {  Dropdown } from "antd";
 import './BaseOptionSetting.scss'
 interface Props {
   items?: any[];
-  onClick?: (key: any, id: any) => void;
+  onClick?: (key: string, id: string) => void;
   icon?: any;
   idItem?: any
 }

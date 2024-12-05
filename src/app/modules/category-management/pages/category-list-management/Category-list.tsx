@@ -82,8 +82,8 @@ export default memo(function CategoryList() {
   }, [reducerCategory]);
   return (
     <div className="user-inputs">
-      <div className="user-info" style={{ alignItems: "start" }}>
-        <div className="user-label">
+      <div className="user-info" style={{ alignItems: "center" }}>
+        <div className="user-label " style={{textAlign:'center'}}>
           <h3 className="w-100">Các danh mục</h3>
         </div>
         {columnTable?.length > 0 && (

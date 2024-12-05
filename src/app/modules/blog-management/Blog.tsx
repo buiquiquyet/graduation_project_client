@@ -11,10 +11,10 @@ import { getListProjectFunds } from "../project-admin-management/services/Projec
 import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
 import { ProjectFundFields } from "../project-admin-management/constants/Project-fund.interface";
 import { formatCurrency, getImgCommon } from "@/shared/user-const";
+import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
 // dự án
 function BlogComponent() {
   const { setLoading } = useContextCommon();
-  const page: Page = new Page();
   const [dataProjectFunds, setDataProjectFunds] = useState<ApiResponseTable>({
     currentPage: 1,
     datas: [],
@@ -22,6 +22,8 @@ function BlogComponent() {
     totalPages: 0,
     totalRecords: 0,
   }); // data trả về
+  const pages: Page = new Page();
+  const [page, setPages] = useState(pages); // page của table
   const [activeTab, setAcitveTab] = useState<TabListProjectFund>(
     TabListProjectFund.IN_PROCESSING
   );
@@ -34,7 +36,9 @@ function BlogComponent() {
     page: Page,
     activeTab: TabListProjectFund
   ) => {
+    page = { ...page, pageSize: page.perPageOptions[0] };
     setLoading(true);
+    
     const res: any = await getListProjectFunds(page, activeTab);
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
@@ -49,9 +53,16 @@ function BlogComponent() {
       });
     }
   };
+  // thay đổi page
+  const handleChangePage = (event: any, newPage: any) => {
+    setPages({
+      ...page,
+      pageNumber: newPage,
+    });
+  };
   useEffect(() => {
     handleCallApiProjectFundsList(page, activeTab);
-  }, []);
+  }, [page]);
   return (
     <div className="blog-component">
       <div className="d-flex flex-column" style={{ gap: "50px" }}>
@@ -198,6 +209,17 @@ function BlogComponent() {
                     Chưa có thông tin dự án.
                   </h5>
                 </div>
+              )}
+              {/* pagination */}
+              {dataProjectFunds.datas &&
+             (
+                <LibBasePagination
+                  totalPage={dataProjectFunds.totalPages}
+                  onClick={(event, newPage) => handleChangePage(event, newPage)}
+                  totalRecords={dataProjectFunds.totalRecords}
+                  pageNumber={page.pageNumber}
+                  isShowTotalRecord={false}
+                />
               )}
             </div>
           </div>
