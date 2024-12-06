@@ -1,4 +1,4 @@
-.category-management {
+.project-fund-user-management {
   span {
     color: rgb(66, 66, 66);
   }
@@ -15,7 +15,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 70px;
+    gap: 100px;
   }
   .user-avatar {
     .user-head {
@@ -51,7 +51,7 @@
     align-items: center;
     justify-content: center;
     // align-items: start;
-    gap: 50px;
+    gap: 80px;
     .user-info {
       width: 100%;
       display: flex;
@@ -71,7 +71,7 @@
     }
     .input-label {
       display: flex;
-      width: 70%;
+      width: 100%;
       flex-direction: column;
     }
   }

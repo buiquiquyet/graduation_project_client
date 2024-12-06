@@ -202,7 +202,7 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
             <div className="container project-fund-content-list w-100 p-0">
               <LibTable columns={columnTable} data={dataListDonates?.datas} />
               {dataListDonates.datas &&
-              dataListDonates.totalRecords > page.perPageOptions[1] && (
+              dataListDonates.totalRecords > page.perPageOptions[0] && (
                 <LibBasePagination
                   totalPage={dataListDonates.totalPages}
                   onClick={(event, newPage) => handleChangePage(event, newPage)}

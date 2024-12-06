@@ -1,17 +1,17 @@
 import { memo, useEffect, useState } from "react";
 import "./Blog.scss";
-import { TabListProjectFund } from "../project-admin-management/constants/Project-fund.enum";
 import { Link } from "react-router-dom";
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
 import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import { Page } from "@/shared/ultils/Page";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
-import { getListProjectFunds } from "../project-admin-management/services/Project-fund.services";
 import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
-import { ProjectFundFields } from "../project-admin-management/constants/Project-fund.interface";
 import { formatCurrency, getImgCommon } from "@/shared/user-const";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
+import { getListProjectFunds } from "../project-fund-admin-management/services/Project-fund.services";
+import { TabListProjectFund } from "../project-fund-admin-management/constants/Project-fund.enum";
+import { ProjectFundFields } from "../project-fund-admin-management/constants/Project-fund.interface";
 // dự án
 function BlogComponent() {
   const { setLoading } = useContextCommon();
@@ -36,9 +36,8 @@ function BlogComponent() {
     page: Page,
     activeTab: TabListProjectFund
   ) => {
-    page = { ...page, pageSize: page.perPageOptions[0] };
     setLoading(true);
-    
+
     const res: any = await getListProjectFunds(page, activeTab);
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
@@ -205,22 +204,27 @@ function BlogComponent() {
                 ))
               ) : (
                 <div className="w-100" style={{ padding: "15px" }}>
-                  <h5 className="w-100  d-flex align-items-center" style={{fontWeight:'bold'}}>
+                  <h5
+                    className="w-100  d-flex align-items-center"
+                    style={{ fontWeight: "bold" }}
+                  >
                     Chưa có thông tin dự án.
                   </h5>
                 </div>
               )}
               {/* pagination */}
               {dataProjectFunds.datas &&
-             (
-                <LibBasePagination
-                  totalPage={dataProjectFunds.totalPages}
-                  onClick={(event, newPage) => handleChangePage(event, newPage)}
-                  totalRecords={dataProjectFunds.totalRecords}
-                  pageNumber={page.pageNumber}
-                  isShowTotalRecord={false}
-                />
-              )}
+                dataProjectFunds.totalRecords > page.perPageOptions[0] && (
+                  <LibBasePagination
+                    totalPage={dataProjectFunds.totalPages}
+                    onClick={(event, newPage) =>
+                      handleChangePage(event, newPage)
+                    }
+                    totalRecords={dataProjectFunds.totalRecords}
+                    pageNumber={page.pageNumber}
+                    isShowTotalRecord={false}
+                  />
+                )}
             </div>
           </div>
         </section>

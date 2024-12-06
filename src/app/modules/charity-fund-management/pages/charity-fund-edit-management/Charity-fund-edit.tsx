@@ -124,6 +124,7 @@ export default memo(function CharityFundEdit() {
       dispatch(addIdRow("")); // set lại id row = ""
       dispatch(addIsEdit(false)); // set lại trạng thái edit  = false
     }
+    
   }, [reducerCharityFund]);
   return (
     <form onSubmit={formik.handleSubmit} className=" user-inputs w-100">
@@ -136,7 +137,6 @@ export default memo(function CharityFundEdit() {
           formInputsInfoCharityFund.map((item, index) => (
             <Fragment key={index}>
               <div className="input-label">
-                <span>{item?.label}</span>
                 <LibSwitchInput item={item} formik={formik} />
               </div>
             </Fragment>

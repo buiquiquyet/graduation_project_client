@@ -25,25 +25,28 @@ export class HeaderConst {
       key: EHeaderTabKey.CONTACT,
     },
     {
-      value: EHeaderTab.DONATE,
-      label: EHeaderTabText.DONATE,
-      key: EHeaderTabKey.DONATE,
-    },
-    {
-      value: EHeaderTab.EVENTS,
-      label: EHeaderTabText.EVENTS,
-      key: EHeaderTabKey.EVENTS,
+      value: EHeaderTab.INSTRUCT,
+      label: EHeaderTabText.INSTRUCT,
+      key: EHeaderTabKey.INSTRUCT,
     },
     {
       value: EHeaderTab.LOGIN,
       label: EHeaderTabText.LOGIN,
       key: EHeaderTabKey.LOGIN,
     },
-    
   ];
   // mảng các element tippy user hoặc admin
-  public static getArrayTippyUser(role: RoleUser = RoleUser.USER) {
-    const roleUser =  [
+  public static getArrayTippyUser(
+    role: RoleUser = RoleUser.USER,
+    isEmissary: boolean = false
+  ) {
+    // role của người dùng khi là sứ giả sẽ được tạo dự án
+    const roleEmissary = {
+      value: EHeaderTab.PROJECT_FUND_USER,
+      label: EHeaderTabText.PROJECT_FUND_USER,
+      key: EHeaderTabKey.PROJECT_FUND_USER,
+    };
+    const roleUser = [
       {
         value: EHeaderTab.ROLE,
         label: EHeaderTabText.ROLE,
@@ -62,6 +65,11 @@ export class HeaderConst {
         key: EHeaderTabKey.PROJECT_FUND,
       },
       {
+        value: EHeaderTab.APPROVAL_PROJECT,
+        label: EHeaderTabText.APPROVAL_PROJECT,
+        key: EHeaderTabKey.APPROVAL_PROJECT,
+      },
+      {
         value: EHeaderTab.CHARITY_FUND,
         label: EHeaderTabText.CHARITY_FUND,
         key: EHeaderTabKey.CHARITY_FUND,
@@ -71,8 +79,11 @@ export class HeaderConst {
         label: EHeaderTabText.CATEGORY,
         key: EHeaderTabKey.CATEGORY,
       },
-      ...roleUser
-    ]
-    return role === RoleUser.ADMIN? roleAdmin : roleUser;
+     
+      ...roleUser,
+    ];
+    if (role === RoleUser.ADMIN) return roleAdmin;
+    if (isEmissary) return [roleEmissary, ...roleUser];
+    return roleUser;
   }
 }

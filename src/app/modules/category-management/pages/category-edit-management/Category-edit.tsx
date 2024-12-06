@@ -109,6 +109,7 @@ export default memo(function CategoryEdit() {
       dispatch(addIdRowCategory("")); // set lại id row = ""
       dispatch(addIsEditCategory(false)); // set lại trạng thái edit  = false
     }
+    
   }, [reducerCategory]);
   return (
     <form onSubmit={formik.handleSubmit} className=" user-inputs w-100">
@@ -121,7 +122,6 @@ export default memo(function CategoryEdit() {
           formInputsInfoCharityFund.map((item, index) => (
             <Fragment key={index}>
               <div className="input-label">
-                <span>{item?.label}</span>
                 <LibSwitchInput item={item} formik={formik} />
               </div>
             </Fragment>

@@ -4,12 +4,12 @@ import { memo, useEffect, useState } from "react";
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import {
-  deleteProjectFunds,
-  getListProjectFunds,
-} from "../../services/Project-fund.services";
+  deleteProjectFundsProcessing,
+  getListProjectFundsProcessing,
+} from "../../services/Project-fund-user.services";
 import { Page } from "@/shared/ultils/Page";
-import { ProjectFundListConst } from "../../constants/Project-fund-list.const";
-import "./Project-fund-list.scss";
+import { ProjectFundProcessingListConst } from "../../constants/Project-fund-user-list.const";
+import "./Project-fund-user-list.scss";
 import BaseButton from "@/shared/component/base-button/BaseButton";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducerProjectFund } from "@/shared/redux/selector";
@@ -24,46 +24,48 @@ import {
   addIsDelSuccessProjectFund,
   addIsEditProjectFund,
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
-import { TabListProjectFund } from "../../constants/Project-fund.enum";
-import { ItemOptionsKey } from "@/shared/constants/item-options-setting";
-import { ListIcons } from "@/shared/constants/list-icons";
-import { exportListDonates } from "@/app/modules/project-fund-detail-management/services/ProjectFundContentAndList.service";
-import { downloadExcelFile } from "@/shared/constants/export-excel";
+import { TabListProjectFundProcessing } from "../../constants/Project-fund-user.enum";
+import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
+import { UserFields } from "@/app/modules/user-management/constants/User.interface";
 
 export default memo(function ProjectFundList() {
-  const { setLoading } = useContextCommon();
-  const page: Page = new Page();
-  const [dataProjectFunds, setDataProjectFunds] = useState<ApiResponseTable>({
-    currentPage: 1,
-    datas: [],
-    message: "",
-    totalPages: 0,
-    totalRecords: 0,
-  }); // data trả về
-  const itemOptions = [
-    { key: ItemOptionsKey.EXPORT, label: ListIcons.getIcon("Xuất lịch sử ủng hộ") },
-  ];
+  const { setLoading, dataUser } = useContextCommon();
+  const pages: Page = new Page();
+  const [page, setPages] = useState(pages); // page của table
+  const [dataProjectFundsProcessing, setDataProjectFundsProcessing] =
+    useState<ApiResponseTable>({
+      currentPage: 1,
+      datas: [],
+      message: "",
+      totalPages: 0,
+      totalRecords: 0,
+    }); // data trả về
+
   const reducerProjectFund = useSelector(ReducerProjectFund); // redux dự án
   const dispatch = useDispatch(); // action redux
 
   const [rowIdSelects, setRowIdSelects] = useState<string[]>([]); // mảng id khi checkbox
   const [rowId, setRowId] = useState<string>(""); // id khi click vào 1 row
-  const [tabList, setTabList] = useState<TabListProjectFund>(
-    TabListProjectFund.IN_PROCESSING
+  const [tabList, setTabList] = useState<TabListProjectFundProcessing>(
+    TabListProjectFundProcessing.PROCESSING
   ); // tab đang diễn ra và đã kết thúc
-  const columnTable = ProjectFundListConst.columnProjectFund; // column table
+  const columnTable = ProjectFundProcessingListConst.columnProjectFund; // column table
   // call api get list dự án
   const handleCallApiProjectFundsList = async (
     page: Page,
-    filterTabList: TabListProjectFund
+    filterTabList: TabListProjectFundProcessing
   ) => {
     setLoading(true);
-    const res: any = await getListProjectFunds(page, filterTabList);
+    const res: any = await getListProjectFundsProcessing(
+      page,
+      filterTabList,
+      dataUser?.[UserFields.ID]
+    );
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
-      setDataProjectFunds(res?.data);
+      setDataProjectFundsProcessing(res?.data);
     } else {
-      setDataProjectFunds({
+      setDataProjectFundsProcessing({
         currentPage: 1,
         datas: [],
         message: "",
@@ -76,7 +78,7 @@ export default memo(function ProjectFundList() {
   const handleCallApiProjectFundsDeletes = async () => {
     if (rowIdSelects?.length > 0) {
       setLoading(true);
-      const res: any = await deleteProjectFunds(rowIdSelects);
+      const res: any = await deleteProjectFundsProcessing(rowIdSelects);
       setLoading(false);
       if (handleResponseInterceptor(res)) {
         // set lại redux của biến button success để gọi lại list và cập nhật lại form edit
@@ -100,30 +102,23 @@ export default memo(function ProjectFundList() {
       dispatch(addIsEditProjectFund(true));
     }
   };
-  // click vào setting option row
-  const handleShowSetting = async (key: any, id: any) => {
-    if (key?.key === ItemOptionsKey.EXPORT) {
-      // export excel
-      setLoading(true);
-      let newPage = { ...page, pageSize: 999 };
-      const res: any = await exportListDonates(newPage, id);
-      if(res?.data) {
-        downloadExcelFile(res?.data)
-      }
-      setLoading(false);
-      
-    }
+  // change page table
+  const handleChangePage = (event: any, newPage: any) => {
+    setPages({
+      ...page,
+      pageNumber: newPage,
+    });
   };
   // thay đổi tab list
-  const handleChangeTabList = (tabList: TabListProjectFund) => {
+  const handleChangeTabList = (tabList: TabListProjectFundProcessing) => {
     setTabList(tabList); // set thay đổi tab list
     handleCallApiProjectFundsList(page, tabList); // gọi api khi thay đổi tab list
   };
   useEffect(() => {
-    if (!rowId || !reducerProjectFund?.[InitProjectFund.ID_ROW]) {
+    if (!rowId || !reducerProjectFund?.[InitProjectFund.ID_ROW] || page) {
       handleCallApiProjectFundsList(page, tabList);
     }
-  }, [reducerProjectFund]);
+  }, [reducerProjectFund, page]);
 
   return (
     <div className="user-inputs">
@@ -133,37 +128,45 @@ export default memo(function ProjectFundList() {
         </div>
         <div className="w-100">
           <div className="w-100 mb-4 d-flex align-item-start tab-list-project-fund ">
-            <h5
-              className={`tab ${
-                tabList === TabListProjectFund.IN_PROCESSING ? "active-tab" : ""
-              }`}
-              onClick={() =>
-                handleChangeTabList(TabListProjectFund.IN_PROCESSING)
-              }
-            >
-              Đang diễn ra
-            </h5>
-            <h5
-              className={`tab ${
-                tabList === TabListProjectFund.ENDED ? "active-tab" : ""
-              }`}
-              onClick={() => handleChangeTabList(TabListProjectFund.ENDED)}
-            >
-              Đã kết thúc
-            </h5>
+            {ProjectFundProcessingListConst.tabTabeList.map(
+              (item: any, index: number) => (
+                <h5
+                  key={index}
+                  className={`tab ${
+                    tabList === item?.value ? "active-tab" : ""
+                  }`}
+                  onClick={() => handleChangeTabList(item?.value)}
+                >
+                  {item?.label}
+                </h5>
+              )
+            )}
           </div>
           <div>
             {columnTable?.length > 0 && (
               <LibTable
-                onClickShowOptios={handleShowSetting}
                 columns={columnTable}
-                data={dataProjectFunds && dataProjectFunds.datas}
+                data={
+                  dataProjectFundsProcessing && dataProjectFundsProcessing.datas
+                }
                 rowIdSelects={rowIdSelects}
                 setRowIdSelects={setRowIdSelects}
                 onRowClick={onRowClick}
-                itemOptions={itemOptions}
               />
             )}
+          </div>
+          <div>
+            {dataProjectFundsProcessing.datas &&
+              dataProjectFundsProcessing.totalRecords >
+                page.perPageOptions[0] && (
+                <LibBasePagination
+                  totalPage={dataProjectFundsProcessing.totalPages}
+                  onClick={(event, newPage) => handleChangePage(event, newPage)}
+                  totalRecords={dataProjectFundsProcessing.totalRecords}
+                  pageNumber={page.pageNumber}
+                  isShowTotalRecord={false}
+                />
+              )}
           </div>
         </div>
         <div className="d-flex " style={{ gap: "20px" }}>
@@ -171,13 +174,6 @@ export default memo(function ProjectFundList() {
             <BaseButton
               disabled={rowIdSelects?.length === 0}
               title="Xóa dự án"
-              onClick={handleCallApiProjectFundsDeletes}
-            />
-          </div>
-          <div>
-            <BaseButton
-              disabled={rowIdSelects?.length === 0}
-              title="Xuất lịch sử ủng hộ"
               onClick={handleCallApiProjectFundsDeletes}
             />
           </div>

@@ -21,10 +21,12 @@ import {
   addIsDelSuccessCategory,
   addIsEditCategory,
 } from "@/shared/reducer/category-slice/CategorySlice";
+import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
 
 export default memo(function CategoryList() {
   const { setLoading } = useContextCommon();
-
+  const pages: Page = new Page();
+  const [page, setPages] = useState(pages); // page của table
   const [dataCategorys, setDataCategorys] = useState<ApiResponseTable>({
     currentPage: 1,
     datas: [],
@@ -41,7 +43,6 @@ export default memo(function CategoryList() {
   const columnTable = CategoryListConst.columnCategory; // column table
   // call api get list danh mục
   const handleCallApiCategorysList = async () => {
-    const page: Page = new Page();
     setLoading(true);
     const res: any = await getListCategorys(page);
     setLoading(false);
@@ -75,15 +76,22 @@ export default memo(function CategoryList() {
       dispatch(addIsEditCategory(true));
     }
   };
+  // change page table
+  const handleChangePage = (event: any, newPage: any) => {
+    setPages({
+      ...page,
+      pageNumber: newPage,
+    });
+  };
   useEffect(() => {
-    if (!rowId || !reducerCategory?.[InitCategory.ID_ROW]) {
+    if (!rowId || !reducerCategory?.[InitCategory.ID_ROW] || page) {
       handleCallApiCategorysList();
     }
-  }, [reducerCategory]);
+  }, [reducerCategory, page]);
   return (
     <div className="user-inputs">
       <div className="user-info" style={{ alignItems: "center" }}>
-        <div className="user-label " style={{textAlign:'center'}}>
+        <div className="user-label " style={{ textAlign: "center" }}>
           <h3 className="w-100">Các danh mục</h3>
         </div>
         {columnTable?.length > 0 && (
@@ -95,6 +103,18 @@ export default memo(function CategoryList() {
             onRowClick={onRowClick}
           />
         )}
+        <div>
+          {dataCategorys.datas &&
+            dataCategorys.totalRecords > page.perPageOptions[0] && (
+              <LibBasePagination
+                totalPage={dataCategorys.totalPages}
+                onClick={(event, newPage) => handleChangePage(event, newPage)}
+                totalRecords={dataCategorys.totalRecords}
+                pageNumber={page.pageNumber}
+                isShowTotalRecord={false}
+              />
+            )}
+        </div>
         <div>
           <BaseButton
             disabled={rowIdSelects?.length === 0}

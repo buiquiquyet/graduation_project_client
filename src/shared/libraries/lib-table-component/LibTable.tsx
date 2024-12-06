@@ -18,6 +18,7 @@ import { MyContext } from "@/App";
 import config from "@/shared/ultils/config";
 import ImageModal from "../gallery-component/Gallery";
 import { convertDate, formatCurrency } from "@/shared/user-const";
+import { TabListProjectFundProcessing } from "@/app/modules/project-fund-user-management/constants/Project-fund-user.enum";
 
 interface PropsTable {
   columns: any[];
@@ -70,6 +71,14 @@ const LibTable: React.FC<PropsTable> = ({
     setRowIdSelects(newSelectedRows);
     setSelectAll(newSelectedRows.length === data.length);
   };
+  // trạng thái item
+  const getStatusItem = (status: TabListProjectFundProcessing): any => {
+    if (status === TabListProjectFundProcessing.PROCESSING)
+      return { label: "Chờ duyệt", value: "#BB8D0B" };
+    else if (status === TabListProjectFundProcessing.APPROVED)
+      return { label: "Đã duyệt", value: "#0079C1" };
+    return { label: "Từ chối duyệt", value: "#F87171" };
+  };
   useEffect(() => {
     if (rowIdSelects && rowIdSelects.length === 0) {
       setSelectAll(false);
@@ -102,7 +111,7 @@ const LibTable: React.FC<PropsTable> = ({
                         event.stopPropagation(); // Ngừng sự kiện lan truyền khi click vào row
                       }}
                     >
-                      <SVG src={publicUrl + "/icons/setting.svg"}></SVG>
+                      <SVG src={publicUrl + "/icons/setting.svg"} />
                     </div>
                   ) : (
                     column.label
@@ -131,132 +140,143 @@ const LibTable: React.FC<PropsTable> = ({
                           column.type === ETableColumnType.NOTE ? "150px" : "",
                       }}
                     >
-                      {column.type === ETableColumnType.CHECKBOX_ACTION ? (
-                        <div style={{ textAlign: "center" }}>
-                          <Checkbox
-                            checked={selectedRows.includes(row.Id)}
-                            onChange={(event) => {
-                              handleCheckboxChange(event, row.Id);
-                            }}
-                            onClick={(event) => event.stopPropagation()}
-                          />
-                        </div>
-                      ) : column.type === ETableColumnType.ICON ? (
-                        <div
-                          onClick={(event) => {
-                            event.stopPropagation(); // Ngừng sự kiện lan truyền khi click vào row
-                          }}
-                          style={{ textAlign: "center" }}
-                        >
-                          <BaseOptionSettings
-                            idItem={row.Id}
-                            onClick={onClickShowOptios}
-                            icon={
-                              <SVG
-                                src={publicUrl + "/icons/moreSetting.svg"}
-                              ></SVG>
-                            }
-                            items={itemOptions}
-                          />
-                        </div>
-                      ) : column.type === ETableColumnType.FILE ? (
-                        <div
-                          style={{ cursor: "pointer" }}
-                          onClick={() =>
-                            Number(row[column.accessor]) > 0
-                              ? onClickOpenFile?.(row.Id)
-                              : null
-                          }
-                        >
-                          {`(${row[column.accessor]}  file)`}
-                        </div>
-                      ) : column.type === ETableColumnType.IMAGE ? (
-                        <div
-                          style={{ cursor: "pointer", position: "relative" }}
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <img
-                            className="img-table"
-                            src={
-                              Array.isArray(row[column.accessor])
-                                ? config.FILE_URL + row[column.accessor]?.[0] // Nếu là mảng, lấy phần tử đầu tiên
-                                : config.FILE_URL + row[column.accessor] // Nếu là chuỗi, sử dụng chuỗi trực tiếp
-                            }
-                          />
-                          <ImageModal
-                            className="img-table-modal"
-                            imgSrcList={
-                              Array.isArray(row[column.accessor])
-                                ? row[column.accessor].map((img: string) => img) // Nếu là mảng, xử lý từng phần tử
-                                : [row[column.accessor]] // Nếu là string, chuyển thành mảng với 1 phần tử
-                            }
-                          ></ImageModal>
-                        </div>
-                      ) : column.type === ETableColumnType.NOTE ? (
-                        <div
-                          className="text-note "
-                          style={{
-                            padding: row[column.accessor] === "" ? "20px" : "",
-                          }}
-                          // onClick={() => {
-                          //   row[column.accessor]
-                          //     ? onClickOpenNote?.(row.Id)
-                          //     : null;
-                          // }}
-                        >
-                          {row[column.accessor]}
-                        </div>
-                      ) : column.type === ETableColumnType.NUMBER ? (
-                        <div
-                          className="text-note "
-                          style={{
-                            padding: row[column.accessor] === "" ? "20px" : "",
-                          }}
-                          // onClick={() => {
-                          //   row[column.accessor]
-                          //     ? onClickOpenNote?.(row.Id)
-                          //     : null;
-                          // }}
-                        >
-                          {formatCurrency(row[column.accessor])}
-                        </div>
-                      ) : column.type === ETableColumnType.TEXT_QUILL ? (
-                        <div
-                          className="text-note "
-                          dangerouslySetInnerHTML={{
-                            __html: row[column.accessor],
-                          }}
-                        ></div>
-                      ) : column.type === ETableColumnType.STATUS ? (
-                        <div>
-                          <div
-                            className="status-col"
-                            style={{
-                              minWidth: "120px",
-                              background:
-                                row[column.accessor] === "0" ||
-                                row[column.accessor] === ""
-                                  ? "#94b8b8"
-                                  : row[column.accessor] === "1"
-                                  ? "#33ff33"
-                                  : "red",
-                            }}
-                          >
-                            {row[column.accessor] === "0" ||
-                            row[column.accessor] === ""
-                              ? "Chờ duyệt"
-                              : row[column.accessor] === "1"
-                              ? "Đã duyệt"
-                              : "Không duyệt"}
-                          </div>
-                        </div>
-                      ) : column.type === ETableColumnType.DATE ? (
-                        <div>
-                          <div>{convertDate(row[column.accessor])}</div>
-                        </div>
-                      ) : (
-                        <div className="text-note">{row[column.accessor]}</div>
-                      )}
+                      {(() => {
+                        switch (column.type) {
+                          case ETableColumnType.CHECKBOX_ACTION:
+                            return (
+                              <div style={{ textAlign: "center" }}>
+                                <Checkbox
+                                  checked={selectedRows.includes(row.Id)}
+                                  onChange={(event) => {
+                                    handleCheckboxChange(event, row.Id);
+                                  }}
+                                  onClick={(event) => event.stopPropagation()}
+                                />
+                              </div>
+                            );
+
+                          case ETableColumnType.ICON:
+                            return (
+                              <div
+                                onClick={(event) => {
+                                  event.stopPropagation(); // Ngừng sự kiện lan truyền khi click vào row
+                                }}
+                                style={{ textAlign: "center" }}
+                              >
+                                <BaseOptionSettings
+                                  idItem={row.Id}
+                                  onClick={onClickShowOptios}
+                                  icon={
+                                    <SVG
+                                      src={publicUrl + "/icons/moreSetting.svg"}
+                                    ></SVG>
+                                  }
+                                  items={itemOptions}
+                                />
+                              </div>
+                            );
+
+                          case ETableColumnType.FILE:
+                            return (
+                              <div
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  Number(row[column.accessor]) > 0
+                                    ? onClickOpenFile?.(row.Id)
+                                    : null
+                                }
+                              >
+                                {`(${row[column.accessor]} file)`}
+                              </div>
+                            );
+
+                          case ETableColumnType.IMAGE:
+                            return (
+                              <div
+                                style={{
+                                  cursor: "pointer",
+                                  position: "relative",
+                                }}
+                                onClick={(event) => event.stopPropagation()}
+                              >
+                                <img
+                                  className="img-table"
+                                  src={
+                                    Array.isArray(row[column.accessor])
+                                      ? config.FILE_URL +
+                                        row[column.accessor]?.[0] // Nếu là mảng, lấy phần tử đầu tiên
+                                      : config.FILE_URL + row[column.accessor] // Nếu là chuỗi, sử dụng chuỗi trực tiếp
+                                  }
+                                />
+                                <ImageModal
+                                  className="img-table-modal"
+                                  imgSrcList={
+                                    Array.isArray(row[column.accessor])
+                                      ? row[column.accessor].map(
+                                          (img: string) => img
+                                        ) // Nếu là mảng, xử lý từng phần tử
+                                      : [row[column.accessor]] // Nếu là string, chuyển thành mảng với 1 phần tử
+                                  }
+                                ></ImageModal>
+                              </div>
+                            );
+
+                          case ETableColumnType.NOTE:
+                          case ETableColumnType.NUMBER:
+                            return (
+                              <div
+                                className="text-note "
+                                style={{
+                                  padding:
+                                    row[column.accessor] === "" ? "20px" : "",
+                                }}
+                              >
+                                {column.type === ETableColumnType.NUMBER
+                                  ? formatCurrency(row[column.accessor])
+                                  : row[column.accessor]}
+                              </div>
+                            );
+
+                          case ETableColumnType.TEXT_QUILL:
+                            return (
+                              <div
+                                className="text-note "
+                                dangerouslySetInnerHTML={{
+                                  __html: row[column.accessor],
+                                }}
+                              ></div>
+                            );
+
+                          case ETableColumnType.STATUS:
+                            return (
+                              <div>
+                                <div
+                                  className="status-col"
+                                  style={{
+                                    minWidth: "120px",
+                                    background: getStatusItem(
+                                      row[column.accessor]
+                                    )?.value,
+                                  }}
+                                >
+                                  {getStatusItem(row[column.accessor])?.label}
+                                </div>
+                              </div>
+                            );
+
+                          case ETableColumnType.DATE:
+                            return (
+                              <div>{convertDate(row[column.accessor])}</div>
+                            );
+
+                          default:
+                            return (
+                              <div className="text-note">
+                                {row[column.accessor]}
+                              </div>
+                            );
+                        }
+                      })()}
                     </TableCell>
                   ))}
                 </TableRow>

@@ -150,7 +150,6 @@ export default memo(function UserEdit() {
             formInputsInfoUser.map((item, index) => (
               <Fragment key={index}>
                 <div className="input-label">
-                  <span>{item?.label}</span>
                   <LibSwitchInput
                     item={item}
                     formik={formik}
@@ -170,7 +169,6 @@ export default memo(function UserEdit() {
             formInputsInfoAddress.map((item, index) => (
               <Fragment key={index}>
                 <div className="input-label">
-                  <span>{item?.label}</span>
                   <LibSwitchInput
                     item={item}
                     formik={formik}

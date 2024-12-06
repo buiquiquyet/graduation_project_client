@@ -45,6 +45,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
   if (item.type === InputTypeEnum.INPUT) {
     return (
       <div className="w-100 input-switch">
+        <span>{item?.label}</span>
         <Input
           className={`w-100 ${checkError() ? "border-error" : ""}`}
           type={item.typeInput}
@@ -64,7 +65,9 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
   } else if (item.type === InputTypeEnum.DATE) {
     return (
       <div className="w-100 input-switch">
+        <span>{item?.label}</span>
         <DatePicker
+          placeholder=""
           style={item?.style}
           className={`w-100 ${checkError() ? "border-error" : ""}`}
           value={
@@ -88,6 +91,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
   } else if (item.type === InputTypeEnum.INPUT_DROPDOWN) {
     return (
       <div className="w-100 input-switch">
+        <span>{item?.label}</span>
         <Select
           style={item?.style}
           className={`w-100 ${checkError() ? "border-error" : ""}`}
@@ -119,6 +123,7 @@ const LibSwitchInput: React.FC<CustomInputProps> = ({
   } else if (item.type === InputTypeEnum.TEXT_AREA) {
     return (
       <div className="w-100 input-switch">
+        <span>{item?.label}</span>
         <Input.TextArea
           className={`w-100 custom-textarea ${
             checkError() ? "border-error" : ""

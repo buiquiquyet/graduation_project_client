@@ -69,7 +69,6 @@ const LibCommentComponent: React.FC<LibCommnetComponentProps> = ({
     page: Page
   ) => {
     setLoading(true);
-    page = { ...page, pageSize: page.perPageOptions[0] };
     const res: any = await getListComments(page, projectFundId);
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {

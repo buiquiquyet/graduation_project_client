@@ -5,8 +5,6 @@ import { FaUser } from "react-icons/fa";
 import "./ProjectFundDetail.scss";
 import { useParams } from "react-router-dom";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
-import { getProjectFund } from "../project-admin-management/services/Project-fund.services";
-import { ProjectFundFields } from "../project-admin-management/constants/Project-fund.interface";
 import { formatCurrency, getImgCommon } from "@/shared/user-const";
 import { ButtonColor } from "@/shared/constants/button.const";
 import ImageModal from "@/shared/libraries/gallery-component/Gallery";
@@ -16,6 +14,8 @@ import ProjectFundContentAndList from "./pages/ProjectFundContentAndList/Project
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
 import SlideHomeComponent from "@/app/modules/home-management/slide-management/SlideHome";
+import { getProjectFund } from "../project-fund-admin-management/services/Project-fund.services";
+import { ProjectFundFields } from "../project-fund-admin-management/constants/Project-fund.interface";
 const ProjectFundDetailComponent = () => {
   const context = useContext(MyContext);
   if (!context) {

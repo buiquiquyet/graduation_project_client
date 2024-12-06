@@ -4,16 +4,16 @@ import "swiper/css/navigation"; // Import Swiper Navigation styles
 import "swiper/css/pagination"; // Import Swiper Pagination styles
 import Slide from "@/shared/libraries/slide-component/Slide";
 import { memo, useEffect, useState } from "react";
-import { getListProjectFunds } from "../../project-admin-management/services/Project-fund.services";
 import { Page } from "@/shared/ultils/Page";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { Link } from "react-router-dom";
 import "./SlideHome.scss";
 import { formatCurrency, getImgCommon } from "@/shared/user-const";
-import { ProjectFundFields } from "../../project-admin-management/constants/Project-fund.interface";
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
 import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
-import { TabListProjectFund } from "../../project-admin-management/constants/Project-fund.enum";
+import { getListProjectFunds } from "../../project-fund-admin-management/services/Project-fund.services";
+import { TabListProjectFund } from "../../project-fund-admin-management/constants/Project-fund.enum";
+import { ProjectFundFields } from "../../project-fund-admin-management/constants/Project-fund.interface";
 // Example public URL
 interface SlideHomeComponentProps {
   slidesPerView?: number;

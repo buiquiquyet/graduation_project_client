@@ -16,7 +16,8 @@ export enum UserFields {
     BIRTH_DAY = "birthDay",  
     WARD = "ward",           
     DISTRICT = "district",   
-    ADDRESS = "address"      
+    ADDRESS = "address",      
+    IS_EMISSARY = "isEmissary", // có phải là sứ giả      
 }
 
 export interface UsersDTO {

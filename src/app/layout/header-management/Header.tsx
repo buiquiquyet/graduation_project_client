@@ -29,7 +29,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
   // phân quyền
   const [role, setRole] = useState<RoleUser>(RoleUser.NONE);
   const [arrTabHome, setArrTabHome] = useState<any[]>(HeaderConst.arrTabHeader); // mảng tab header Home
-  const arrTabHomeUser = HeaderConst.getArrayTippyUser; // mảng element tippy user
+  const arrTippyHomeUser: any = HeaderConst.getArrayTippyUser; // mảng element tippy user
   // mảng các tab
   const onClickActiveHeader = (activeTab: EHeaderTab) => {
     setActiveTab(activeTab);
@@ -139,7 +139,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                       </div>
                     </div>
                     <MenuHeadeLessTippy>
-                      {arrTabHomeUser(dataUser?.[UserFields.ROLE])?.map(
+                      {arrTippyHomeUser(dataUser?.[UserFields.ROLE], dataUser?.[UserFields.IS_EMISSARY])?.map(
                         (item: any, index: number) => (
                           <Fragment key={index}>
                             <Link

@@ -20,10 +20,12 @@ import {
 } from "@/shared/reducer/charity-fund-slice/CharityFundSlice";
 import { InitCharityFund } from "@/shared/reducer/charity-fund-slice/InitCharityFundProps";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
+import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
 
 export default memo(function CharityFundList() {
   const { setLoading } = useContextCommon();
-
+  const pages: Page = new Page();
+  const [page, setPages] = useState(pages); // page của table
   const [dataCharityFunds, setDataCharityFunds] = useState<ApiResponseTable>({
     currentPage: 1,
     datas: [],
@@ -40,7 +42,6 @@ export default memo(function CharityFundList() {
   const columnTable = CharityFundListConst.columnCharityFund; // column table
   // call api get list quỹ
   const handleCallApiCharityFundsList = async () => {
-    const page: Page = new Page();
     setLoading(true);
     const res: any = await getListCharityFunds(page);
     setLoading(false);
@@ -68,19 +69,26 @@ export default memo(function CharityFundList() {
       }
     }
   };
+  // change page table
+  const handleChangePage = (event: any, newPage: any) => {
+    setPages({
+      ...page,
+      pageNumber: newPage,
+    });
+  };
   // khi click vào 1 row
   const onRowClick = async (idRow: string) => {
-    if (idRow !== rowId || !reducerCharityFund?.[InitCharityFund.ID_ROW]) {
+    if (idRow !== rowId || !reducerCharityFund?.[InitCharityFund.ID_ROW] ) {
       setRowId(idRow);
       dispatch(addIdRow(idRow));
       dispatch(addIsEdit(true));
     }
   };
   useEffect(() => {
-    if (!rowId || !reducerCharityFund?.[InitCharityFund.ID_ROW]) {
+    if (!rowId || !reducerCharityFund?.[InitCharityFund.ID_ROW] || page) {
       handleCallApiCharityFundsList();
     }
-  }, [reducerCharityFund]);
+  }, [reducerCharityFund, page]);
   return (
     <div className="user-inputs">
       <div className="user-info" style={{ textAlign: "center" }}>
@@ -98,6 +106,18 @@ export default memo(function CharityFundList() {
             />
           </div>
         )}
+        <div>
+          {dataCharityFunds.datas &&
+            dataCharityFunds.totalRecords > page.perPageOptions[0] && (
+              <LibBasePagination
+                totalPage={dataCharityFunds.totalPages}
+                onClick={(event, newPage) => handleChangePage(event, newPage)}
+                totalRecords={dataCharityFunds.totalRecords}
+                pageNumber={page.pageNumber}
+                isShowTotalRecord={false}
+              />
+            )}
+        </div>
         <div>
           <BaseButton
             disabled={rowIdSelects?.length === 0}

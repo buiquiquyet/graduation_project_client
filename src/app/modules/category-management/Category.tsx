@@ -1,8 +1,19 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import "./Category.scss";
 import CategoryEdit from "./pages/category-edit-management/Category-edit";
 import CategoryList from "./pages/category-list-management/Category-list";
+import { useDispatch } from "react-redux";
+import { addIdRowCategory, addIsDelSuccessCategory, addIsEditCategory, addIsSubmitSuccessCategory } from "@/shared/reducer/category-slice/CategorySlice";
 export default memo(function CategoryComponent() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(addIdRowCategory(""));
+      dispatch(addIsSubmitSuccessCategory(false));
+      dispatch(addIsEditCategory(false));
+      dispatch(addIsDelSuccessCategory(false));
+    };
+  }, [])
   return (
     <div className="category-management">
       <div className="user-wrapper">
