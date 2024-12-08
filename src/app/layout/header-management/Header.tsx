@@ -73,6 +73,15 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
       setActiveTab(value ?? EHeaderTab.HOME);
     }
   };
+
+  // xử lý active tab user
+  const handleCheckActiveUser = (activeTab: EHeaderTab): boolean => {
+    if (!arrTippyHomeUser) return false;
+    return arrTippyHomeUser(
+      dataUser?.[UserFields.ROLE],
+      dataUser?.[UserFields.IS_EMISSARY]
+    )?.some((item: any) => item?.value === activeTab);
+  };
   useEffect(() => {
     getActiveTab();
   }, []);
@@ -85,8 +94,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
         <div className="container">
           <div onClick={() => onClickActiveHeader(EHeaderTab.HOME)}>
             <Link to={"/"} className="navbar-brand label-title">
-              <div className="img-header-logo">
-                <img src={`${publicUrl + "/images/logoMain2.png"}`} />
+              <div className="img-header-logo nav-link ">
+                <img className="nav-logo" src={`${publicUrl + "/images/logoMain2.png"}`} />
               </div>
             </Link>
           </div>
@@ -127,38 +136,41 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                       <div className="user-img-home">
                         <img src={getAvatarUser(dataUser)} />
                       </div>
-                      <div className={`nav-link `} style={{ padding: "0" }}>
+                      <div style={{ padding: "0" }}>
                         <span
-                          className={`${
-                            EHeaderTab.ROLE === activeTab ? "active-user" : ""
+                          className={` nav-link ${
+                            handleCheckActiveUser(activeTab)
+                              ? "active-user"
+                              : ""
                           }`}
-                          style={{ fontSize: "14px", cursor: "pointer" }}
+                          style={{ fontSize: "24px", cursor: "pointer", color:'white' }}
                         >
                           {dataUser?.[UserFields.FULL_NAME]}
                         </span>
                       </div>
                     </div>
                     <MenuHeadeLessTippy>
-                      {arrTippyHomeUser(dataUser?.[UserFields.ROLE], dataUser?.[UserFields.IS_EMISSARY])?.map(
-                        (item: any, index: number) => (
-                          <Fragment key={index}>
-                            <Link
-                              className="tippy-header"
-                              to={`/${item?.key}`}
-                              onClick={() => onClickActiveHeader(item?.value)}
+                      {arrTippyHomeUser(
+                        dataUser?.[UserFields.ROLE],
+                        dataUser?.[UserFields.IS_EMISSARY]
+                      )?.map((item: any, index: number) => (
+                        <Fragment key={index}>
+                          <Link
+                            className="tippy-header"
+                            to={`/${item?.key}`}
+                            onClick={() => onClickActiveHeader(item?.value)}
+                          >
+                            <div
+                              className={`nav-link `}
+                              style={{ padding: "0" }}
                             >
-                              <div
-                                className={`nav-link `}
-                                style={{ padding: "0" }}
-                              >
-                                <span className="span-tippy-header">
-                                  {item?.label}
-                                </span>
-                              </div>
-                            </Link>
-                          </Fragment>
-                        )
-                      )}
+                              <span className="span-tippy-header">
+                                {item?.label}
+                              </span>
+                            </div>
+                          </Link>
+                        </Fragment>
+                      ))}
                     </MenuHeadeLessTippy>
                   </HeadeLessTippyComponent>
                 </li>
@@ -172,9 +184,12 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
       {isBackImgHeader && (
         <div
           className="hero-wrap"
-          style={{ backgroundImage: `url(${publicUrl + "/images/bg_7.jpg"})` }}
+          style={{
+            backgroundImage: `url(${publicUrl + "/images/bgmain.jpg"})`,
+          }}
           data-stellar-background-ratio="0.5"
         >
+          <div className="over-lay"></div>
           <div className="overlay" />
           <div className="container">
             <div
@@ -189,13 +204,13 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                   <h1
                     className="mb-4"
                     data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+                    style={{ fontSize: "80px", fontWeight: "bold" }}
                   >
-                    KHÔNG LÀM GÌ KHÔNG PHẢI LÀ MỘT LỰA CHỌN CỦA CUỘC SỐNG CHÚNG
-                    TA
+                    Chí Linh – Kết nối yêu thương, lan tỏa hy vọng
                   </h1>
                 </LazyLoadComponent>
 
-                <LazyLoadComponent>
+                {/* <LazyLoadComponent>
                   <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
                     <Link
                       to={"/"}
@@ -205,7 +220,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                       <span>Xem video</span>
                     </Link>
                   </p>
-                </LazyLoadComponent>
+                </LazyLoadComponent> */}
               </div>
             </div>
           </div>

@@ -16,6 +16,11 @@ export class ProjectFundListConst {
       type: ETableColumnType.NOTE,
     },
     {
+      label: "Sứ giả",
+      accessor: ProjectFundFields.USER_NAME,
+      type: ETableColumnType.NOTE,
+    },
+    {
       label: "DANH MỤC",
       accessor: ProjectFundFields.CATEGORY_NAME,
       type: ETableColumnType.NOTE,

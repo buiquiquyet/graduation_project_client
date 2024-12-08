@@ -1,9 +1,17 @@
 .header {
+  .over-lay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    opacity: 0.5;
+    background: #312f2e;
+  }
   .label-title {
     font-size: 30px;
   }
   .img-header-logo {
-    
     img {
       border-radius: 999px;
       width: 80px;
@@ -16,22 +24,27 @@
     align-items: center;
     gap: 4px;
     .user-img-home {
-        cursor: pointer;
+      cursor: pointer;
       img {
         border-radius: 999px;
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
       }
-      
     }
   }
-  .active-user{
+  .nav-link {
+    font-size: 24px !important;
+  }
+  .active-user {
     color: #f86f2d !important;
     cursor: pointer;
   }
+  .user-tab {
+    color: white !important;
+  }
   .header-noBgImg {
     height: 100px;
-    background-color: #252525
+    background-color: #252525;
   }
   .tippy-header {
     display: flex;
@@ -50,7 +63,7 @@
   @media (max-width: 991.98px) {
     .header-noBgImg {
       height: 0px;
-      background-color: none
+      background-color: none;
     }
   }
 }

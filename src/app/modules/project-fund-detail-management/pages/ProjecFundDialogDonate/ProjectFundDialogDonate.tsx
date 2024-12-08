@@ -94,8 +94,7 @@ const ProjectFundDialogDonate: React.FC<ProjectFundDialogDonateProps> = ({
                     key={index}
                     className="col-12 col-sm-12 col-md-12 col-lg-6 mb-4"
                   >
-                    <div className="">
-                      <span style={{ fontSize: "16px" }}>{item?.label}</span>
+                    <div className="input-label">
                       <LibSwitchInput item={item} formik={formik} />
                     </div>
                   </div>
@@ -115,7 +114,6 @@ const ProjectFundDialogDonate: React.FC<ProjectFundDialogDonateProps> = ({
                 formInputsInfoDonateAmout.map((item, index) => (
                   <div key={index}>
                     <div className="">
-                      <span style={{ fontSize: "16px" }}>{item?.label}</span>
                       <LibSwitchInput item={item} formik={formik} />
                     </div>
                   </div>

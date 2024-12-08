@@ -47,7 +47,8 @@ export function handleResponseInterceptor(
 export function handleCheckSuccessResponse(res: any) {
   if (
     res?.data?.[EAxiosResponse.MESSAGE] === ResponseDTOKey.SUCCESS ||
-    res?.data?.[EAxiosResponse.MESSAGE] === ResponseDTOKey.SUCCESS_V2
+    res?.data?.[EAxiosResponse.MESSAGE] === ResponseDTOKey.SUCCESS_V2 ||
+    res?.[EAxiosResponse.STATUS] === ESuccessCode.OK
   )
     return true;
   return false;

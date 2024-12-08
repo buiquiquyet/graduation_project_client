@@ -1,0 +1,32 @@
+.slide-home-charity-fund {
+  margin-bottom: 100px;
+  .cost-slide {
+    display: -webkit-box; /* Sử dụng box layout cho phần tử */
+    -webkit-line-clamp: 3; /* Giới hạn hiển thị 3 dòng */
+    -webkit-box-orient: vertical; /* Đặt chiều dọc cho các dòng văn bản */
+    overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm khi nội dung vượt quá */
+    white-space: normal; /* Cho phép xuống dòng nếu cần */
+    text-wrap: wrap;
+  }
+  .text-project-fund {
+    white-space: nowrap; /* Ngăn ngắt dòng */
+    overflow: hidden; /* Ẩn phần dư */
+    text-overflow: ellipsis;
+  }
+  .item-info-fund {
+    gap: 10px;
+    .text-info-fund {
+      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+      font-size: 18px;
+      line-height: 1.4rem;
+    }
+    .hotline {
+      color: #f86f2d !important;
+    }
+  }
+}

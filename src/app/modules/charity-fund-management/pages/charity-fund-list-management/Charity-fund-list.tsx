@@ -114,7 +114,6 @@ export default memo(function CharityFundList() {
                 onClick={(event, newPage) => handleChangePage(event, newPage)}
                 totalRecords={dataCharityFunds.totalRecords}
                 pageNumber={page.pageNumber}
-                isShowTotalRecord={false}
               />
             )}
         </div>

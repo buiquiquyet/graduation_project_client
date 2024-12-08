@@ -55,9 +55,9 @@ const ProjectFundDetailComponent = () => {
   useEffect(() => {
     // Cuộn đến phần tử đầu tiên khi component được render lại
     if (topElementRef.current) {
-      topElementRef.current.scrollIntoView({ behavior: 'smooth' });
+      topElementRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, []);  // Mảng phụ thuộc rỗng, chỉ chạy một lần khi component được mount
+  }, []); // Mảng phụ thuộc rỗng, chỉ chạy một lần khi component được mount
 
   return (
     <div className="project-fund-detail" ref={topElementRef}>
@@ -215,7 +215,7 @@ const ProjectFundDetailComponent = () => {
                             onClick={onClickDialogDonate}
                             title="Ủng hộ ngay"
                           />
-                          <BaseButton title="Trở thành sứ giả" />
+                          {/* <BaseButton title="Trở thành sứ giả" /> */}
                         </div>
                       </div>
                     </div>
@@ -231,6 +231,8 @@ const ProjectFundDetailComponent = () => {
                 dataDetailProjectFund?.[ProjectFundFields.DESCRIPTION]
               }
               projectFundId={projectFundId}
+              userId={dataDetailProjectFund?.[ProjectFundFields.USER_Id]}
+              projectFundListLike={dataDetailProjectFund?.[ProjectFundFields.LIKE_BY_USERS]}
             />
           )}
         </div>
@@ -242,7 +244,7 @@ const ProjectFundDetailComponent = () => {
                 <div className="other-project mb-4">Các dự án khác</div>
                 <div className="w-100">
                   {" "}
-                  <SlideHomeComponent slidesPerView={3}/>{" "}
+                  <SlideHomeComponent slidesPerView={3} />{" "}
                 </div>
               </div>
             </div>

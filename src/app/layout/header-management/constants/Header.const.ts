@@ -19,11 +19,11 @@ export class HeaderConst {
       label: EHeaderTabText.BLOG,
       key: EHeaderTabKey.BLOG,
     },
-    {
-      value: EHeaderTab.CONTACT,
-      label: EHeaderTabText.CONTACT,
-      key: EHeaderTabKey.CONTACT,
-    },
+    // {
+    //   value: EHeaderTab.CONTACT,
+    //   label: EHeaderTabText.CONTACT,
+    //   key: EHeaderTabKey.CONTACT,
+    // },
     {
       value: EHeaderTab.INSTRUCT,
       label: EHeaderTabText.INSTRUCT,

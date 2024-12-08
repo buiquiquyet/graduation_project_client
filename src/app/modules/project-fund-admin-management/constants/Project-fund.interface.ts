@@ -1,6 +1,4 @@
-
-
-export enum ProjectFundFields{
+export enum ProjectFundFields {
   ID = "Id",
   FUND_ID = "idFund", // id của quỹ
   FUND_NAME = "nameFund", // tên của quỹ
@@ -16,11 +14,13 @@ export enum ProjectFundFields{
   START_DATE = "startDate", // ngày bắt đầu
   END_DATE = "endDate", // ngày kết thúc
   UPDATE_AT = "updatedAt",
-  //== 
+  //==
   PERCENT = "percent", // phần trăm tiền
   IMAGES_FUND = "imageFund", // ảnh chiến dịch
   NUMBER_OF_DONATE = "numberOfDonate", // số người ủng hộ
-
+  USER_NAME = "userName", // tên sứ giả
+  USER_Id = "userId", // id sứ giả
+  LIKE_BY_USERS = "likedByUsers", // mảng like
 }
 
 export interface ProjectFundDTO {

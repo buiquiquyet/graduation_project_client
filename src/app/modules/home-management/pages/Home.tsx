@@ -6,11 +6,11 @@ import { memo, useContext, useEffect, useState } from "react";
 // import * as ApiServiceHome from "../services/Home.service";
 import { Link } from "react-router-dom";
 import { CountChildWorld } from "../constants/Home.enum";
-import LastestEvent from "./lastest-event/Lastest-event";
-import LastestBlog from "./lastest-blog/Lastest-blog";
+import CharityFundsHome from "./charity-funds-home/CharityFundsHome";
 import LastestDonate from "./lastest-donate/Lastest-donate";
 import { HomeConst } from "../constants/Home.const";
 import ImageGallery from "@/shared/libraries/gallery-component/Gallery";
+import TotalPayment from "../total-payment/TotalPayment";
 
 function HomeComponent() {
   const context = useContext(MyContext);
@@ -169,9 +169,10 @@ function HomeComponent() {
           </LazyLoadComponent>
         </div>
       </section>
+      <TotalPayment/>
       <LastestDonate />
-      {/* 8 img 2 row */}
 
+      {/* 8 img 2 row */}
       <section className="ftco-section">
         <LazyLoadComponent>
           <div className="d-md-flex">
@@ -187,6 +188,7 @@ function HomeComponent() {
                   <ImageGallery
                     imgSrcList={HomeConst.ArrImgGalley}
                     indexImg={index}
+                    isPublicUrl={true}
                   ></ImageGallery>
                   <div
                     className="icon d-flex justify-content-center align-items-center"
@@ -213,6 +215,7 @@ function HomeComponent() {
                   <ImageGallery
                     imgSrcList={HomeConst.ArrImgGalley}
                     indexImg={4 + index}
+                    isPublicUrl={true}
                   ></ImageGallery>
                   <div
                     className="icon d-flex justify-content-center align-items-center"
@@ -226,65 +229,8 @@ function HomeComponent() {
           </div>
         </LazyLoadComponent>
       </section>
-      <LastestBlog />
-      <LastestEvent />
-      <section
-        className="ftco-section-3 img"
-        style={{ backgroundImage: `url(${publicUrl + "/images/bg_3.jpg"})` }}
-      >
-        <div className="overlay" />
-        <LazyLoadComponent>
-          <div className="container">
-            <div className="row d-md-flex">
-              <div className="col-md-6 d-flex ">
-                <div
-                  className="img img-2 align-self-stretch"
-                  style={{
-                    backgroundImage: `url(${publicUrl + "/images/bg_4.jpg"})`,
-                  }}
-                />
-              </div>
-              <div className="col-md-6 volunteer pl-md-5 ">
-                <h3 className="mb-3">Tình nguyện viên.</h3>
-                <form action="#" className="volunter-form">
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Your Name"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Your Email"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <textarea
-                      name=""
-                      id=""
-                      cols={30}
-                      rows={3}
-                      className="form-control"
-                      placeholder="Message"
-                      defaultValue={""}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="submit"
-                      defaultValue="Send Message"
-                      className="btn btn-white py-3 px-5"
-                    />
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </LazyLoadComponent>
-      </section>
+      <CharityFundsHome />
+     
     </>
   );
 }

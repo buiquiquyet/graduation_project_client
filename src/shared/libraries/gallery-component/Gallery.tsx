@@ -1,9 +1,10 @@
 // export default ImageModal;
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Modal from "react-modal";
 import "./Gallery.scss";
 import { getImgCommon } from "@/shared/user-const";
+import { MyContext } from "@/App";
 // Đặt phần tử root cho modal
 Modal.setAppElement("#root");
 
@@ -11,15 +12,27 @@ interface ImageModalProps {
   imgSrcList: string[]; // Danh sách các ảnh
   imgAlt?: string;
   indexImg?: number;
-  className?: string
+  className?: string;
+  isPublicUrl?: boolean; // gọi img với url publicUrl
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({
   imgSrcList,
   imgAlt = "Image",
   indexImg = 0,
-  className
+  className,
+  isPublicUrl = false,
 }) => {
+  let newPublicUrl: any;
+  if (isPublicUrl) {
+    const context = useContext(MyContext);
+    if (!context) {
+      return null;
+    }
+    const { publicUrl } = context;
+    newPublicUrl = publicUrl;
+  }
+
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0); // Trạng thái cho chỉ số ảnh hiện tại
 
@@ -37,13 +50,13 @@ const ImageModal: React.FC<ImageModalProps> = ({
       prevIndex === 0 ? imgSrcList.length - 1 : prevIndex - 1
     );
   };
-  
+
   const goToNext = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === imgSrcList.length - 1 ? 0 : prevIndex + 1
     );
   };
-  
+
   return (
     <>
       {/* Danh sách ảnh có thể nhấn vào để mở modal */}
@@ -100,12 +113,20 @@ const ImageModal: React.FC<ImageModalProps> = ({
               }}
               className="button-gallery"
             >
-              <FaChevronLeft color="white" style={{width:'40px', height:'40px'}} /> {/* Biểu tượng mũi tên trái */}
+              <FaChevronLeft
+                color="white"
+                style={{ width: "40px", height: "40px" }}
+              />{" "}
+              {/* Biểu tượng mũi tên trái */}
             </button>
           )}
           {/* Ảnh được hiển thị ở giữa modal với kích thước cố định */}
           <img
-            src={getImgCommon(imgSrcList[currentIndex])} // Hiển thị ảnh dựa trên chỉ số hiện tại
+            src={
+              isPublicUrl
+                ? newPublicUrl + imgSrcList[currentIndex]
+                : getImgCommon(imgSrcList[currentIndex])
+            } // Hiển thị ảnh dựa trên chỉ số hiện tại
             alt={imgAlt}
             style={{
               width: "80vw",
@@ -128,7 +149,11 @@ const ImageModal: React.FC<ImageModalProps> = ({
                 right: "15px",
               }}
             >
-              <FaChevronRight  color="white" style={{width:'40px', height:'40px'}}/> {/* Biểu tượng mũi tên phải */}
+              <FaChevronRight
+                color="white"
+                style={{ width: "40px", height: "40px" }}
+              />{" "}
+              {/* Biểu tượng mũi tên phải */}
             </button>
           )}
         </div>

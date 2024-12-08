@@ -17,17 +17,12 @@ const LibBasePagination: React.FC<Props> = ({
   isShowTotalRecord = true,
 }) => {
   return (
-    <div className="d-flex justify-content-center align-items-center mt-4 w-100">
+    <div className="d-flex justify-content-center align-items-center mt-4 w-100 pagination">
       {isShowTotalRecord && (
         <div
-          className="p-1"
-          style={{
-            fontSize: "14px",
-            border: "1px solid #ccc",
-            color: "var(--primary)",
-          }}
+          className=" total-item"
         >
-          Tất cả {totalRecords} dòng
+          <span>Tất cả {totalRecords} bản ghi</span>
         </div>
       )}
       <Pagination

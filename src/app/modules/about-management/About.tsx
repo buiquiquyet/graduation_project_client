@@ -1,7 +1,7 @@
 import { MyContext } from "@/App";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import { useContext } from "react";
-
+import "./About.scss";
 const AboutComponent = () => {
   const context = useContext(MyContext);
   if (!context) {
@@ -9,8 +9,8 @@ const AboutComponent = () => {
   }
   const { publicUrl } = context;
   return (
-    <>
-      <section className="ftco-section">
+    <div className="about-management">
+      <section className="ftco-section ">
         <div className="container">
           <LazyLoadComponent>
             <div className="row d-flex">
@@ -18,194 +18,94 @@ const AboutComponent = () => {
                 <div
                   className="img img-about align-self-stretch"
                   style={{
-                    backgroundImage: `url(${publicUrl + "/images/bg_3.jpg"})`,
+                    backgroundImage: `url(${
+                      publicUrl + "/images/main/10.jpg"
+                    })`,
                     width: "100%",
                   }}
                 ></div>
               </div>
-              <div className="col-md-6 pl-md-5 ">
-                <h2 className="mb-4">
-                  Welcome to Welfare Stablished Since 1898
-                </h2>
-                <p>
-                  The Big Oxmox advised her not to do so, because there were
-                  thousands of bad Commas, wild Question Marks and devious
-                  Semikoli, but the Little Blind Text didn’t listen. She packed
-                  her seven versalia, put her initial into the belt and made
-                  herself on the way.
-                </p>
-                <p>
-                  On her way she met a copy. The copy warned the Little Blind
-                  Text, that where it came from it would have been rewritten a
-                  thousand times and everything that was left from its origin
-                  would be the word "and" and the Little Blind Text should turn
-                  around and return to its own, safe country. But nothing the
-                  copy said could convince her and so it didn’t take long until
-                  a few insidious Copy Writers ambushed her, made her drunk with
-                  Longe and Parole and dragged her into their agency, where they
-                  abused her for their.
-                </p>
+              <div
+                className="col-md-6 pl-md-5 "
+                style={{ textAlign: "justify" }}
+              >
+                <h2 className="mb-4">Về chúng tôi</h2>
+                <span className="text-introduce">
+                  GiveHope là nền tảng thiện nguyện trực tuyến, kết nối những
+                  tấm lòng hảo tâm với các dự án và cá nhân cần sự giúp đỡ.
+                  Chúng tôi tập trung vào việc cung cấp một không gian minh bạch
+                  và dễ dàng cho người dùng tham gia quyên góp cho các lĩnh vực
+                  thiết yếu như giáo dục, y tế, hỗ trợ thiên tai, chăm sóc người
+                  cao tuổi và nhiều hoạt động cộng đồng khác. Với cam kết mang
+                  lại sự rõ ràng trong quá trình sử dụng quỹ, mỗi đóng góp của
+                  bạn sẽ trực tiếp tạo ra sự thay đổi tích cực trong cuộc sống
+                  của những người cần giúp đỡ. Giao diện thân thiện và dễ sử
+                  dụng của chúng tôi cho phép người dùng theo dõi hành trình
+                  đóng góp, giúp đảm bảo sự tin tưởng và minh bạch. Tham gia
+                  GiveHope, bạn không chỉ giúp đỡ những người gặp khó khăn, mà
+                  còn trở thành một phần của cộng đồng yêu thương, lan tỏa hy
+                  vọng và tạo dựng những thay đổi tốt đẹp cho xã hội.
+                </span>
               </div>
             </div>
           </LazyLoadComponent>
         </div>
       </section>
-
-      <LazyLoadComponent>
-        <section
-          className="ftco-counter ftco-intro ftco-intro-2"
-          id="section-counter"
-        >
-          <div className="container">
-            <div className="row no-gutters">
-              <div className="col-md-5 d-flex justify-content-center counter-wrap ">
-                <div className="block-18 color-1 align-items-stretch">
-                  <div className="text">
-                    <span>Served Over</span>
-                    <strong className="number" data-number="1432805">
-                      0
-                    </strong>
-                    <span>Children in 190 countries in the world</span>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md d-flex justify-content-center counter-wrap ">
-                <div className="block-18 color-2 align-items-stretch">
-                  <div className="text">
-                    <h3 className="mb-4">Donate Money</h3>
-                    <p>
-                      Even the all-powerful Pointing has no control about the
-                      blind texts.
-                    </p>
-                    <p>
-                      <a href="#" className="btn btn-white px-3 py-2 mt-2">
-                        Donate Now
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md d-flex justify-content-center counter-wrap ">
-                <div className="block-18 color-3 align-items-stretch">
-                  <div className="text">
-                    <h3 className="mb-4">Be a Volunteer</h3>
-                    <p>
-                      Even the all-powerful Pointing has no control about the
-                      blind texts.
-                    </p>
-                    <p>
-                      <a href="#" className="btn btn-white px-3 py-2 mt-2">
-                        Be A Volunteer
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </LazyLoadComponent>
 
       <section className="ftco-section bg-light">
         <div className="container">
           <div className="row justify-content-center mb-5 pb-3">
             <div className="col-md-7 heading-section  text-center">
               <LazyLoadComponent>
-                <h2 className="mb-4">Latest Donations</h2>
-              </LazyLoadComponent>
-              <LazyLoadComponent>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia and Consonantia, there live the blind texts.
-                </p>
+                <h2 className="mb-4">Ủng hộ cho chúng tôi</h2>
               </LazyLoadComponent>
             </div>
+            <LazyLoadComponent>
+              <div className="container">
+                <div className="row d-flex">
+                  <div
+                    className="col-12 col-sm-12 col-md-12 col-lg-8 d-flex flex-column"
+                    style={{ gap: "10px" }}
+                  >
+                    <span className="text-donate">
+                      Số tiền bạn ủng hộ được dùng để bù đắp cho các chi phí vận
+                      hành của GiveHope, nhằm xây dựng một nền tảng gây quỹ cộng
+                      đồng trực tuyến tiện lợi, tin cậy và minh bạch cho người
+                      dùng và hoàn toàn MIỄN PHÍ cho các tổ chức phi lợi nhuận,
+                      bao gồm:
+                    </span>
+                    <span className="text-donate">
+                      <b style={{ fontWeight: "bold" }}>Công nghệ</b>: Máy chủ,
+                      băng thông, bảo trì, phát triển hệ thống,…để đảm bảo tính
+                      ổn định, tiện lợi và bảo mật cho người dùng và các tổ chức
+                      gây quỹ.
+                    </span>{" "}
+                    <span className="text-donate">
+                      <b style={{ fontWeight: "bold" }}>Nhân lực</b>: Nguồn ủng
+                      hộ của các bạn giúp GiveHope duy trì bộ máy nhân sự vận
+                      hành cần thiết, chúng tôi nỗ lực tối ưu bộ máy nhân sự
+                      thông qua việc sử dụng các nguồn lực tình nguyện viên và
+                      hỗ trợ khác để đảm bảo số tiền đóng góp của bạn có hiệu
+                      suất cao nhất.
+                    </span>{" "}
+                    <span className="text-donate">
+                      Trân trọng, Đội ngũ GiveHope
+                    </span>
+                  </div>
+                  <div className=" img-qrcol-12 col-sm-12 col-md-12 col-lg-4 ">
+                    <img
+                      style={{ width: "300px", height: "300px" }}
+                      src={publicUrl + "/images/qr.jpg"}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </LazyLoadComponent>
           </div>
-          <LazyLoadComponent>
-            <div className="row">
-              <div className="col-lg-4 d-flex mb-sm-4 ">
-                <div className="staff">
-                  <div className="d-flex mb-4">
-                    <div
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/person_1.jpg"
-                        })`,
-                      }}
-                    ></div>
-                    <div className="info ml-4">
-                      <h3>
-                        <a href="teacher-single.html">Ivan Jacobson</a>
-                      </h3>
-                      <span className="position">Donated Just now</span>
-                      <div className="text">
-                        <p>
-                          Donated <span>$300</span> for{" "}
-                          <a href="#">Children Needs Food</a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 d-flex mb-sm-4 ">
-                <div className="staff">
-                  <div className="d-flex mb-4">
-                    <div
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/person_2.jpg"
-                        })`,
-                      }}
-                    ></div>
-                    <div className="info ml-4">
-                      <h3>
-                        <a href="teacher-single.html">Ivan Jacobson</a>
-                      </h3>
-                      <span className="position">Donated Just now</span>
-                      <div className="text">
-                        <p>
-                          Donated <span>$150</span> for{" "}
-                          <a href="#">Children Needs Food</a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 d-flex mb-sm-4 ">
-                <div className="staff">
-                  <div className="d-flex mb-4">
-                    <div
-                      className="img"
-                      style={{
-                        backgroundImage: `url(${
-                          publicUrl + "/images/person_3.jpg"
-                        })`,
-                      }}
-                    ></div>
-                    <div className="info ml-4">
-                      <h3>
-                        <a href="teacher-single.html">Ivan Jacobson</a>
-                      </h3>
-                      <span className="position">Donated Just now</span>
-                      <div className="text">
-                        <p>
-                          Donated <span>$250</span> for{" "}
-                          <a href="#">Children Needs Food</a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </LazyLoadComponent>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

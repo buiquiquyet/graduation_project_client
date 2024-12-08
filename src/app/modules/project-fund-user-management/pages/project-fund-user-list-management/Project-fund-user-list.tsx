@@ -164,7 +164,6 @@ export default memo(function ProjectFundList() {
                   onClick={(event, newPage) => handleChangePage(event, newPage)}
                   totalRecords={dataProjectFundsProcessing.totalRecords}
                   pageNumber={page.pageNumber}
-                  isShowTotalRecord={false}
                 />
               )}
           </div>

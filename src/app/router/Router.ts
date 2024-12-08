@@ -3,7 +3,7 @@ import { EHeaderTabKey } from "../layout/header-management/constants/Header.enum
 import AboutComponent from "../modules/about-management/About";
 import BlogComponent from "../modules/blog-management/Blog";
 import ContactComponent from "../modules/contact-management/Contact";
-import DonateComponent from "../modules/donate-management/Donate";
+import DonateComponent from "../modules/donate-management/Instruct";
 import HomeComponent from "../modules/home-management/pages/Home";
 import LoginComponent from "../modules/login-management/Login";
 import UserComponent from "../modules/user-management/User";

@@ -62,6 +62,8 @@ function BlogComponent() {
   useEffect(() => {
     handleCallApiProjectFundsList(page, activeTab);
   }, [page]);
+  console.log(dataProjectFunds);
+
   return (
     <div className="blog-component">
       <div className="d-flex flex-column" style={{ gap: "50px" }}>
@@ -214,6 +216,7 @@ function BlogComponent() {
               )}
               {/* pagination */}
               {dataProjectFunds.datas &&
+                dataProjectFunds.datas?.length > 0 &&
                 dataProjectFunds.totalRecords > page.perPageOptions[0] && (
                   <LibBasePagination
                     totalPage={dataProjectFunds.totalPages}
@@ -222,7 +225,6 @@ function BlogComponent() {
                     }
                     totalRecords={dataProjectFunds.totalRecords}
                     pageNumber={page.pageNumber}
-                    isShowTotalRecord={false}
                   />
                 )}
             </div>

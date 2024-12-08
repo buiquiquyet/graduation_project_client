@@ -6,7 +6,13 @@ import { ProjectFundContentAndListAcitve } from "../../interfaces/ProjectFundCon
 import "./ProjectFundContentAndList.scss";
 import { CharityFundFields } from "@/app/modules/charity-fund-management/constants/charity-fund.interface";
 import { getImgCommon } from "@/shared/user-const";
-import { FaLocationArrow, FaMailBulk, FaPhone } from "react-icons/fa";
+import {
+  FaHeart,
+  FaLocationArrow,
+  FaMailBulk,
+  FaPhone,
+  FaRegHeart,
+} from "react-icons/fa";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import LibTable from "@/shared/libraries/lib-table-component/LibTable";
 import { ProjectFundContentAndListConst } from "../../constants/ProjectFundContentAndList.const";
@@ -16,15 +22,24 @@ import { Page } from "@/shared/ultils/Page";
 import { getListDonates } from "../../services/ProjectFundContentAndList.service";
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
+import { getDetailUserById } from "@/app/modules/user-management/services/User.services";
+import {
+  updateLike,
+  updateUnLike,
+} from "@/app/modules/project-fund-admin-management/services/Project-fund.services";
 interface ProjectFundContentAndListProps {
   idFund: string;
   projectFundDescription: string;
   projectFundId: string | undefined;
+  userId: string; // id của sứ giả
+  projectFundListLike: any[];
 }
 const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
   idFund,
   projectFundDescription,
   projectFundId,
+  userId,
+  projectFundListLike,
 }) => {
   const { setLoading, dataUser } = useContextCommon();
   const [dataDetailFund, setDataDetailFund] = useState<any>(); // dữ liệu detail quỹ
@@ -42,7 +57,14 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
   const [activeTab, setActiveTab] = useState<ProjectFundContentAndListAcitve>(
     ProjectFundContentAndListAcitve.CONTENT
   ); // set tab nào đang active
-
+  const [liked, setLiked] = useState<boolean>(
+    projectFundListLike &&
+      projectFundListLike?.includes(dataUser?.[UserFields?.ID])
+  ); // like project fund
+  const [countLike, setCountLike] = useState<number>(
+    projectFundListLike?.length ?? 0
+  ); // số lượng like
+  const [dataUserInfo, setDataUserInfo] = useState(null); // thông tin sứ giả
   const columnTable = ProjectFundContentAndListConst.coloumnTable; // column table của danh sách ủng hộ
   // CALL API DETAIL 1 quỹ
   const handleCallApiFundDetail = async (idFund: string) => {
@@ -63,16 +85,45 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
     setLoading(true);
     const res: any = await getListDonates(page, projectFundId);
     setLoading(false);
-    if(handleCheckSuccessResponse(res)) {
-      setDataListDonates(res?.data)
+    if (handleCheckSuccessResponse(res)) {
+      setDataListDonates(res?.data);
     }
-  }
-   // change page table
-   const handleChangePage = (event: any, newPage: any) => {
+  };
+  // get detail của user sứ giả
+  const handleCallApiDetailUser = async (idUser: string) => {
+    setLoading(true);
+    const res: any = await getDetailUserById(idUser);
+    setLoading(false);
+    if (handleCheckSuccessResponse(res)) {
+      const data = res?.data?.data;
+      setDataUserInfo(data);
+    } else {
+      setDataUserInfo(null);
+    }
+  };
+  // change page table
+  const handleChangePage = (event: any, newPage: any) => {
     setPages({
       ...page,
       pageNumber: newPage,
     });
+  };
+  // set like
+  const handleClickSetLike = async () => {
+    // like
+    if (!liked) {
+      setLoading(true);
+      await updateLike(projectFundId ?? "", dataUser?.[UserFields.ID] ?? "");
+      setLoading(false);
+      setCountLike((pre) => pre + 1);
+      //unike
+    } else {
+      setLoading(true);
+      await updateUnLike(projectFundId ?? "", dataUser?.[UserFields.ID] ?? "");
+      setLoading(false);
+      setCountLike((pre) => pre - 1);
+    }
+    setLiked(!liked);
   };
   useEffect(() => {
     if (idFund) {
@@ -80,10 +131,18 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
     }
   }, [idFund]);
   useEffect(() => {
-    if(projectFundId) {
+    if (projectFundId) {
       handleCallApiDonateList(page, projectFundId);
     }
   }, [page, projectFundId]);
+  useEffect(() => {
+    if (userId) {
+      handleCallApiDetailUser(userId);
+    }
+  }, [userId]);
+  useEffect(() => {
+    window.scrollTo(0, 0); // Cuộn lên đầu trang
+  }, []); // Mảng rỗng để chỉ chạy một lần khi component được mount
   return (
     <div>
       <div className="container p-5  project-fund-content-list">
@@ -123,6 +182,25 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
               <div className="row body-content">
                 <div className="col-12 col-sm-12 col-md-12 col-lg-8 justified-content mb-4">
                   <div
+                    className="mb-3 d-flex align-items-center"
+                    style={{
+                      gap: "10px",
+                      userSelect: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={
+                      dataUser?.[UserFields.ID] ? handleClickSetLike : () => {}
+                    }
+                  >
+                    {liked || !dataUser?.[UserFields.ID] ? (
+                      <FaHeart fontSize={60} color="red" />
+                    ) : (
+                      <FaRegHeart fontSize={60} />
+                    )}
+
+                    <div style={{ fontSize: "24px" }}>{countLike ?? 0}</div>
+                  </div>
+                  <div
                     dangerouslySetInnerHTML={{
                       __html: projectFundDescription ?? "",
                     }}
@@ -136,10 +214,30 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                   </div>
                 </div>
                 <div className="col-12 col-sm-12 col-md-12 col-lg-4 fund-content">
+                  {dataUserInfo && (
+                    <div className="div-fund-content mb-3">
+                      <h4>Sứ giả gây quỹ</h4>
+                      <div
+                        className="d-flex align-items-center gap-3"
+                        style={{ gap: "10px" }}
+                      >
+                        <div className="info-user">
+                          <img
+                            src={getImgCommon(
+                              dataUserInfo?.[UserFields.AVATAR]
+                            )}
+                          />
+                        </div>
+                        <div className="info-user">
+                          <span>{dataUserInfo?.[UserFields.FULL_NAME]}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   {dataDetailFund && (
                     <div className="div-fund-content">
                       <div>
-                        <span>Thông tin tổ chức quỹ</span>
+                        <h4>Thông tin tổ chức quỹ</h4>
                       </div>
                       <div className="container" style={{ gap: "10px" }}>
                         <div className="row" style={{ gap: "10px" }}>
@@ -162,9 +260,12 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                           {`${dataDetailFund?.[CharityFundFields.DESCRIPTION]}`}
                         </span>
                       </div>
-                      <ul>
+                      <ul
+                        className="d-flex flex-column"
+                        style={{ gap: "10px" }}
+                      >
                         <li className="d-flex align-items-center item-info-fund">
-                          <div>
+                          <div className="d-flex align-items-center">
                             <FaLocationArrow />
                           </div>
                           <span className="text-info-fund ">
@@ -172,7 +273,7 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                           </span>
                         </li>
                         <li className="d-flex align-items-center item-info-fund">
-                          <div>
+                          <div className="d-flex align-items-center">
                             <FaMailBulk />
                           </div>
                           <span className="text-info-fund ">
@@ -180,7 +281,7 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                           </span>
                         </li>
                         <li className="d-flex align-items-center item-info-fund">
-                          <div>
+                          <div className="d-flex align-items-center">
                             <FaPhone />
                           </div>
                           <span className="text-info-fund hotline">
@@ -202,15 +303,16 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
             <div className="container project-fund-content-list w-100 p-0">
               <LibTable columns={columnTable} data={dataListDonates?.datas} />
               {dataListDonates.datas &&
-              dataListDonates.totalRecords > page.perPageOptions[0] && (
-                <LibBasePagination
-                  totalPage={dataListDonates.totalPages}
-                  onClick={(event, newPage) => handleChangePage(event, newPage)}
-                  totalRecords={dataListDonates.totalRecords}
-                  pageNumber={page.pageNumber}
-                  isShowTotalRecord={false}
-                />
-              )}
+                dataListDonates.totalRecords > page.perPageOptions[0] && (
+                  <LibBasePagination
+                    totalPage={dataListDonates.totalPages}
+                    onClick={(event, newPage) =>
+                      handleChangePage(event, newPage)
+                    }
+                    totalRecords={dataListDonates.totalRecords}
+                    pageNumber={page.pageNumber}
+                  />
+                )}
             </div>
           </LazyLoadComponent>
         )}

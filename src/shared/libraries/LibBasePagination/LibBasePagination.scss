@@ -1,10 +1,20 @@
 
-.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
-    color: white;
-    background-color: var(--primary)  !important;
-  }
-  svg {
-    cursor: pointer;
-    font-size: 20px;
-  }
-  
+.pagination {
+  .css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+      color: white;
+      background-color: var(--primary)  !important;
+    }
+    svg {
+      cursor: pointer;
+      font-size: 20px;
+    }
+    .total-item {
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      padding: 4px;
+      span {
+        color: black;
+      }
+    }
+
+}

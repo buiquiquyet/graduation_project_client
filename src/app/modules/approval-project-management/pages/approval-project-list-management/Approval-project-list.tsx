@@ -166,7 +166,6 @@ export default memo(function ApprovalProjectListComponent() {
                     }
                     totalRecords={dataProjectFundsProcessing.totalRecords}
                     pageNumber={page.pageNumber}
-                    isShowTotalRecord={false}
                   />
                 )}
             </div>

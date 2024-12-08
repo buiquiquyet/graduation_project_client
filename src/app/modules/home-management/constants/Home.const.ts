@@ -1,12 +1,12 @@
 export class HomeConst {
   public static ArrImgGalley = [
-    "/images/cause-2.jpg",
-    "/images/cause-3.jpg",
-    "/images/cause-4.jpg",
-    "/images/cause-5.jpg",
-    "/images/cause-6.jpg",
-    "/images/image_1.jpg",
-    "/images/image_2.jpg",
-    "/images/image_3.jpg",
+    "/images/bg.jpg",
+    "/images/main/2.jpg",
+    "/images/main/3.jpg",
+    "/images/main/4.jpg",
+    "/images/main/5.jpg",
+    "/images/main/6.jpg",
+    "/images/main/7.jpg",
+    "/images/main/26.jpg",
   ];
 }

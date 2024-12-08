@@ -1,13 +1,7 @@
-import { MyContext } from "@/App";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
-import { useContext } from "react";
-
+import { Link } from "react-router-dom";
+import { EHeaderTabKey } from "../header-management/constants/Header.enum";
 const FooterComponent = () => {
-  const context = useContext(MyContext);
-  if (!context) {
-    return null;
-  }
-  const { publicUrl } = context;
   return (
     <footer className="ftco-footer ftco-section img">
       <div className="overlay" />
@@ -15,14 +9,14 @@ const FooterComponent = () => {
         <div className="row mb-5">
           <div className="col-md-3">
             <div className="ftco-footer-widget mb-4">
-              <h2 className="ftco-heading-2">About Us</h2>
+              <h2 className="ftco-heading-2">Về chúng tôi</h2>
               <p>
-                Far far away, behind the word mountains, far from the countries
-                Vokalia and Consonantia, there live the blind texts.
+                GiveHope là nền tảng thiện nguyện trực tuyến, kết nối những tấm
+                lòng hảo tâm với các dự án và cá nhân cần sự giúp đỡ.
               </p>
               <LazyLoadComponent>
                 <ul className="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                  <li className="">
+                  {/* <li className="">
                     <a href="#">
                       <span className="icon-twitter" />
                     </a>
@@ -36,23 +30,15 @@ const FooterComponent = () => {
                     <a href="#">
                       <span className="icon-instagram" />
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </LazyLoadComponent>
             </div>
           </div>
           <div className="col-md-4">
             <div className="ftco-footer-widget mb-4">
-              <h2 className="ftco-heading-2">Recent Blog</h2>
+              <h2 className="ftco-heading-2">Dự án gần đây</h2>
               <div className="block-21 mb-4 d-flex">
-                <a
-                  className="blog-img mr-4"
-                  style={{
-                    backgroundImage: `url(${
-                      publicUrl + "/images/image_1.jpg"
-                    })`,
-                  }}
-                />
                 <div className="text">
                   <h3 className="heading">
                     <a href="#">
@@ -79,14 +65,6 @@ const FooterComponent = () => {
                 </div>
               </div>
               <div className="block-21 mb-4 d-flex">
-                <a
-                  className="blog-img mr-4"
-                  style={{
-                    backgroundImage: `url(${
-                      publicUrl + "/images/image_2.jpg"
-                    })`,
-                  }}
-                />
                 <div className="text">
                   <h3 className="heading">
                     <a href="#">
@@ -116,62 +94,52 @@ const FooterComponent = () => {
           </div>
           <div className="col-md-2">
             <div className="ftco-footer-widget mb-4 ml-md-4">
-              <h2 className="ftco-heading-2">Site Links</h2>
+              <h2 className="ftco-heading-2">Đường dẫn web</h2>
               <ul className="list-unstyled">
                 <li>
-                  <a href="#" className="py-2 d-block">
-                    Home
-                  </a>
+                  <Link to={EHeaderTabKey.HOME} className="py-2 d-block">
+                    Trang chủ
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="py-2 d-block">
-                    About
-                  </a>
+                  <Link to={EHeaderTabKey.ABOUT} className="py-2 d-block">
+                    Giới thiệu
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="py-2 d-block">
-                    Donate
-                  </a>
+                  <Link to={EHeaderTabKey.BLOG} className="py-2 d-block">
+                    Dự án
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="py-2 d-block">
-                    Causes
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="py-2 d-block">
-                    Event
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="py-2 d-block">
-                    Blog
-                  </a>
+                  <Link to={EHeaderTabKey.INSTRUCT} className="py-2 d-block">
+                    Hướng dẫn
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
           <div className="col-md-3">
             <div className="ftco-footer-widget mb-4">
-              <h2 className="ftco-heading-2">Have a Questions?</h2>
+              <h2 className="ftco-heading-2">Bạn có câu hỏi?</h2>
               <div className="block-23 mb-3">
                 <ul>
                   <li>
                     <span className="icon icon-map-marker" />
                     <span className="text">
-                      203 Fake St. Mountain View, San Francisco, California, USA
+                      76 Nguyễn Thị Duệ, TT. Sao Đỏ, Chí Linh, Hải Dương
                     </span>
                   </li>
                   <li>
                     <a href="#">
                       <span className="icon icon-phone" />
-                      <span className="text">+2 392 3929 210</span>
+                      <span className="text">+84 379952714</span>
                     </a>
                   </li>
                   <li>
                     <a href="#">
                       <span className="icon icon-envelope" />
-                      <span className="text">info@yourdomain.com</span>
+                      <span className="text">quyetbuiqui@gmail.com</span>
                     </a>
                   </li>
                 </ul>
@@ -183,11 +151,11 @@ const FooterComponent = () => {
           <div className="col-md-12 text-center">
             <p>
               {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
-              Copyright © All rights reserved | This template is made with{" "}
+              {/* Copyright © All rights reserved | This template is made with{" "}
               <i className="icon-heart" aria-hidden="true" /> by{" "}
               <a href="https://colorlib.com" target="_blank">
                 Colorlib
-              </a>
+              </a> */}
               {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
             </p>
           </div>

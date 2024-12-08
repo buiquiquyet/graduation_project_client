@@ -156,7 +156,7 @@ export default function LoginComponent() {
       <div className="limiter">
         <div
           className="container-login100"
-          style={{ backgroundImage: `url(${publicUrl + "/images/bg_7.jpg"})` }}
+          style={{ backgroundImage: `url(${publicUrl + "/images/bgmain3.jpg"})` }}
         >
           {!isVerifyEmailCode && (
             <form

@@ -111,7 +111,6 @@ export default memo(function CategoryList() {
                 onClick={(event, newPage) => handleChangePage(event, newPage)}
                 totalRecords={dataCategorys.totalRecords}
                 pageNumber={page.pageNumber}
-                isShowTotalRecord={false}
               />
             )}
         </div>

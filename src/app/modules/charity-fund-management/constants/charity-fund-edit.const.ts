@@ -18,7 +18,7 @@ export class CharityFundEditConst {
     {
       label: "Số điện thoại",
       value: CharityFundFields.PHONE,
-      typeInput: "number",
+      typeInput: "text",
       type: InputTypeEnum.INPUT,
       // maxLength: 12
     },
