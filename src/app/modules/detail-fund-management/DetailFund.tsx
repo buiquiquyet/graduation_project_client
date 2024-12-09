@@ -21,6 +21,7 @@ export default memo(function DetailFundComponent() {
       setDataFund(res?.data?.data);
     }
   };
+
   useEffect(() => {
     if (fundId) {
       handleCallApiDetailFund(fundId);
@@ -73,36 +74,9 @@ export default memo(function DetailFundComponent() {
         <section className="content-description-fund">
           <span>{dataFund?.[CharityFundFields.DESCRIPTION] ?? ""}</span>
         </section>
-        <section className="container box-count-fund">
-          <div className="row ">
-            <div className="col-12 col-sm-6 col-md-6 col-lg-3 count-fund">
-              <span className="lable-count-fund">Dự án</span>
-              <span>14</span>
-            </div>
-            <div className="col-12 col-sm-6 col-md-6 col-lg-3  count-fund">
-              <span className="lable-count-fund">Sứ giả</span>
-              <span>14</span>
-            </div>
-            <div className="col-12 col-sm-6 col-md-6 col-lg-3  count-fund">
-              <span className="lable-count-fund">Số người ủng hộ</span>
-              <span>14</span>
-            </div>
-            <div className="col-12 col-sm-6 col-md-6 col-lg-3  count-fund">
-              <span className="lable-count-fund">Số tiền ủng hộ</span>
-              <span>{formatCurrency(100000)}</span>
-            </div>
-          </div>
-        </section>
-        <section className="boder-fund"></section>
-        <section className="emissary-box">
-          <h2>Sứ giả gây quỹ</h2>
-          <span>
-            Bạn có thể trở thành sứ giả gây quỹ cho các dự án bằng cách tạo
-            trang gây quỹ với mục tiêu của riêng mình.
-          </span>
-        </section>
+        
         {/* nhóm sứ giả đã donate */}
-        <EmissaryBox />
+        <EmissaryBox fundId={fundId ?? ""} />
         {/* list các dự án thuộc quỹ này */}
       </div>
       <DetailFundListProject />
