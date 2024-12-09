@@ -32,15 +32,14 @@
       transform: scaleX(1);
     }
   }
-  
+
   .list-project-fund {
     .text-body {
-        margin-top: 15px;
-        margin-bottom: 15px;
+      margin-top: 15px;
+      margin-bottom: 15px;
     }
-.text-subBody {
-
-}
+    .text-subBody {
+    }
     .text-charity-fund {
       font-weight: bold;
       font-size: 16px;
@@ -60,7 +59,7 @@
     }
     .cost-slide {
       font-size: 18px;
-      
+
       word-wrap: break-word; /* Có thể không cần thiết cho trường hợp này */
       width: 120px; /* Chiều rộng cố định */
       overflow: hidden; /* Ẩn nội dung tràn ra */
@@ -91,5 +90,4 @@
       padding-block: 20px; /* Khoảng cách trên dưới */
     }
   }
-  
 }

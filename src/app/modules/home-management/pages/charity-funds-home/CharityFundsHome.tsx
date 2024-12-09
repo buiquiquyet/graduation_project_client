@@ -46,7 +46,7 @@ export default function CharityFundsHome() {
       <div className="mb-4 w-100">
         <h2 className="w-100" style={{ fontSize: "34px", textAlign:'center' }}>Các quỹ tổ chức</h2>
       </div>
-      <Slide slidesPerView={5}>
+      <Slide slidesPerView={4}>
         {dataCharityFunds.datas &&
           dataCharityFunds.datas?.length > 0 &&
           dataCharityFunds.datas.map((slide, index) => (
@@ -54,7 +54,7 @@ export default function CharityFundsHome() {
               <div className="cause-entry">
                 <div className="image-item">
                   <Link
-                    to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}/${
+                    to={`/${EHeaderTabKey.DETAIL_FUND}/${
                       slide?.[CharityFundFields.ID]
                     }`}
                     className="img"

@@ -7,9 +7,9 @@ import "./ProjectFundContentAndList.scss";
 import { CharityFundFields } from "@/app/modules/charity-fund-management/constants/charity-fund.interface";
 import { getImgCommon } from "@/shared/user-const";
 import {
+  FaEnvelope,
   FaHeart,
   FaLocationArrow,
-  FaMailBulk,
   FaPhone,
   FaRegHeart,
 } from "react-icons/fa";
@@ -274,7 +274,7 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                         </li>
                         <li className="d-flex align-items-center item-info-fund">
                           <div className="d-flex align-items-center">
-                            <FaMailBulk />
+                            <FaEnvelope />
                           </div>
                           <span className="text-info-fund ">
                             {dataDetailFund?.[CharityFundFields.EMAIL]}

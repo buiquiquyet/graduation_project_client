@@ -16,6 +16,7 @@ import ProjectFundDetailComponent from "../modules/project-fund-detail-managemen
 import ProjectFundComponent from "../modules/project-fund-admin-management/Project-fund";
 import ProjectFundUserComponent from "../modules/project-fund-user-management/Project-user-fund";
 import ApprovalProject from "../modules/approval-project-management/ApprovalProject";
+import DetailFund from "../modules/detail-fund-management/DetailFund";
 const publicRouter = [
   {
     path: `${EHeaderTabKey.HOME}`,
@@ -70,6 +71,13 @@ const publicRouter = [
     children: null,
     layout: DefaultLayout,
     isBackImgHeader: false,
+    type: "",
+  },
+  {
+    path: `${EHeaderTabKey.DETAIL_FUND}/:fundId`,
+    component: DetailFund,
+    children: null,
+    layout: DefaultLayout,
     type: "",
   },
   // {path: '/pageNotFound',  component: PageNotFound, type: 'pageNotFound'},
@@ -130,6 +138,7 @@ const privateAdminRouter = [
     isBackImgHeader: false,
     type: "",
   },
+ 
 ];
 
 const getPublicRoutes = () => publicRouter;

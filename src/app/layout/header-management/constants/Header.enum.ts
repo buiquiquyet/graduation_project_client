@@ -12,6 +12,7 @@ export enum EHeaderTab {
     CATEGORY, // danh mục loại từ thiện vd: trẻ enm, ý tế
     PROJECT_FUND_DETAIL, // danh mục loại từ thiện vd: trẻ enm, ý tế
     APPROVAL_PROJECT, // duyệt dự án
+    DETAIL_FUND, // xem chi tiết quỹ
 }
 export enum EHeaderTabText {
     HOME = "Trang chủ", // trang chủ
@@ -22,11 +23,12 @@ export enum EHeaderTabText {
     LOGIN = "Đăng ký / Đăng nhập", // đăng ký đăng nhập
     LOGOUT = "Đăng xuất", // đăng xuất
     ROLE = "Cá nhân", // trang người dùng
-    PROJECT_FUND = "Dự án", // 
-    PROJECT_FUND_USER = "Dự án", // 
+    PROJECT_FUND = "Quản lý dự án", // dự án của admin
+    PROJECT_FUND_USER = "Dự án sứ giả", // dự án của sứ giả
     CHARITY_FUND = "Quỹ đầu tư", // trang các quỹ đầu tư
     CATEGORY = "Danh mục", // trang các quỹ đầu tư
     APPROVAL_PROJECT = "Duyệt dự án ", // duyệt dự án
+    DETAIL_FUND = "Xem chi tiết quỹ", // xem chi tiết quỹ
 }
 export enum EHeaderTabKey {
     HOME = "", // trang chủ
@@ -44,4 +46,5 @@ export enum EHeaderTabKey {
     CATEGORY = "category",
     PROJECT_FUND_DETAIL = "project-fund-detail",
     APPROVAL_PROJECT = "approval-project",
+    DETAIL_FUND = "detail-fund", 
 }
