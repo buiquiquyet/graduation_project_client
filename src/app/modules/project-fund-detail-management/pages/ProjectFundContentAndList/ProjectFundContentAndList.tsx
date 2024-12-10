@@ -27,6 +27,9 @@ import {
   updateLike,
   updateUnLike,
 } from "@/app/modules/project-fund-admin-management/services/Project-fund.services";
+import { Link } from "react-router-dom";
+import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
+import { ProjectFundFields } from "@/app/modules/project-fund-admin-management/constants/Project-fund.interface";
 interface ProjectFundContentAndListProps {
   idFund: string;
   projectFundDescription: string;
@@ -240,7 +243,13 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                         <h4>Thông tin tổ chức quỹ</h4>
                       </div>
                       <div className="container" style={{ gap: "10px" }}>
-                        <div className="row" style={{ gap: "10px" }}>
+                        <Link
+                          to={`/${EHeaderTabKey.DETAIL_FUND}/${
+                            dataDetailFund?.[ProjectFundFields.ID]
+                          }`}
+                          className="row"
+                          style={{ gap: "10px" }}
+                        >
                           <div className="img-fund-content">
                             <img
                               src={getImgCommon(
@@ -253,7 +262,7 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                               {dataDetailFund?.[CharityFundFields.NAME]}
                             </span>
                           </div>
-                        </div>
+                        </Link>
                       </div>
                       <div>
                         <span>

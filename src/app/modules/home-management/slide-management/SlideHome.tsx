@@ -121,7 +121,7 @@ const SlideHomeComponent: React.FC<SlideHomeComponentProps> = ({
                       <span style={{ color: "#696969", fontSize: "16px" }}>
                         với mục tiêu{" "}
                       </span>{" "}
-                      <span style={{ color: "black" }}>
+                      <span style={{ color: "black", fontWeight:'bold' }}>
                         {formatCurrency(
                           slide?.[ProjectFundFields.TARGET_AMOUNT]
                         )}

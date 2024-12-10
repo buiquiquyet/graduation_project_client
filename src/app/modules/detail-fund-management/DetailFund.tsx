@@ -1,4 +1,4 @@
-import { formatCurrency, getImgCommon } from "@/shared/user-const";
+import {  getImgCommon } from "@/shared/user-const";
 import { memo, useEffect, useState } from "react";
 import { FaEnvelope, FaPhone } from "react-icons/fa";
 import "./DetailFund.scss";

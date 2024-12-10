@@ -68,7 +68,7 @@ export default function CharityFundsHome() {
                 <div className="text p-3 p-md-4" style={{boxShadow: "2px 3px 66px -24px rgba(0, 0, 0, 0.6)"}}>
                   <div className="mb-2 mt-2">
                     <Link
-                      to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}/${
+                      to={`/${EHeaderTabKey.DETAIL_FUND}/${
                         slide?.[ProjectFundFields.ID]
                       }`}
                     >
@@ -77,11 +77,11 @@ export default function CharityFundsHome() {
                       </div>
                     </Link>
                   </div>
-                  <Link to={`/${EHeaderTabKey.PROJECT_FUND_DETAIL}`}>
+                  <div >
                     <h3 className="text-project-fund w-100">
                       {slide?.[ProjectFundFields.NAME]}
                     </h3>
-                  </Link>
+                  </div>
                   <span className="donation-time mb-3 d-block"></span>
                   
                   <div className="fund-raised d-block w-100">

@@ -62,7 +62,6 @@ function BlogComponent() {
   useEffect(() => {
     handleCallApiProjectFundsList(page, activeTab);
   }, [page]);
-  console.log(dataProjectFunds);
 
   return (
     <div className="blog-component">
@@ -193,7 +192,7 @@ function BlogComponent() {
                             >
                               với mục tiêu{" "}
                             </span>{" "}
-                            <span style={{ color: "black" }}>
+                            <span style={{ color: "black", fontWeight:'bold' }}>
                               {formatCurrency(
                                 item?.[ProjectFundFields.TARGET_AMOUNT]
                               )}

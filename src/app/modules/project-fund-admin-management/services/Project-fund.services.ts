@@ -1,7 +1,10 @@
 import { BuildParams } from "@/shared/ultils/BuildParams";
 import { Page } from "@/shared/ultils/Page";
 import { customRequest } from "@/shared/ultils/request";
-import { LikeProjectFundFields, TabListProjectFund } from "../constants/Project-fund.enum";
+import {
+  LikeProjectFundFields,
+  TabListProjectFund,
+} from "../constants/Project-fund.enum";
 
 const apiCommon = "project-fund";
 // createa thông tin người dùng
@@ -18,10 +21,14 @@ export const createProjectFund = async (body: any) => {
     throw error; // Truyền lỗi lên trên để xử lý tiếp
   }
 };
-// get list các quỹ
-export const getListProjectFunds = async (page: Page, filterTabList?: TabListProjectFund) => {
-  let additionalParams = { filterType: filterTabList}; 
-  let params = BuildParams.Params(page,additionalParams);
+// get list các dự án
+export const getListProjectFunds = async (
+  page: Page,
+  filterTabList?: TabListProjectFund,
+  fundId?: string
+) => {
+  let additionalParams = { filterType: filterTabList, fundId: fundId ?? null };
+  let params = BuildParams.Params(page, additionalParams);
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest("GET", `/${apiCommon}${params}`);
@@ -83,15 +90,10 @@ export const deleteProjectFunds = async (ids: any[]) => {
 export const updateLike = async (projectFundId: string, userId: string) => {
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
-    const response = await customRequest(
-      "POST",
-      `/${apiCommon}/like`,
-      {
-        [LikeProjectFundFields.PROJECT_FUND_ID]: projectFundId,
-        [LikeProjectFundFields.USER_ID]: userId
-      },
-      
-    );
+    const response = await customRequest("POST", `/${apiCommon}/like`, {
+      [LikeProjectFundFields.PROJECT_FUND_ID]: projectFundId,
+      [LikeProjectFundFields.USER_ID]: userId,
+    });
 
     return response; // Trả về response chứa status và data
   } catch (error) {
@@ -103,15 +105,10 @@ export const updateLike = async (projectFundId: string, userId: string) => {
 export const updateUnLike = async (projectFundId: string, userId: string) => {
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
-    const response = await customRequest(
-      "POST",
-      `/${apiCommon}/unlike`,
-      {
-        [LikeProjectFundFields.PROJECT_FUND_ID]: projectFundId,
-        [LikeProjectFundFields.USER_ID]: userId
-      },
-      
-    );
+    const response = await customRequest("POST", `/${apiCommon}/unlike`, {
+      [LikeProjectFundFields.PROJECT_FUND_ID]: projectFundId,
+      [LikeProjectFundFields.USER_ID]: userId,
+    });
 
     return response; // Trả về response chứa status và data
   } catch (error) {
