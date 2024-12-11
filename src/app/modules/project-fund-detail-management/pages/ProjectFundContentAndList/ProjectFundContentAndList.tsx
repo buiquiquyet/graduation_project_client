@@ -1,10 +1,8 @@
-import { getCharityFund } from "@/app/modules/charity-fund-management/services/Charity-fund.services";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
 import { memo, useEffect, useState } from "react";
 import { ProjectFundContentAndListAcitve } from "../../interfaces/ProjectFundContentAndList.enum";
 import "./ProjectFundContentAndList.scss";
-import { CharityFundFields } from "@/app/modules/charity-fund-management/constants/charity-fund.interface";
 import { getImgCommon } from "@/shared/user-const";
 import {
   FaEnvelope,
@@ -23,13 +21,13 @@ import { getListDonates } from "../../services/ProjectFundContentAndList.service
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
 import { getDetailUserById } from "@/app/modules/user-management/services/User.services";
-import {
-  updateLike,
-  updateUnLike,
-} from "@/app/modules/project-fund-admin-management/services/Project-fund.services";
+
 import { Link } from "react-router-dom";
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
-import { ProjectFundFields } from "@/app/modules/project-fund-admin-management/constants/Project-fund.interface";
+import { getCharityFund } from "@/app/modules/admin-modules/charity-fund-management/services/Charity-fund.services";
+import { updateLike, updateUnLike } from "@/app/modules/admin-modules/project-fund-admin-management/services/Project-fund.services";
+import { ProjectFundFields } from "@/app/modules/admin-modules/project-fund-admin-management/constants/Project-fund.interface";
+import { CharityFundFields } from "@/app/modules/admin-modules/charity-fund-management/constants/charity-fund.interface";
 interface ProjectFundContentAndListProps {
   idFund: string;
   projectFundDescription: string;
@@ -143,9 +141,7 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
       handleCallApiDetailUser(userId);
     }
   }, [userId]);
-  useEffect(() => {
-    window.scrollTo(0, 0); // Cuộn lên đầu trang
-  }, []); // Mảng rỗng để chỉ chạy một lần khi component được mount
+
   return (
     <div>
       <div className="container p-5  project-fund-content-list">
@@ -190,6 +186,8 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                       gap: "10px",
                       userSelect: "none",
                       cursor: "pointer",
+                      borderBottom: "1px solid #ccc",
+                      paddingBottom: "10px",
                     }}
                     onClick={
                       dataUser?.[UserFields.ID] ? handleClickSetLike : () => {}

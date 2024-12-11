@@ -11,9 +11,9 @@ import "./SlideHome.scss";
 import { formatCurrency, getImgCommon } from "@/shared/user-const";
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
 import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
-import { getListProjectFunds } from "../../project-fund-admin-management/services/Project-fund.services";
-import { TabListProjectFund } from "../../project-fund-admin-management/constants/Project-fund.enum";
-import { ProjectFundFields } from "../../project-fund-admin-management/constants/Project-fund.interface";
+import { getListProjectFunds } from "../../admin-modules/project-fund-admin-management/services/Project-fund.services";
+import { TabListProjectFund } from "../../admin-modules/project-fund-admin-management/constants/Project-fund.enum";
+import { ProjectFundFields } from "../../admin-modules/project-fund-admin-management/constants/Project-fund.interface";
 // Example public URL
 interface SlideHomeComponentProps {
   slidesPerView?: number;

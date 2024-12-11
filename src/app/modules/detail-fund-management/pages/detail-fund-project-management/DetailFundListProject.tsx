@@ -1,7 +1,8 @@
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
-import { TabListProjectFund } from "@/app/modules/project-fund-admin-management/constants/Project-fund.enum";
-import { ProjectFundFields } from "@/app/modules/project-fund-admin-management/constants/Project-fund.interface";
-import { getListProjectFunds } from "@/app/modules/project-fund-admin-management/services/Project-fund.services";
+import { TabListProjectFund } from "@/app/modules/admin-modules/project-fund-admin-management/constants/Project-fund.enum";
+import { ProjectFundFields } from "@/app/modules/admin-modules/project-fund-admin-management/constants/Project-fund.interface";
+import { getListProjectFunds } from "@/app/modules/admin-modules/project-fund-admin-management/services/Project-fund.services";
+
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";

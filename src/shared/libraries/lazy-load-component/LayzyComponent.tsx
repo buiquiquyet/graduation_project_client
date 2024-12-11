@@ -12,7 +12,7 @@ const LazyLoadComponent: React.FC<LazyProps> = ({ children }) => {
   });
 
   return (
-    <div ref={ref} className={`hidden ${inView ? 'slide-up' : ''}`}>
+    <div  ref={ref} className={`hidden w-100 ${inView ? 'slide-up' : ''}`}>
       {children}
     </div>
   );

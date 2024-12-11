@@ -5,10 +5,10 @@ import "./DetailFund.scss";
 import EmissaryBox from "./pages/emissary-box-management/EmissaryBox";
 import DetailFundListProject from "./pages/detail-fund-project-management/DetailFundListProject";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
-import { getCharityFund } from "../charity-fund-management/services/Charity-fund.services";
 import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
 import { useParams } from "react-router-dom";
-import { CharityFundFields } from "../charity-fund-management/constants/charity-fund.interface";
+import { getCharityFund } from "../admin-modules/charity-fund-management/services/Charity-fund.services";
+import { CharityFundFields } from "../admin-modules/charity-fund-management/constants/charity-fund.interface";
 export default memo(function DetailFundComponent() {
   const { setLoading } = useContextCommon();
   const { fundId } = useParams();

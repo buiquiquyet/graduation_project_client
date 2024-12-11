@@ -22,13 +22,14 @@
   .item-user {
     display: flex;
     align-items: center;
-    gap: 4px;
     .user-img-home {
+      display: flex;
+      align-items: center;
       cursor: pointer;
       img {
         border-radius: 999px;
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
       }
     }
   }

@@ -1,3 +1,5 @@
+import { BuildParams } from "@/shared/ultils/BuildParams";
+import { Page } from "@/shared/ultils/Page";
 import { customRequest } from "@/shared/ultils/request";
 
 const apiCommon = "user"
@@ -61,6 +63,38 @@ export const getDetailUserById = async (idUser: string) => {
     const response = await customRequest(
       "GET",
       `/${apiCommon}/${idUser}`
+    );
+
+    return response; // Trả về response chứa status và data
+  } catch (error) {
+    // Ném ra lỗi đã xử lý từ customRequest
+    throw error; // Truyền lỗi lên trên để xử lý tiếp
+  }
+};
+// get list các người dùng
+export const getListUsers = async (page: Page) => {
+  const params = BuildParams.Params(page);
+  try {
+    // Gọi customRequest với phương thức POST, đường dẫn, body và headers
+    const response = await customRequest("GET", `/${apiCommon}${params}`);
+
+    return response; // Trả về response chứa status và data
+  } catch (error) {
+    // Ném ra lỗi đã xử lý từ customRequest
+    throw error; // Truyền lỗi lên trên để xử lý tiếp
+  }
+};
+// xoá nhiều người dùng
+export const deleteUsers = async (ids: any[]) => {
+  try {
+    // Gọi customRequest với phương thức POST, đường dẫn, body và headers
+    const response = await customRequest(
+      "DELETE",
+      `/${apiCommon}/deleteByIds`,
+      JSON.stringify(ids),
+      {
+        "Content-Type": "application/json",
+      }
     );
 
     return response; // Trả về response chứa status và data

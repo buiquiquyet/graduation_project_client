@@ -20,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReducerProjectFund } from "@/shared/redux/selector";
 
 import LibQillComponent from "@/shared/libraries/lib-qill-component/LibQillComponent";
-import { getListCharityFundsForOptions } from "@/app/modules/charity-fund-management/services/Charity-fund.services";
 import { Page } from "@/shared/ultils/Page";
 import {
   convertToCommonOptions,
@@ -38,8 +37,9 @@ import {
   addIsEditProjectFund,
   addIsSubmitSuccessProjectFund,
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
-import { getListCategorys } from "@/app/modules/category-management/services/Category.services";
 import { UserFields } from "@/app/modules/user-management/constants/User.interface";
+import { getListCharityFundsForOptions } from "@/app/modules/admin-modules/charity-fund-management/services/Charity-fund.services";
+import { getListCategorys } from "@/app/modules/admin-modules/category-management/services/Category.services";
 export default memo(function ProjectFundEdit() {
   // check useContext
   const { setLoading, dataUser } = useContextCommon();

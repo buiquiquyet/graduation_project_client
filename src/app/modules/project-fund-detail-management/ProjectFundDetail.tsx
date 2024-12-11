@@ -14,8 +14,9 @@ import ProjectFundContentAndList from "./pages/ProjectFundContentAndList/Project
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import LibCategoryAbsolute from "@/shared/libraries/LibCategoryAbsolute/LibCategoryAbsolute";
 import SlideHomeComponent from "@/app/modules/home-management/slide-management/SlideHome";
-import { getProjectFund } from "../project-fund-admin-management/services/Project-fund.services";
-import { ProjectFundFields } from "../project-fund-admin-management/constants/Project-fund.interface";
+import { getProjectFund } from "../admin-modules/project-fund-admin-management/services/Project-fund.services";
+import { ProjectFundFields } from "../admin-modules/project-fund-admin-management/constants/Project-fund.interface";
+
 const ProjectFundDetailComponent = () => {
   const context = useContext(MyContext);
   if (!context) {
@@ -51,16 +52,11 @@ const ProjectFundDetailComponent = () => {
       handleCallApiProjectFundDetail(projectFundId);
     }
   }, [projectFundId]);
-  const topElementRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    // Cuộn đến phần tử đầu tiên khi component được render lại
-    if (topElementRef.current) {
-      topElementRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, []); // Mảng phụ thuộc rỗng, chỉ chạy một lần khi component được mount
+  
+ 
 
   return (
-    <div className="project-fund-detail" ref={topElementRef}>
+    <div className="project-fund-detail" >
       <div className="w-100">
         <div className="w-100">
           <LazyLoadComponent>

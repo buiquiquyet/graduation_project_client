@@ -1,4 +1,4 @@
-import { TabListProjectFundProcessing } from "../../project-fund-user-management/constants/Project-fund-user.enum";
+import { TabListProjectFundProcessing } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
 
 export class ApprovalProjectConst {
 

@@ -10,13 +10,14 @@ import UserComponent from "../modules/user-management/User";
 import { UserFields } from "../modules/user-management/constants/User.interface";
 import { RoleUser } from "@/helper/ContextCommon/ContextCommon.enum";
 // import Admin from "../modules/admin-management/Admin"
-import CharityFundComponent from "../modules/charity-fund-management/Charity-fund";
-import CategoryComponent from "../modules/category-management/Category";
 import ProjectFundDetailComponent from "../modules/project-fund-detail-management/ProjectFundDetail";
-import ProjectFundComponent from "../modules/project-fund-admin-management/Project-fund";
-import ProjectFundUserComponent from "../modules/project-fund-user-management/Project-user-fund";
-import ApprovalProject from "../modules/approval-project-management/ApprovalProject";
 import DetailFund from "../modules/detail-fund-management/DetailFund";
+import ApprovalProjectFundComponent from "../modules/admin-modules/approval-project-management/ApprovalProject";
+import ProjectFundUserComponent from "../modules/user-modules/project-fund-user-management/Project-user-fund";
+import ProjectFundComponent from "../modules/admin-modules/project-fund-admin-management/Project-fund";
+import Category from "../modules/admin-modules/category-management/Category";
+import CharityFund from "../modules/admin-modules/charity-fund-management/Charity-fund";
+import AdminUserManagement from "../modules/admin-modules/admin-user-management/AdminUserManagement";
 const publicRouter = [
   {
     path: `${EHeaderTabKey.HOME}`,
@@ -107,6 +108,14 @@ const privateUserRouterIsEmissary = [
 // router của admin
 const privateAdminRouter = [
   {
+    path: `${EHeaderTabKey.ADMIN_USER}`,
+    component: AdminUserManagement,
+    children: null,
+    layout: DefaultLayout,
+    isBackImgHeader: false,
+    type: "",
+  },
+  {
     path: `${EHeaderTabKey.PROJECT_FUND}`,
     component: ProjectFundComponent,
     children: null,
@@ -116,7 +125,7 @@ const privateAdminRouter = [
   },
   {
     path: `${EHeaderTabKey.CHARITY_FUND}`,
-    component: CharityFundComponent,
+    component: CharityFund,
     children: null,
     layout: DefaultLayout,
     isBackImgHeader: false,
@@ -124,7 +133,7 @@ const privateAdminRouter = [
   },
   {
     path: `${EHeaderTabKey.CATEGORY}`,
-    component: CategoryComponent,
+    component: Category,
     children: null,
     layout: DefaultLayout,
     isBackImgHeader: false,
@@ -132,40 +141,50 @@ const privateAdminRouter = [
   },
   {
     path: `${EHeaderTabKey.APPROVAL_PROJECT}`,
-    component: ApprovalProject,
+    component: ApprovalProjectFundComponent,
     children: null,
     layout: DefaultLayout,
     isBackImgHeader: false,
     type: "",
   },
- 
 ];
 
 const getPublicRoutes = () => publicRouter;
 
-const getAdminRoutes = () => [...publicRouter, ...privateAdminRouter, ...privateUserRouter];
+const getAdminRoutes = () => [
+  ...publicRouter,
+  ...privateAdminRouter,
+  ...privateUserRouter,
+];
 
 const getUserRoutes = (isEmissary: boolean) => {
   if (isEmissary) {
-    return [...publicRouter, ...privateUserRouter, ...privateUserRouterIsEmissary];
+    return [
+      ...publicRouter,
+      ...privateUserRouter,
+      ...privateUserRouterIsEmissary,
+    ];
   }
   return [...publicRouter, ...privateUserRouter];
 };
 
 const getRoutesBasedOnPath = (pathName: EHeaderTabKey, dataUser: any) => {
+  // ADMIN
   const arrRoleAdminAcitve = [
     EHeaderTabKey.CHARITY_FUND,
     EHeaderTabKey.PROJECT_FUND,
     EHeaderTabKey.CATEGORY,
     EHeaderTabKey.APPROVAL_PROJECT,
+    EHeaderTabKey.ADMIN_USER,
   ];
+  // USER
   const arrRoleUserAcitve = [
     EHeaderTabKey.ROLE,
     EHeaderTabKey.PROJECT_FUND_USER,
   ];
   if (arrRoleAdminAcitve.includes(pathName)) {
     return getAdminRoutes();
-  } else if (arrRoleUserAcitve.includes(pathName) ) {
+  } else if (arrRoleUserAcitve.includes(pathName)) {
     return getUserRoutes(dataUser?.[UserFields.IS_EMISSARY]);
   }
   return getPublicRoutes();
@@ -177,16 +196,13 @@ export const getRoutes = (dataUser?: any) => {
     return getRoutesBasedOnPath(pathName, dataUser);
   }
 
-
   if (dataUser?.[UserFields.ROLE] === RoleUser.USER) {
-    return  getUserRoutes(dataUser?.[UserFields.IS_EMISSARY]);
+    return getUserRoutes(dataUser?.[UserFields.IS_EMISSARY]);
   }
-  
+
   if (dataUser?.[UserFields.ROLE] === RoleUser.ADMIN) {
     return getAdminRoutes();
   }
 
   return getPublicRoutes();
 };
-
-

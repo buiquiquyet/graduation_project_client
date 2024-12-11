@@ -143,7 +143,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                               ? "active-user"
                               : ""
                           }`}
-                          style={{ fontSize: "24px", cursor: "pointer", color:'white' }}
+                          style={{  cursor: "pointer", color:'white' }}
                         >
                           {dataUser?.[UserFields.FULL_NAME]}
                         </span>

@@ -18,7 +18,8 @@ import { MyContext } from "@/App";
 import config from "@/shared/ultils/config";
 import ImageModal from "../gallery-component/Gallery";
 import { convertDate, formatCurrency } from "@/shared/user-const";
-import { TabListProjectFundProcessing } from "@/app/modules/project-fund-user-management/constants/Project-fund-user.enum";
+import { TabListProjectFundProcessing } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
+import LibBaseSearch from "../lib-search-component/LibSearchComponent";
 
 interface PropsTable {
   columns: any[];
@@ -87,6 +88,7 @@ const LibTable: React.FC<PropsTable> = ({
   }, [rowIdSelects]);
   return (
     <div>
+      <LibBaseSearch style={{ marginBottom: "30px" }} />
       <TableContainer component={Paper} className="table-container">
         <Table>
           <TableHead>
@@ -196,6 +198,7 @@ const LibTable: React.FC<PropsTable> = ({
                                 style={{
                                   cursor: "pointer",
                                   position: "relative",
+                                  textAlign: "center",
                                 }}
                                 onClick={(event) => event.stopPropagation()}
                               >

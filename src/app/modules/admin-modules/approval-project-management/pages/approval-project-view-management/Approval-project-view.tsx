@@ -9,11 +9,10 @@ import { createValidationSchema } from "@/shared/validate";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import BaseFileUpload from "@/shared/component/base-dialog-file/BaseFileUpload";
 import { memo, useCallback, useEffect, useState } from "react";
-import {  useDispatch, useSelector } from "react-redux";
+import {   useSelector } from "react-redux";
 import { ReducerProjectFund } from "@/shared/redux/selector";
 
 import LibQillComponent from "@/shared/libraries/lib-qill-component/LibQillComponent";
-import { getListCharityFundsForOptions } from "@/app/modules/charity-fund-management/services/Charity-fund.services";
 import { Page } from "@/shared/ultils/Page";
 import {
   convertToCommonOptions,
@@ -23,10 +22,11 @@ import {
 
 import { InitProjectFund } from "@/shared/reducer/project-fund-slice/InitProjectFundProps";
 
-import { getListCategorys } from "@/app/modules/category-management/services/Category.services";
-import { ProjectFundProcessingDTO, ProjectFundProcessingFields } from "@/app/modules/project-fund-user-management/constants/Project-fund-user.interface";
-import { ProjectFundProcessingEditConst } from "@/app/modules/project-fund-user-management/constants/Project-fund-user-edit.const";
-import { getProjectFundProcessing } from "@/app/modules/project-fund-user-management/services/Project-fund-user.services";
+import { getListCharityFundsForOptions } from "../../../charity-fund-management/services/Charity-fund.services";
+import { getListCategorys } from "../../../category-management/services/Category.services";
+import { ProjectFundProcessingDTO, ProjectFundProcessingFields } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.interface";
+import { ProjectFundProcessingEditConst } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user-edit.const";
+import { getProjectFundProcessing } from "@/app/modules/user-modules/project-fund-user-management/services/Project-fund-user.services";
 export default memo(function ApprovalProjectViewComponent() {
   // check useContext
   const { setLoading,  } = useContextCommon();
@@ -95,7 +95,7 @@ export default memo(function ApprovalProjectViewComponent() {
     const res: any = await getListCharityFundsForOptions(page);
     setLoading(false);
     if (handleResponseInterceptor(res, false)) {
-      setFormInputsProjectFund((prevState) =>
+      setFormInputsProjectFund((prevState: any) =>
         updateOptionsFormInputs(
           prevState,
           ProjectFundProcessingFields.FUND_ID,
@@ -112,7 +112,7 @@ export default memo(function ApprovalProjectViewComponent() {
     const res: any = await getListCategorys(page);
     setLoading(false);
     if (handleResponseInterceptor(res, false)) {
-      setFormInputsProjectFund((prevState) =>
+      setFormInputsProjectFund((prevState: any) =>
         updateOptionsFormInputs(
           prevState,
           ProjectFundProcessingFields.CATEGORY_ID,
@@ -145,7 +145,7 @@ export default memo(function ApprovalProjectViewComponent() {
         <div className="user-info col-12 col-sm-12 col-md-12 col-lg-6 ">
           {formInputsProjectFund &&
             formInputsProjectFund.length > 0 &&
-            formInputsProjectFund.map((item, index) => (
+            formInputsProjectFund.map((item: any, index: number) => (
               <Fragment key={index}>
                 <div className="input-label">
                   <LibSwitchInput item={item} formik={formik} />

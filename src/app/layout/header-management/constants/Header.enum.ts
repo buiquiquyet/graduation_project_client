@@ -13,6 +13,7 @@ export enum EHeaderTab {
     PROJECT_FUND_DETAIL, // danh mục loại từ thiện vd: trẻ enm, ý tế
     APPROVAL_PROJECT, // duyệt dự án
     DETAIL_FUND, // xem chi tiết quỹ
+    ADMIN_USER, // quản lý người dùng
 }
 export enum EHeaderTabText {
     HOME = "Trang chủ", // trang chủ
@@ -29,6 +30,7 @@ export enum EHeaderTabText {
     CATEGORY = "Danh mục", // trang các quỹ đầu tư
     APPROVAL_PROJECT = "Duyệt dự án ", // duyệt dự án
     DETAIL_FUND = "Xem chi tiết quỹ", // xem chi tiết quỹ
+    ADMIN_USER = "Quản lý người dùng", // quản lý người dùng
 }
 export enum EHeaderTabKey {
     HOME = "", // trang chủ
@@ -47,4 +49,5 @@ export enum EHeaderTabKey {
     PROJECT_FUND_DETAIL = "project-fund-detail",
     APPROVAL_PROJECT = "approval-project",
     DETAIL_FUND = "detail-fund", 
+    ADMIN_USER = "admin-user", // quản lý người dùng
 }

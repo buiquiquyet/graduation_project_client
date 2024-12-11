@@ -26,6 +26,7 @@
   .img-table {
     width: 70px;
     height: 70px;
+    
   }
   .img-table-modal {
     width: 70px;
@@ -36,15 +37,17 @@
     left: 50%;
   }
   .text-note {
-    // width: 100% !important;
+    width: 100% !important;
+   
     cursor: pointer;
     word-wrap: break-word; /* Có thể không cần thiết cho trường hợp này */
-    width: 120px; /* Chiều rộng cố định */
+    width: 200px; /* Chiều rộng cố định */
+    max-width: 400px;
     overflow: hidden; /* Ẩn nội dung tràn ra */
     text-overflow: ellipsis; /* Hiển thị dấu ... */
-    white-space: nowrap; /* Không cho phép xuống dòng */
-    padding-block: 20px; /* Khoảng cách trên dưới */
-    height: 60px;
+    white-space: normal; /* Không cho phép xuống dòng */
+    text-align: center;
+    max-height: 60px;
   }
   
 }

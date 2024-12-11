@@ -46,6 +46,7 @@ export class HeaderConst {
       label: EHeaderTabText.PROJECT_FUND_USER,
       key: EHeaderTabKey.PROJECT_FUND_USER,
     };
+    // quyền người dùng
     const roleUser = [
       {
         value: EHeaderTab.ROLE,
@@ -58,7 +59,13 @@ export class HeaderConst {
         key: EHeaderTabKey.LOGIN,
       },
     ];
+    // quyền admin
     const roleAdmin = [
+      {
+        value: EHeaderTab.ADMIN_USER,
+        label: EHeaderTabText.ADMIN_USER,
+        key: EHeaderTabKey.ADMIN_USER,
+      },
       {
         value: EHeaderTab.PROJECT_FUND,
         label: EHeaderTabText.PROJECT_FUND,
@@ -79,7 +86,6 @@ export class HeaderConst {
         label: EHeaderTabText.CATEGORY,
         key: EHeaderTabKey.CATEGORY,
       },
-     
       ...roleUser,
     ];
     if (role === RoleUser.ADMIN) return roleAdmin;

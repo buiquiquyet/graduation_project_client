@@ -7,7 +7,7 @@ import {
   addIdRowProjectFund,
   addIsEditProjectFund,
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
-export default function ProjectFundComponent() {
+export default function ApprovalProjectFundComponent() {
   const dispatch = useDispatch(); // action redux
   useEffect(() => {
     return () => {
