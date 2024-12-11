@@ -63,7 +63,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         // onPreview={onPreview}
         onChange={handleFileChange}
         beforeUpload={beforeUpload} // Kiểm tra loại file
-        accept=".png,.jpg,.jpeg,.webp,.gif" // Cho phép tải lên ảnh và file pdf
+        accept=".png,.jpg,.jpeg,.webp,.gif,.mp4,.avi,.mov,.wmv,.flv,.mkv"
         maxCount={imgLength} // Giới hạn chỉ được chọn một ảnh
         onRemove={handleRemove} // Xử lý sự kiện xóa file
       >

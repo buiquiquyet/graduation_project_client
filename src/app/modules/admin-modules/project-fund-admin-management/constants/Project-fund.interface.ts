@@ -8,6 +8,8 @@ export enum ProjectFundFields {
   NAME = "name", // tên chiến dịch
   IMAGES = "images", // ảnh chiến dịch
   IMAGES_IFORM_FILE = "imagesIFormFile", // ảnh chiến dịch
+  VIDEO = "video", // video chiến dịch
+  VIDEO_IFORM_FILE = "videoIFormFile", // video chiến dịch
   DESCRIPTION = "description", // ghi chú
   TARGET_AMOUNT = "targetAmount", // số tiền mục tiêu
   CURRENT_AMOUNT = "currentAmount", // số tiền hiện tại

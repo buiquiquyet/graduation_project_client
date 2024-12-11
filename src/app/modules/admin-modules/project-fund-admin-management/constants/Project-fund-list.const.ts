@@ -54,7 +54,11 @@ export class ProjectFundListConst {
       label: "ẢNH",
       accessor: ProjectFundFields.IMAGES,
       type: ETableColumnType.IMAGE,
-      
+    },
+    {
+      label: "VIDEO",
+      accessor: ProjectFundFields.VIDEO,
+      type: ETableColumnType.IMAGE,
     },
     {
       label: "CẬP NHẬT LÚC",

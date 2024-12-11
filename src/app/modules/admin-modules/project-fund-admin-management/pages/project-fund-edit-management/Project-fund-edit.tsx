@@ -47,6 +47,7 @@ export default memo(function ProjectFundEdit() {
   const reducerProjectFund = useSelector(ReducerProjectFund); // redux của dự án
 
   const [listFileNames, setListFileNames] = useState<any[]>([]); // mảng file image
+  const [listFileVideo, setListFileVideo] = useState<any[]>([]); // mảng file video
   const [content, setContent] = useState(""); // value của mô tả dự án
   const [formInputsProjectFund, setFormInputsProjectFund] = useState(
     ProjectFundEditConst.arrProjectFundInfo
@@ -90,6 +91,13 @@ export default memo(function ProjectFundEdit() {
           );
         });
       }
+      // THÊM video vào formData
+      if(listFileVideo?.length > 0) {
+        formData.append(
+          ProjectFundFields.VIDEO_IFORM_FILE,
+          listFileVideo[0]?.originFileObj
+        );
+      }
       formData.set(ProjectFundFields.DESCRIPTION, content); // dữ liệu của mô tả dự án
       let res: any = null;
       // nếu đang ở tạo mới dự án
@@ -125,7 +133,10 @@ export default memo(function ProjectFundEdit() {
   const onChangeImage = useCallback((newFileList: any[]) => {
     setListFileNames(newFileList);
   }, []);
-
+  // cập nhật list file video
+  const onChangeVideo = useCallback((newFileList: any[]) => {
+    setListFileVideo(newFileList);
+  }, []);
   // lấy bản ghi của 1 dự án thông qua id
   const handleCallApiGetProjectFund = async (idFund: string) => {
     setLoading(true);
@@ -220,11 +231,19 @@ export default memo(function ProjectFundEdit() {
 
           {/* tải ảnh */}
           <div className="input-label">
-            <span>Ảnh </span>
+            <span>Tải ảnh </span>
             <BaseFileUpload
               onChange={onChangeImage}
               fileList={listFileNames}
               imgLength={4}
+            />
+          </div>
+          <div className="input-label">
+            <span>Tải video </span>
+            <BaseFileUpload
+              onChange={onChangeVideo}
+              fileList={listFileVideo}
+              imgLength={1}
             />
           </div>
         </div>

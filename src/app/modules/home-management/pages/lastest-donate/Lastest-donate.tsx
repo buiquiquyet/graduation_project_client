@@ -39,7 +39,7 @@ console.log(publicUrl);
             <LazyLoadComponent>
               <div className="row justify-content-center mb-5 pb-3 d-flex">
                 <div className="col-md-7 heading-section  text-center">
-                  <h2 className="mb-4">QUYÊN GÓP NHIỀU NHẤT</h2>
+                  <h2 className="mb-4">THÀNH VIÊN HOẠT ĐỘNG TÍCH CỰC</h2>
                   <h5>
                     Khi ta giúp đỡ người khác, ta cũng đang giúp chính mình trở
                     nên giàu có hơn về tinh thần.

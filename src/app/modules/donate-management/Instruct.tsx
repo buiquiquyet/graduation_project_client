@@ -28,7 +28,7 @@ function DonateComponent() {
             <LazyLoadComponent >
               <div className="w-100">
                 <h1 style={{ textAlign: "center", fontSize: "50px" }}>
-                  Hướng dẫn xử dụng
+                  Hướng dẫn sử dụng
                 </h1>
               </div>
             </LazyLoadComponent>

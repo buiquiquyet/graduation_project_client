@@ -241,7 +241,7 @@ export default function LoginComponent() {
                 {!toRegister && (
                   <>
                     <div className="txt1 text-center p-t-54 p-b-20">
-                      <span className="text-color">Hoặc đăng nhập</span>
+                      <span className="text-color">Hoặc đăng nhập với google</span>
                     </div>
                     <GoogleOAuthProvider clientId={`${ClientKey.KEY_ID}`}>
                       <div className="d-flex align-items-center justify-content-center">
@@ -259,7 +259,7 @@ export default function LoginComponent() {
                 <div className="flex-col-c p-t-155">
                   {!toRegister && (
                     <span className="text-color  txt1 p-b-17">
-                      Hoặc đăng ký
+                      {/* Hoặc đăng ký */}
                     </span>
                   )}
 
