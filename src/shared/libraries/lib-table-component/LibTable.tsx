@@ -15,9 +15,8 @@ import "./LibTable.scss";
 import { ETableColumnType } from "./constants/LibTable.enum";
 import BaseOptionSettings from "./base-options-setting/BaseOptionSetting";
 import { MyContext } from "@/App";
-import config from "@/shared/ultils/config";
 import ImageModal from "../gallery-component/Gallery";
-import { convertDate, formatCurrency } from "@/shared/user-const";
+import { convertDate, formatCurrency, getImgCommon } from "@/shared/user-const";
 import { TabListProjectFundProcessing } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
 import LibBaseSearch from "../lib-search-component/LibSearchComponent";
 
@@ -206,9 +205,8 @@ const LibTable: React.FC<PropsTable> = ({
                                   className="img-table"
                                   src={
                                     Array.isArray(row[column.accessor])
-                                      ? config.FILE_URL +
-                                        row[column.accessor]?.[0] // Nếu là mảng, lấy phần tử đầu tiên
-                                      : config.FILE_URL + row[column.accessor] // Nếu là chuỗi, sử dụng chuỗi trực tiếp
+                                      ? getImgCommon(row[column.accessor]?.[0]) // Nếu là mảng, lấy phần tử đầu tiên
+                                      : getImgCommon(row[column.accessor]) // Nếu là chuỗi, sử dụng chuỗi trực tiếp
                                   }
                                 />
                                 <ImageModal
@@ -223,7 +221,40 @@ const LibTable: React.FC<PropsTable> = ({
                                 ></ImageModal>
                               </div>
                             );
-
+                          case ETableColumnType.VIDEO:
+                            return (
+                              <div
+                                style={{
+                                  cursor: "pointer",
+                                  position: "relative",
+                                  textAlign: "center",
+                                }}
+                                onClick={(event) => event.stopPropagation()}
+                              >
+                                {/* Hiển thị video thay vì hình ảnh */}
+                                {row[column.accessor] ? (
+                                  <video
+                                    className="video-table"
+                                    style={{
+                                      width: "70px", // Điều chỉnh kích thước video cho phù hợp
+                                      height: "70px",
+                                      objectFit: "cover", // Cắt video nếu cần thiết để không bị mờ
+                                    }}
+                                    src={
+                                      Array.isArray(row[column.accessor])
+                                        ? getImgCommon(
+                                            row[column.accessor]?.[0]
+                                          ) // Nếu là mảng, lấy phần tử đầu tiên
+                                        : getImgCommon(row[column.accessor]) // Nếu là chuỗi, sử dụng chuỗi trực tiếp
+                                    }
+                                    controls // Hiển thị các điều khiển video (play, pause, volume, v.v.)
+                                    autoPlay={false} // Tùy chọn tự động phát, bạn có thể thay đổi nếu cần
+                                  />
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            );
                           case ETableColumnType.NOTE:
                           case ETableColumnType.NUMBER:
                             return (

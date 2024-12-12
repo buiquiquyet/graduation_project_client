@@ -3,6 +3,10 @@ import { Button, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
 import { UploadOutlined } from "@ant-design/icons";
 import { memo } from "react";
+import {
+  ToastMessage,
+  ToastStatus,
+} from "@/shared/libraries/message-log-component/MessageLog";
 
 interface BaseFileUploadProps {
   fileList: any[]; // mảng list file
@@ -14,7 +18,13 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   onChange,
   imgLength = 1,
 }) => {
-  const typeImg = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+  const typeImg = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+    "image/jpg",
+  ];
   const handleFileChange = ({ fileList: newFileList }: any) => {
     // const updatedFileList = info.fileList.map((file: any) => ({
     //   uid: file.uid,
@@ -39,6 +49,13 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   // Hàm kiểm tra file trước khi tải lên
   const beforeUpload = (file: any) => {
     const isValid = typeImg.includes(file.type);
+    if (!isValid) {
+      onChange([]);
+      ToastMessage.show(
+        ToastStatus.error,
+        "Sai định dạng ảnh! Định dạng cho phép '.jpg, .png, .gif, .webp, .jpeg'"
+      ); // Thông báo nếu file không hợp lệ
+    }
     return isValid;
   };
   return (
@@ -63,7 +80,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         // onPreview={onPreview}
         onChange={handleFileChange}
         beforeUpload={beforeUpload} // Kiểm tra loại file
-        accept=".png,.jpg,.jpeg,.webp,.gif,.mp4,.avi,.mov,.wmv,.flv,.mkv"
+        accept=".png,.jpg,.jpeg,.webp,.gif"
         maxCount={imgLength} // Giới hạn chỉ được chọn một ảnh
         onRemove={handleRemove} // Xử lý sự kiện xóa file
       >

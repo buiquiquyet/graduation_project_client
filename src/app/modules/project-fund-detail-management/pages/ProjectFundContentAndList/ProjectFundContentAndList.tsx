@@ -25,7 +25,10 @@ import { getDetailUserById } from "@/app/modules/user-management/services/User.s
 import { Link } from "react-router-dom";
 import { EHeaderTabKey } from "@/app/layout/header-management/constants/Header.enum";
 import { getCharityFund } from "@/app/modules/admin-modules/charity-fund-management/services/Charity-fund.services";
-import { updateLike, updateUnLike } from "@/app/modules/admin-modules/project-fund-admin-management/services/Project-fund.services";
+import {
+  updateLike,
+  updateUnLike,
+} from "@/app/modules/admin-modules/project-fund-admin-management/services/Project-fund.services";
 import { ProjectFundFields } from "@/app/modules/admin-modules/project-fund-admin-management/constants/Project-fund.interface";
 import { CharityFundFields } from "@/app/modules/admin-modules/charity-fund-management/constants/charity-fund.interface";
 interface ProjectFundContentAndListProps {
@@ -34,6 +37,7 @@ interface ProjectFundContentAndListProps {
   projectFundId: string | undefined;
   userId: string; // id của sứ giả
   projectFundListLike: any[];
+  video?: string; // video
 }
 const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
   idFund,
@@ -41,6 +45,7 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
   projectFundId,
   userId,
   projectFundListLike,
+  video,
 }) => {
   const { setLoading, dataUser } = useContextCommon();
   const [dataDetailFund, setDataDetailFund] = useState<any>(); // dữ liệu detail quỹ
@@ -186,7 +191,7 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
                       gap: "10px",
                       userSelect: "none",
                       cursor: "pointer",
-                      borderBottom: "1px solid #ccc",
+                      // borderBottom: "1px solid #ccc",
                       paddingBottom: "10px",
                     }}
                     onClick={
@@ -201,6 +206,24 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
 
                     <div style={{ fontSize: "24px" }}>{countLike ?? 0}</div>
                   </div>
+                  {/* hiển thị video */}
+                  {video && (
+                    <div>
+                      <video
+                        className="video-table"
+                        style={{
+                          width: "100%", // Điều chỉnh kích thước video cho phù hợp
+                          // height: "70px",
+                          objectFit: "cover", // Cắt video nếu cần thiết để không bị mờ
+                        }}
+                        src={getImgCommon(video[0])}
+                        controls // Hiển thị các điều khiển video (play, pause, volume, v.v.)
+                        autoPlay={false} // Tùy chọn tự động phát, bạn có thể thay đổi nếu cần
+                      />
+                    </div>
+                  )}
+
+                  {/* ==== */}
                   <div
                     dangerouslySetInnerHTML={{
                       __html: projectFundDescription ?? "",

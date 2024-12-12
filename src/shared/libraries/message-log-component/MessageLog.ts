@@ -8,7 +8,7 @@ export enum ToastStatus {
   info = "info",
 }
 export class ToastMessage {
-  public static show(type: string, message: string, onClose?: () => void) {
+  public static show(type: ToastStatus, message: string, onClose?: () => void) {
     return toast[type as keyof typeof ToastStatus](message, {
       autoClose: 1800,
       onClose,

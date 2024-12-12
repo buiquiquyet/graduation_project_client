@@ -39,6 +39,7 @@ import {
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
 import { getListCharityFundsForOptions } from "../../../charity-fund-management/services/Charity-fund.services";
 import { getListCategorys } from "../../../category-management/services/Category.services";
+import BaseVideoFile from "@/shared/component/base-video-file/BaseVideoFile";
 export default memo(function ProjectFundEdit() {
   // check useContext
   const { setLoading } = useContextCommon();
@@ -201,6 +202,7 @@ export default memo(function ProjectFundEdit() {
       // set lại form rỗng khi submit delete thành công
       formik.resetForm();
       setListFileNames([]);
+      setListFileVideo([]);
       dispatch(addIsDelSuccessProjectFund(false)); // set lại trạng thái submit delete  = false
       dispatch(addIdRowProjectFund("")); // set lại id row = ""
       dispatch(addIsEditProjectFund(false)); // set lại trạng thái edit  = false
@@ -240,10 +242,9 @@ export default memo(function ProjectFundEdit() {
           </div>
           <div className="input-label">
             <span>Tải video </span>
-            <BaseFileUpload
+            <BaseVideoFile
               onChange={onChangeVideo}
               fileList={listFileVideo}
-              imgLength={1}
             />
           </div>
         </div>

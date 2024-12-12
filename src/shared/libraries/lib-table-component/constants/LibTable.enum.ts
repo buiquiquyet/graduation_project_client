@@ -12,6 +12,7 @@ export enum ETableColumnType {
     // CHUA SU DUNG
     REORDER = "REORDER",    // KÉO THẢ
     IMAGE = "IMAGE",    // IMAGE
+    VIDEO = "VIDEO",    // VIDEO
     CHECKBOX_ACTION = 'CHECKBOX_ACTION',    // CHECKBOX CÓ THỂ TICK
     // CHECKBOX_CHANGE = 'CHECKBOX_CHANGE',    // CHECKBOX XỬ LÝ GỌI HÀM
     // CHECKBOX_RESULT = 'CHECKBOX_RESULT',    // CHECKBOX CHỈ ĐỂ SHOW

@@ -229,6 +229,7 @@ const ProjectFundDetailComponent = () => {
               projectFundId={projectFundId}
               userId={dataDetailProjectFund?.[ProjectFundFields.USER_Id]}
               projectFundListLike={dataDetailProjectFund?.[ProjectFundFields.LIKE_BY_USERS]}
+              video={dataDetailProjectFund?.[ProjectFundFields.VIDEO]}
             />
           )}
         </div>
