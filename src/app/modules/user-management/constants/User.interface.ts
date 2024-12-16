@@ -18,6 +18,7 @@ export enum UserFields {
     DISTRICT = "district",   
     ADDRESS = "address",      
     IS_EMISSARY = "isEmissary", // có phải là sứ giả      
+    IS_EMISSARY_APPROVED = "isEmissaryApproved", // đã duyệt thành sứ giả chưa   
 }
 
 export interface UsersDTO {

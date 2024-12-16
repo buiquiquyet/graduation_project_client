@@ -79,7 +79,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
     if (!arrTippyHomeUser) return false;
     return arrTippyHomeUser(
       dataUser?.[UserFields.ROLE],
-      dataUser?.[UserFields.IS_EMISSARY]
+      dataUser?.[UserFields.IS_EMISSARY_APPROVED]
     )?.some((item: any) => item?.value === activeTab);
   };
   useEffect(() => {
@@ -95,7 +95,10 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
           <div onClick={() => onClickActiveHeader(EHeaderTab.HOME)}>
             <Link to={"/"} className="navbar-brand label-title">
               <div className="img-header-logo nav-link ">
-                <img className="nav-logo" src={`${publicUrl + "/images/logoMain2.png"}`} />
+                <img
+                  className="nav-logo"
+                  src={`${publicUrl + "/images/logoMain2.png"}`}
+                />
               </div>
             </Link>
           </div>
@@ -143,7 +146,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                               ? "active-user"
                               : ""
                           }`}
-                          style={{  cursor: "pointer", color:'white' }}
+                          style={{ cursor: "pointer", color: "white" }}
                         >
                           {dataUser?.[UserFields.FULL_NAME]}
                         </span>
@@ -152,7 +155,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ isBackImgHeader = true }) => {
                     <MenuHeadeLessTippy>
                       {arrTippyHomeUser(
                         dataUser?.[UserFields.ROLE],
-                        dataUser?.[UserFields.IS_EMISSARY]
+                        dataUser?.[UserFields.IS_EMISSARY_APPROVED]
                       )?.map((item: any, index: number) => (
                         <Fragment key={index}>
                           <Link

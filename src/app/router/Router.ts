@@ -185,7 +185,7 @@ const getRoutesBasedOnPath = (pathName: EHeaderTabKey, dataUser: any) => {
   if (arrRoleAdminAcitve.includes(pathName)) {
     return getAdminRoutes();
   } else if (arrRoleUserAcitve.includes(pathName)) {
-    return getUserRoutes(dataUser?.[UserFields.IS_EMISSARY]);
+    return getUserRoutes(dataUser?.[UserFields.IS_EMISSARY_APPROVED]);
   }
   return getPublicRoutes();
 };
@@ -197,7 +197,7 @@ export const getRoutes = (dataUser?: any) => {
   }
 
   if (dataUser?.[UserFields.ROLE] === RoleUser.USER) {
-    return getUserRoutes(dataUser?.[UserFields.IS_EMISSARY]);
+    return getUserRoutes(dataUser?.[UserFields.IS_EMISSARY_APPROVED]);
   }
 
   if (dataUser?.[UserFields.ROLE] === RoleUser.ADMIN) {

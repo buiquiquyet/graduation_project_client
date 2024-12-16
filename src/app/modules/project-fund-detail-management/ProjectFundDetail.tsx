@@ -52,11 +52,9 @@ const ProjectFundDetailComponent = () => {
       handleCallApiProjectFundDetail(projectFundId);
     }
   }, [projectFundId]);
-  
- 
 
   return (
-    <div className="project-fund-detail" >
+    <div className="project-fund-detail">
       <div className="w-100">
         <div className="w-100">
           <LazyLoadComponent>
@@ -118,16 +116,24 @@ const ProjectFundDetailComponent = () => {
                     </div>
                     <div className="right-box-info">
                       <div className="right-box-content">
-                        <div className="right-box-images container p-0 align-items-center">
-                          <div className="row w-100" style={{ gap: "10px" }}>
-                            <img
-                              src={getImgCommon(
-                                dataDetailProjectFund?.[
-                                  ProjectFundFields.IMAGES_FUND
-                                ]
-                              )}
-                              className="mb-2"
-                            />
+                        <div
+                          className="right-box-images container p-0 m-0 align-items-center"
+                          style={{ width: "70%" }}
+                        >
+                          <div
+                            className="d-flex  w-100 align-items-center"
+                            style={{ gap: "10px" }}
+                          >
+                            <div>
+                              <img
+                                src={getImgCommon(
+                                  dataDetailProjectFund?.[
+                                    ProjectFundFields.IMAGES_FUND
+                                  ]
+                                )}
+                                className="mb-2"
+                              />
+                            </div>
                             <span className="text-main">
                               {
                                 dataDetailProjectFund?.[
@@ -137,14 +143,14 @@ const ProjectFundDetailComponent = () => {
                             </span>
                           </div>
                         </div>
-                        <div className="container p-0 align-items-center">
-                          <div className="row align-items-center justify-content-end">
+                        <div className=" align-items-center">
+                          <div className="d-flex align-items-center justify-content-end">
                             <FaUser />
                             <div className="ml-2 pt-1">
                               {dataDetailProjectFund?.[
                                 ProjectFundFields.NUMBER_OF_DONATE
                               ] + " "}{" "}
-                              người ủng hộ
+                              lượt ủng hộ
                             </div>
                           </div>
                         </div>
@@ -228,7 +234,9 @@ const ProjectFundDetailComponent = () => {
               }
               projectFundId={projectFundId}
               userId={dataDetailProjectFund?.[ProjectFundFields.USER_Id]}
-              projectFundListLike={dataDetailProjectFund?.[ProjectFundFields.LIKE_BY_USERS]}
+              projectFundListLike={
+                dataDetailProjectFund?.[ProjectFundFields.LIKE_BY_USERS]
+              }
               video={dataDetailProjectFund?.[ProjectFundFields.VIDEO]}
             />
           )}

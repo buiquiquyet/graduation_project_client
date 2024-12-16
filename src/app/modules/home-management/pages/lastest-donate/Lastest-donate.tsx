@@ -6,7 +6,7 @@ import { handleCheckSuccessResponse } from "@/shared/constants/base.constants";
 import LazyLoadComponent from "@/shared/libraries/lazy-load-component/LayzyComponent";
 import { formatCurrency, getImgCommon } from "@/shared/user-const";
 import { memo, useContext, useEffect, useState } from "react";
-
+import './Lastest-donate.scss'
 function LastestDonate() {
   const context = useContext(MyContext);
   if (!context) {
@@ -32,7 +32,7 @@ function LastestDonate() {
 console.log(publicUrl);
 
   return (
-    <>
+    <div className="lastest-donate">
       {data3Donors?.length > 0 && (
         <section className="ftco-section">
           <div className="container">
@@ -69,7 +69,7 @@ console.log(publicUrl);
                                         ProjectFundDialogDonateFields.AVATAR
                                       ]
                                     )
-                                  : publicUrl + "/images/avatar.png"
+                                  : publicUrl + "/images/avatar.webp"
                               })`,
                             }}
                           />
@@ -104,7 +104,7 @@ console.log(publicUrl);
           </div>
         </section>
       )}
-    </>
+    </div>
   );
 }
 export default memo(LastestDonate);

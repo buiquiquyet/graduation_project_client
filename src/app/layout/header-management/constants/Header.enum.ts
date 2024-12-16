@@ -14,6 +14,7 @@ export enum EHeaderTab {
     APPROVAL_PROJECT, // duyệt dự án
     DETAIL_FUND, // xem chi tiết quỹ
     ADMIN_USER, // quản lý người dùng
+    APPROVAL_EMISSARY, // duyệt quyền sứ giả
 }
 export enum EHeaderTabText {
     HOME = "Trang chủ", // trang chủ
@@ -31,6 +32,7 @@ export enum EHeaderTabText {
     APPROVAL_PROJECT = "Duyệt dự án ", // duyệt dự án
     DETAIL_FUND = "Xem chi tiết quỹ", // xem chi tiết quỹ
     ADMIN_USER = "Quản lý người dùng", // quản lý người dùng
+    APPROVAL_EMISSARY = "Duyệt sứ giả", // duyệt quyền sứ giả
 }
 export enum EHeaderTabKey {
     HOME = "", // trang chủ
@@ -50,4 +52,5 @@ export enum EHeaderTabKey {
     APPROVAL_PROJECT = "approval-project",
     DETAIL_FUND = "detail-fund", 
     ADMIN_USER = "admin-user", // quản lý người dùng
+    APPROVAL_EMISSARY = "approval-emissary", // duyệt quyền sứ giả
 }
