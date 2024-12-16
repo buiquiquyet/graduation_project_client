@@ -25,9 +25,14 @@ export const createProjectFund = async (body: any) => {
 export const getListProjectFunds = async (
   page: Page,
   filterTabList?: TabListProjectFund,
-  fundId?: string
+  fundId?: string,
+  searchValue?: string
 ) => {
-  let additionalParams = { filterType: filterTabList, fundId: fundId ?? null };
+  let additionalParams = {
+    filterType: filterTabList,
+    fundId: fundId ?? null,
+    searchValue,
+  };
   let params = BuildParams.Params(page, additionalParams);
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers

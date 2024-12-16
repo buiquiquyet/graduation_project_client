@@ -30,6 +30,7 @@ interface PropsTable {
   onClickOpenFile?: (id: string) => void;
   onClickOpenNote?: (id: string) => void;
   onRowClick?: (id: string) => void;
+  onChangeSearch?: (value: string) => void
 }
 const LibTable: React.FC<PropsTable> = ({
   columns,
@@ -41,6 +42,7 @@ const LibTable: React.FC<PropsTable> = ({
   onClickOpenFile,
   onClickOpenNote,
   onRowClick,
+  onChangeSearch
 }) => {
   const context = useContext(MyContext);
   if (!context) {
@@ -87,7 +89,7 @@ const LibTable: React.FC<PropsTable> = ({
   }, [rowIdSelects]);
   return (
     <div>
-      <LibBaseSearch style={{ marginBottom: "30px" }} />
+      <LibBaseSearch style={{ marginBottom: "30px" }} onChange={onChangeSearch} />
       <TableContainer component={Paper} className="table-container">
         <Table>
           <TableHead>

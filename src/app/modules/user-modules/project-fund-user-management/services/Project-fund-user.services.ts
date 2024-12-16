@@ -1,7 +1,10 @@
 import { BuildParams } from "@/shared/ultils/BuildParams";
 import { Page } from "@/shared/ultils/Page";
 import { customRequest } from "@/shared/ultils/request";
-import { TabListProjectFundProcessing, UpdateApprovalStatusDTO } from "../constants/Project-fund-user.enum";
+import {
+  TabListProjectFundProcessing,
+  UpdateApprovalStatusDTO,
+} from "../constants/Project-fund-user.enum";
 
 const apiCommon = "project-fund-processing";
 // createa thông tin người dùng
@@ -22,9 +25,10 @@ export const createProjectFundProcessing = async (body: any) => {
 export const getListProjectFundsProcessing = async (
   page: Page,
   filterTabList?: TabListProjectFundProcessing,
-  userId: string = ""
+  userId: string = "",
+  searchValue: string = ""
 ) => {
-  let additionalParams: any = { filterType: filterTabList };
+  let additionalParams: any = { filterType: filterTabList, searchValue };
   if (userId) {
     additionalParams = { ...additionalParams, userId };
   }
@@ -67,7 +71,9 @@ export const updateProjectFundProcessing = async (id: string, body: any) => {
   }
 };
 // update trạng thái  dự án
-export const updateStatusProjectFundProcessing = async (body: UpdateApprovalStatusDTO) => {
+export const updateStatusProjectFundProcessing = async (
+  body: UpdateApprovalStatusDTO
+) => {
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest(

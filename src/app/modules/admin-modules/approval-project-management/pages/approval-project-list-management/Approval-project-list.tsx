@@ -13,14 +13,21 @@ import {
 } from "@/shared/constants/base.constants";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
 
-
 import { ApprovalProjectConst } from "../../constants/Approval-project-const";
 import { addIdRowProjectFund } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
 import { useDispatch } from "react-redux";
 import { Select } from "antd";
-import { TabListProjectFundProcessing, UpdateApprovalStatusDTO, UpdateApprovalStatusFields } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
+import {
+  TabListProjectFundProcessing,
+  UpdateApprovalStatusDTO,
+  UpdateApprovalStatusFields,
+} from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
 import { ProjectFundProcessingListConst } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user-list.const";
-import { getListProjectFundsProcessing, updateStatusProjectFundProcessing } from "@/app/modules/user-modules/project-fund-user-management/services/Project-fund-user.services";
+import {
+  getListProjectFundsProcessing,
+  updateStatusProjectFundProcessing,
+} from "@/app/modules/user-modules/project-fund-user-management/services/Project-fund-user.services";
+import { debounce } from "lodash";
 
 const { Option } = Select;
 export default memo(function ApprovalProjectListComponent() {
@@ -50,10 +57,16 @@ export default memo(function ApprovalProjectListComponent() {
   // call api get list dự án
   const handleCallApiProjectFundsList = async (
     page: Page,
-    filterTabList: TabListProjectFundProcessing
+    filterTabList: TabListProjectFundProcessing,
+    searchValue: string = ""
   ) => {
     setLoading(true);
-    const res: any = await getListProjectFundsProcessing(page, filterTabList);
+    const res: any = await getListProjectFundsProcessing(
+      page,
+      filterTabList,
+      "",
+      searchValue
+    );
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
       setDataProjectFundsProcessing(res?.data);
@@ -78,8 +91,8 @@ export default memo(function ApprovalProjectListComponent() {
       const res: any = await updateStatusProjectFundProcessing(dataRequest);
       setLoading(false);
       if (handleResponseInterceptor(res)) {
-        handleCallApiProjectFundsList(page, tabList)
-        setRowIdSelects([])
+        handleCallApiProjectFundsList(page, tabList);
+        setRowIdSelects([]);
       }
     }
   };
@@ -90,6 +103,13 @@ export default memo(function ApprovalProjectListComponent() {
       dispatch(addIdRowProjectFund(idRow));
     }
   };
+  // search
+  const onChangeSearch = debounce((value: any) => {
+    if (dataProjectFundsProcessing?.datas?.length > 0) {
+      const valueSearch = value.target.value;
+      handleCallApiProjectFundsList(page, tabList, valueSearch);
+    }
+  }, 1000);
   // change page table
   const handleChangePage = (event: any, newPage: any) => {
     setPages({
@@ -140,13 +160,11 @@ export default memo(function ApprovalProjectListComponent() {
               {columnTable?.length > 0 && (
                 <LibTable
                   columns={columnTable}
-                  data={
-                    dataProjectFundsProcessing &&
-                    dataProjectFundsProcessing.datas
-                  }
+                  data={dataProjectFundsProcessing?.datas}
                   rowIdSelects={rowIdSelects}
                   setRowIdSelects={setRowIdSelects}
                   onRowClick={onRowClick}
+                  onChangeSearch={onChangeSearch}
                 />
               )}
             </div>

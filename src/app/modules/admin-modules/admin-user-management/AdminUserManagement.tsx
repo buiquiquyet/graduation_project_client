@@ -12,6 +12,7 @@ import BaseButton from "@/shared/component/base-button/BaseButton";
 import { AdminUserConst } from "./constants/AdminUserManagement.const";
 import "./AdminUserManagement.scss";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
+import { debounce } from "lodash";
 export default memo(function AdminUserManagement() {
   const { setLoading } = useContextCommon();
   let pages: Page = new Page();
@@ -34,10 +35,10 @@ export default memo(function AdminUserManagement() {
     });
   };
   // call api get list danh mục
-  const handleCallApiUsersList = async () => {
+  const handleCallApiUsersList = async (searchValue: string = "") => {
     setLoading(true);
 
-    const res: any = await getListUsers(page);
+    const res: any = await getListUsers(page, searchValue);
     setLoading(false);
     if (res) {
       setDataUsers(res?.data);
@@ -55,6 +56,13 @@ export default memo(function AdminUserManagement() {
       }
     }
   };
+  // search
+  const onChangeSearch = debounce((value: any) => {
+    if(dataUsers?.datas?.length > 0) {
+      const valueSearch = value.target.value;
+      handleCallApiUsersList(valueSearch);
+    }
+  }, 1000);
   useEffect(() => {
     if (page) {
       handleCallApiUsersList();
@@ -71,9 +79,10 @@ export default memo(function AdminUserManagement() {
             <div className="w-100">
               <LibTable
                 columns={columnTable}
-                data={dataUsers && dataUsers.datas}
+                data={dataUsers?.datas}
                 rowIdSelects={rowIdSelects}
                 setRowIdSelects={setRowIdSelects}
+                onChangeSearch={onChangeSearch}
               />
             </div>
           )}

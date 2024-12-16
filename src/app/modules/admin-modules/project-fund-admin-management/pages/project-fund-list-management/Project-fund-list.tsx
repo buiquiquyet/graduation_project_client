@@ -30,7 +30,7 @@ import { ListIcons } from "@/shared/constants/list-icons";
 import { exportListDonates } from "@/app/modules/project-fund-detail-management/services/ProjectFundContentAndList.service";
 import { downloadExcelFile } from "@/shared/constants/export-excel";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
-
+import { debounce } from "lodash";
 export default memo(function ProjectFundList() {
   const { setLoading } = useContextCommon();
   const pages: Page = new Page();
@@ -45,7 +45,7 @@ export default memo(function ProjectFundList() {
   const itemOptions = [
     {
       key: ItemOptionsKey.EXPORT,
-      label: ListIcons.getIcon("Xuất lịch sử ủng hộ"),
+      label: ListIcons.getIcon("Xuất excel lịch sử ủng hộ"),
     },
   ];
   const reducerProjectFund = useSelector(ReducerProjectFund); // redux dự án
@@ -60,10 +60,16 @@ export default memo(function ProjectFundList() {
   // call api get list dự án
   const handleCallApiProjectFundsList = async (
     page: Page,
-    filterTabList: TabListProjectFund
+    filterTabList: TabListProjectFund,
+    searchValue: string = ""
   ) => {
     setLoading(true);
-    const res: any = await getListProjectFunds(page, filterTabList);
+    const res: any = await getListProjectFunds(
+      page,
+      filterTabList,
+      "",
+      searchValue
+    );
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
       setDataProjectFunds(res?.data);
@@ -130,11 +136,17 @@ export default memo(function ProjectFundList() {
     setTabList(tabList); // set thay đổi tab list
     handleCallApiProjectFundsList(page, tabList); // gọi api khi thay đổi tab list
   };
+  // search
+  const onChangeSearch = debounce((value: any) => {
+    if(dataProjectFunds?.datas?.length > 0) {
+      const valueSearch = value.target.value;
+      handleCallApiProjectFundsList(page, tabList, valueSearch);
+    }
+  }, 1000);
   useEffect(() => {
     if (!rowId || !reducerProjectFund?.[InitProjectFund.ID_ROW] || page) {
       handleCallApiProjectFundsList(page, tabList);
     }
-    
   }, [reducerProjectFund, page]);
 
   return (
@@ -169,11 +181,12 @@ export default memo(function ProjectFundList() {
               <LibTable
                 onClickShowOptios={handleShowSetting}
                 columns={columnTable}
-                data={dataProjectFunds && dataProjectFunds.datas}
+                data={dataProjectFunds?.datas}
                 rowIdSelects={rowIdSelects}
                 setRowIdSelects={setRowIdSelects}
                 onRowClick={onRowClick}
                 itemOptions={itemOptions}
+                onChangeSearch={onChangeSearch}
               />
             )}
           </div>

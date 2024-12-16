@@ -72,8 +72,11 @@ export const getDetailUserById = async (idUser: string) => {
   }
 };
 // get list các người dùng
-export const getListUsers = async (page: Page) => {
-  const params = BuildParams.Params(page);
+export const getListUsers = async (page: Page, searchValue: string = "") => {
+  let additionalParams = {
+    searchValue,
+  };
+  const params = BuildParams.Params(page, additionalParams);
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest("GET", `/${apiCommon}${params}`);

@@ -18,8 +18,12 @@ export const createCharityFund = async (body: any) => {
   }
 };
 // get list các quỹ
-export const getListCharityFunds = async (page: Page) => {
-  const params = BuildParams.Params(page);
+export const getListCharityFunds = async (
+  page: Page,
+  searchValue: string = ""
+) => {
+  let additionalParams: any = { searchValue };
+  const params = BuildParams.Params(page, additionalParams);
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest("GET", `/${apiCommon}${params}`);

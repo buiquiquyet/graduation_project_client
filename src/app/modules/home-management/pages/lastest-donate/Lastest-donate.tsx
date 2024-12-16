@@ -79,10 +79,10 @@ console.log(publicUrl);
                                 ProjectFundDialogDonateFields.USER_NAME
                               ] ?? "Người hảo tâm ẩn danh"}
                             </h5>
-                            <div className="text mt-3">
-                              <p>
+                            <div className="text mt-3" >
+                              <p style={{fontSize: '18px'}}>
                                 Đã quyên góp tổng{" "}
-                                <span>
+                                <span style={{fontSize:'24px'}}>
                                   {" "}
                                   {formatCurrency(
                                     item?.[

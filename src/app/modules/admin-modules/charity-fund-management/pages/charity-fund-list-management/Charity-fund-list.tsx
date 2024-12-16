@@ -21,6 +21,7 @@ import {
 import { InitCharityFund } from "@/shared/reducer/charity-fund-slice/InitCharityFundProps";
 import { handleResponseInterceptor } from "@/shared/constants/base.constants";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
+import { debounce } from "lodash";
 
 export default memo(function CharityFundList() {
   const { setLoading } = useContextCommon();
@@ -41,9 +42,9 @@ export default memo(function CharityFundList() {
   const [rowId, setRowId] = useState<string>(""); // id khi click vào 1 row
   const columnTable = CharityFundListConst.columnCharityFund; // column table
   // call api get list quỹ
-  const handleCallApiCharityFundsList = async () => {
+  const handleCallApiCharityFundsList = async (valueSearch: string = "") => {
     setLoading(true);
-    const res: any = await getListCharityFunds(page);
+    const res: any = await getListCharityFunds(page, valueSearch);
     setLoading(false);
     if (res) {
       setDataCharityFunds(res?.data);
@@ -78,12 +79,19 @@ export default memo(function CharityFundList() {
   };
   // khi click vào 1 row
   const onRowClick = async (idRow: string) => {
-    if (idRow !== rowId || !reducerCharityFund?.[InitCharityFund.ID_ROW] ) {
+    if (idRow !== rowId || !reducerCharityFund?.[InitCharityFund.ID_ROW]) {
       setRowId(idRow);
       dispatch(addIdRow(idRow));
       dispatch(addIsEdit(true));
     }
   };
+  // search
+  const onChangeSearch = debounce((value: any) => {
+    if(dataCharityFunds?.datas?.length > 0) {
+      const valueSearch = value.target.value;
+      handleCallApiCharityFundsList(valueSearch);
+    }
+  }, 1000);
   useEffect(() => {
     if (!rowId || !reducerCharityFund?.[InitCharityFund.ID_ROW] || page) {
       handleCallApiCharityFundsList();
@@ -99,10 +107,11 @@ export default memo(function CharityFundList() {
           <div className="w-100">
             <LibTable
               columns={columnTable}
-              data={dataCharityFunds && dataCharityFunds.datas}
+              data={dataCharityFunds?.datas}
               rowIdSelects={rowIdSelects}
               setRowIdSelects={setRowIdSelects}
               onRowClick={onRowClick}
+              onChangeSearch={onChangeSearch}
             />
           </div>
         )}

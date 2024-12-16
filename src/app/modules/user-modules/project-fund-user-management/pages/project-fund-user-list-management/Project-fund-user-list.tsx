@@ -27,6 +27,7 @@ import {
 import { TabListProjectFundProcessing } from "../../constants/Project-fund-user.enum";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
 import { UserFields } from "@/app/modules/user-management/constants/User.interface";
+import { debounce } from "lodash";
 
 export default memo(function ProjectFundList() {
   const { setLoading, dataUser } = useContextCommon();
@@ -53,13 +54,15 @@ export default memo(function ProjectFundList() {
   // call api get list dự án
   const handleCallApiProjectFundsList = async (
     page: Page,
-    filterTabList: TabListProjectFundProcessing
+    filterTabList: TabListProjectFundProcessing,
+    searchValue: string = ""
   ) => {
     setLoading(true);
     const res: any = await getListProjectFundsProcessing(
       page,
       filterTabList,
-      dataUser?.[UserFields.ID]
+      dataUser?.[UserFields.ID],
+      searchValue
     );
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
@@ -109,6 +112,13 @@ export default memo(function ProjectFundList() {
       pageNumber: newPage,
     });
   };
+  // search
+  const onChangeSearch = debounce((value: any) => {
+    if (dataProjectFundsProcessing?.datas?.length > 0) {
+      const valueSearch = value.target.value;
+      handleCallApiProjectFundsList(page, tabList, valueSearch);
+    }
+  }, 1000);
   // thay đổi tab list
   const handleChangeTabList = (tabList: TabListProjectFundProcessing) => {
     setTabList(tabList); // set thay đổi tab list
@@ -146,12 +156,11 @@ export default memo(function ProjectFundList() {
             {columnTable?.length > 0 && (
               <LibTable
                 columns={columnTable}
-                data={
-                  dataProjectFundsProcessing && dataProjectFundsProcessing.datas
-                }
+                data={dataProjectFundsProcessing?.datas}
                 rowIdSelects={rowIdSelects}
                 setRowIdSelects={setRowIdSelects}
                 onRowClick={onRowClick}
+                onChangeSearch={onChangeSearch}
               />
             )}
           </div>

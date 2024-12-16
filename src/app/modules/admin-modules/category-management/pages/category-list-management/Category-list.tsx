@@ -22,6 +22,7 @@ import {
   addIsEditCategory,
 } from "@/shared/reducer/category-slice/CategorySlice";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
+import { debounce } from "lodash";
 
 export default memo(function CategoryList() {
   const { setLoading } = useContextCommon();
@@ -42,9 +43,9 @@ export default memo(function CategoryList() {
   const [rowId, setRowId] = useState<string>(""); // id khi click vào 1 row
   const columnTable = CategoryListConst.columnCategory; // column table
   // call api get list danh mục
-  const handleCallApiCategorysList = async () => {
+  const handleCallApiCategorysList = async (valueSearch: string = "") => {
     setLoading(true);
-    const res: any = await getListCategorys(page);
+    const res: any = await getListCategorys(page, valueSearch);
     setLoading(false);
     if (res) {
       setDataCategorys(res?.data);
@@ -76,6 +77,13 @@ export default memo(function CategoryList() {
       dispatch(addIsEditCategory(true));
     }
   };
+  // search
+  const onChangeSearch = debounce((value: any) => {
+    if(dataCategorys?.datas?.length > 0) {
+      const valueSearch = value.target.value;
+      handleCallApiCategorysList(valueSearch);
+    }
+  }, 1000);
   // change page table
   const handleChangePage = (event: any, newPage: any) => {
     setPages({
@@ -97,10 +105,11 @@ export default memo(function CategoryList() {
         {columnTable?.length > 0 && (
           <LibTable
             columns={columnTable}
-            data={dataCategorys && dataCategorys.datas}
+            data={dataCategorys?.datas}
             rowIdSelects={rowIdSelects}
             setRowIdSelects={setRowIdSelects}
             onRowClick={onRowClick}
+            onChangeSearch={onChangeSearch}
           />
         )}
         <div>
