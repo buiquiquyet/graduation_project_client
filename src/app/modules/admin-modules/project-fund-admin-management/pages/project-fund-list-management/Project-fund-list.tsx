@@ -138,10 +138,8 @@ export default memo(function ProjectFundList() {
   };
   // search
   const onChangeSearch = debounce((value: any) => {
-    if(dataProjectFunds?.datas?.length > 0) {
-      const valueSearch = value.target.value;
-      handleCallApiProjectFundsList(page, tabList, valueSearch);
-    }
+    const valueSearch = value.target.value;
+    handleCallApiProjectFundsList(page, tabList, valueSearch);
   }, 1000);
   useEffect(() => {
     if (!rowId || !reducerProjectFund?.[InitProjectFund.ID_ROW] || page) {

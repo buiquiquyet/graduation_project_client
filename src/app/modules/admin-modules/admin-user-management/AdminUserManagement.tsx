@@ -58,10 +58,8 @@ export default memo(function AdminUserManagement() {
   };
   // search
   const onChangeSearch = debounce((value: any) => {
-    if(dataUsers?.datas?.length > 0) {
-      const valueSearch = value.target.value;
-      handleCallApiUsersList(valueSearch);
-    }
+    const valueSearch = value.target.value;
+    handleCallApiUsersList(valueSearch);
   }, 1000);
   useEffect(() => {
     if (page) {

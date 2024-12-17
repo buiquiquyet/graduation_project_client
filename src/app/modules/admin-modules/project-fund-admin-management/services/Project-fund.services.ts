@@ -7,7 +7,7 @@ import {
 } from "../constants/Project-fund.enum";
 
 const apiCommon = "project-fund";
-// createa thông tin người dùng
+// createa thông tin dự án
 export const createProjectFund = async (body: any) => {
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers

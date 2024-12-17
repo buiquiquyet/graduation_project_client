@@ -87,10 +87,8 @@ export default memo(function CharityFundList() {
   };
   // search
   const onChangeSearch = debounce((value: any) => {
-    if(dataCharityFunds?.datas?.length > 0) {
-      const valueSearch = value.target.value;
-      handleCallApiCharityFundsList(valueSearch);
-    }
+    const valueSearch = value.target.value;
+    handleCallApiCharityFundsList(valueSearch);
   }, 1000);
   useEffect(() => {
     if (!rowId || !reducerCharityFund?.[InitCharityFund.ID_ROW] || page) {

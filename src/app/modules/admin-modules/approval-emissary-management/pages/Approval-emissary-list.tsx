@@ -5,34 +5,25 @@ import { ApiResponseTable } from "@/shared/constants/api-response-table";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 
 import { Page } from "@/shared/ultils/Page";
-import "./Approval-project-list.scss";
 import BaseButton from "@/shared/component/base-button/BaseButton";
 import {
   handleCheckSuccessResponse,
   handleResponseInterceptor,
 } from "@/shared/constants/base.constants";
 import LibBasePagination from "@/shared/libraries/LibBasePagination/LibBasePagination";
-
-import { addIdRowProjectFund } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
-import { useDispatch } from "react-redux";
 import { Select } from "antd";
-import {
-  TabListProjectFundProcessing,
-  UpdateApprovalStatusDTO,
-  UpdateApprovalStatusFields,
-} from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
+import { TabListProjectFundProcessing } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
 import { ProjectFundProcessingListConst } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user-list.const";
-import {
-  getListProjectFundsProcessing,
-  updateStatusProjectFundProcessing,
-} from "@/app/modules/user-modules/project-fund-user-management/services/Project-fund-user.services";
 import { ApprovalEmissaryConst } from "../constants/Approval-emissary-const";
 import { debounce } from "lodash";
+import {
+  getListUserEmissary,
+  updateStatusUserEmissary,
+} from "@/app/modules/user-management/services/User.services";
 
 const { Option } = Select;
 export default memo(function ApprovalEmissaryListComponent() {
   const { setLoading } = useContextCommon();
-  const dispatch = useDispatch(); // action redux
   const pages: Page = new Page();
   const [page, setPages] = useState(pages); // page của table
   const [dataProjectFundsProcessing, setDataProjectFundsProcessing] =
@@ -53,18 +44,17 @@ export default memo(function ApprovalEmissaryListComponent() {
   const [tabList, setTabList] = useState<TabListProjectFundProcessing>(
     TabListProjectFundProcessing.PROCESSING
   ); // tab đang diễn ra và đã kết thúc
-  const columnTable = ProjectFundProcessingListConst.columnProjectFund; // column table
-  // call api get list dự án
-  const handleCallApiProjectFundsList = async (
+  const columnTable = ApprovalEmissaryConst.columnApprovalEmissary; // column table
+  // call api get list người duyệt
+  const handleCallApiUserEmissaryList = async (
     page: Page,
     filterTabList: TabListProjectFundProcessing,
     searchValue: string = ""
   ) => {
     setLoading(true);
-    const res: any = await getListProjectFundsProcessing(
+    const res: any = await getListUserEmissary(
       page,
       filterTabList,
-      "",
       searchValue
     );
     setLoading(false);
@@ -84,14 +74,13 @@ export default memo(function ApprovalEmissaryListComponent() {
   const handleApproveProject = async () => {
     if (rowIdSelects?.length > 0) {
       setLoading(true);
-      const dataRequest: UpdateApprovalStatusDTO = {
-        [UpdateApprovalStatusFields.IDS]: rowIdSelects,
-        [UpdateApprovalStatusFields.IS_APPROVED]: selectOptionStatus, // trạng thái duyệt
-      };
-      const res: any = await updateStatusProjectFundProcessing(dataRequest);
+      const res: any = await updateStatusUserEmissary(
+        rowIdSelects,
+        selectOptionStatus
+      );
       setLoading(false);
       if (handleResponseInterceptor(res)) {
-        handleCallApiProjectFundsList(page, tabList);
+        handleCallApiUserEmissaryList(page, tabList);
         setRowIdSelects([]);
       }
     }
@@ -100,15 +89,12 @@ export default memo(function ApprovalEmissaryListComponent() {
   const onRowClick = async (idRow: string) => {
     if (idRow !== rowId) {
       setRowId(idRow);
-      dispatch(addIdRowProjectFund(idRow));
     }
   };
   // search
   const onChangeSearch = debounce((value: any) => {
-    if (dataProjectFundsProcessing?.datas?.length > 0) {
-      const valueSearch = value.target.value;
-      handleCallApiProjectFundsList(page, tabList, valueSearch);
-    }
+    const valueSearch = value.target.value;
+    handleCallApiUserEmissaryList(page, tabList, valueSearch);
   }, 1000);
   // change page table
   const handleChangePage = (event: any, newPage: any) => {
@@ -120,7 +106,7 @@ export default memo(function ApprovalEmissaryListComponent() {
   // thay đổi tab list
   const handleChangeTabList = (tabList: TabListProjectFundProcessing) => {
     setTabList(tabList); // set thay đổi tab list
-    handleCallApiProjectFundsList(page, tabList); // gọi api khi thay đổi tab list
+    handleCallApiUserEmissaryList(page, tabList); // gọi api khi thay đổi tab list
   };
   // set state options status
   const onChangeSelectOptionStatus = (value: TabListProjectFundProcessing) => {
@@ -128,7 +114,7 @@ export default memo(function ApprovalEmissaryListComponent() {
   };
   useEffect(() => {
     if (page) {
-      handleCallApiProjectFundsList(page, tabList);
+      handleCallApiUserEmissaryList(page, tabList);
     }
   }, [page]);
 
@@ -136,10 +122,6 @@ export default memo(function ApprovalEmissaryListComponent() {
     <div className="tab-list-project-fund-approvaL">
       <div className="container  pt-5 pb-5">
         <div className="user-info" style={{ textAlign: "center" }}>
-          <div className="user-label">
-            <h3 className="w-100">Các dự án</h3>
-          </div>
-
           <div className="w-100">
             <div className="w-100 mb-4 d-flex align-item-start tab-active-box ">
               {ApprovalEmissaryConst.tabTabeList.map(

@@ -1,5 +1,6 @@
 import { RoleUser } from "@/helper/ContextCommon/ContextCommon.enum";
 import { EHeaderTab, EHeaderTabKey, EHeaderTabText } from "./Header.enum";
+import { TabListProjectFundProcessing } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
 
 export class HeaderConst {
   // mảng các tab trên header
@@ -38,7 +39,7 @@ export class HeaderConst {
   // mảng các element tippy user hoặc admin
   public static getArrayTippyUser(
     role: RoleUser = RoleUser.USER,
-    isEmissary: boolean = false
+    isEmissary: TabListProjectFundProcessing 
   ) {
     // role của người dùng khi là sứ giả sẽ được tạo dự án
     const roleEmissary = {
@@ -61,6 +62,11 @@ export class HeaderConst {
     ];
     // quyền admin
     const roleAdmin = [
+      {
+        value: EHeaderTab.APPROVAL_EMISSARY,
+        label: EHeaderTabText.APPROVAL_EMISSARY,
+        key: EHeaderTabKey.APPROVAL_EMISSARY,
+      },
       {
         value: EHeaderTab.ADMIN_USER,
         label: EHeaderTabText.ADMIN_USER,
@@ -89,7 +95,8 @@ export class HeaderConst {
       ...roleUser,
     ];
     if (role === RoleUser.ADMIN) return roleAdmin;
-    if (isEmissary) return [roleEmissary, ...roleUser];
+    if (isEmissary === TabListProjectFundProcessing.APPROVED)
+      return [roleEmissary, ...roleUser];
     return roleUser;
   }
 }

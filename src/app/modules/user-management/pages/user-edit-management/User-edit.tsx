@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { UserEditConst } from "../../constants/User-edit.const";
 import { Fragment } from "react/jsx-runtime";
 
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import {
   getCitys,
   getDistricts,
@@ -21,6 +21,7 @@ import {
   updateOptionsFormInputs,
 } from "@/shared/user-const";
 import LibSwitchInput from "@/shared/libraries/lib-switch-input-component/libSwitchInput";
+import BaseFileUpload from "@/shared/component/base-dialog-file/BaseFileUpload";
 export default memo(function UserEdit() {
   // check useContext
   const { setLoading, dataUser } = useContextCommon();
@@ -28,6 +29,7 @@ export default memo(function UserEdit() {
     UserEditConst.arrPersonLocation
   ); // form input thông tin địa chỉ
   const formInputsInfoUser: any[] = UserEditConst.arrPersonInfo; // form input thông tin cá nhân
+  const [listFileNames, setListFileNames] = useState<any[]>([]); // mảng file image
   // trả về thông tin user
   const handleGetInfoUser = () => {
     return {
@@ -51,11 +53,19 @@ export default memo(function UserEdit() {
     initialValues,
     validationSchema,
     onSubmit: async (values: any) => {
-      setLoading(true);
-      const res: any = await updateUser(dataUser?.[UserFields.ID] ?? "", {
-        ...(dataUser ?? {}),
-        ...values,
+      // dữ liệu truyền lên
+      const formData = new FormData();
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key]);
       });
+      listFileNames.forEach((file: any) => {
+        formData.append(UserFields.CCCD_IFORM_FILE, file.originFileObj);
+      });
+      setLoading(true);
+      const res: any = await updateUser(
+        dataUser?.[UserFields.ID] ?? "",
+        formData
+      );
       setLoading(false);
       if (handleResponseInterceptor(res)) {
       }
@@ -118,7 +128,10 @@ export default memo(function UserEdit() {
       );
     }
   };
-
+  // cập nhật list file image
+  const onChangeImage = useCallback((newFileList: any[]) => {
+    setListFileNames(newFileList);
+  }, []);
   useEffect(() => {
     getDataCity();
   }, []);
@@ -126,13 +139,14 @@ export default memo(function UserEdit() {
     if (dataUser) {
       initialValues = handleGetInfoUser();
       formik.setValues(initialValues);
-      // nếu có code của city
-      if (dataUser?.[UserFields.CITY]) {
-        getDataDistrict(dataUser?.[UserFields.CITY]);
-      }
+      setListFileNames(dataUser?.[UserFields.CCCD]); // SET LẠI FILE IMAGE
       //nếu có code của quận huyện
       if (dataUser?.[UserFields.DISTRICT]) {
         getDataWard(dataUser?.[UserFields.DISTRICT]);
+      }
+      // nếu có code của city
+      if (dataUser?.[UserFields.CITY]) {
+        getDataDistrict(dataUser?.[UserFields.CITY]);
       }
     }
   }, [dataUser]);
@@ -177,11 +191,19 @@ export default memo(function UserEdit() {
                 </div>
               </Fragment>
             ))}
+          <div className="input-label">
+            <span>Tải lên cccd </span>
+            <BaseFileUpload
+              onChange={onChangeImage}
+              fileList={listFileNames}
+              imgLength={2}
+            />
+          </div>
         </div>
       </div>
       <div>
-        <BaseButton title="Cập nhật" />
+        <BaseButton disabled={listFileNames?.length !== 2} title="Cập nhật" />
       </div>
     </form>
   );
-})
+});

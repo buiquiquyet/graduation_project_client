@@ -18,6 +18,8 @@ import ProjectFundComponent from "../modules/admin-modules/project-fund-admin-ma
 import Category from "../modules/admin-modules/category-management/Category";
 import CharityFund from "../modules/admin-modules/charity-fund-management/Charity-fund";
 import AdminUserManagement from "../modules/admin-modules/admin-user-management/AdminUserManagement";
+import ApprovalEmissaryComponent from "../modules/admin-modules/approval-emissary-management/ApprovalEmissary";
+import { TabListProjectFundProcessing } from "../modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
 const publicRouter = [
   {
     path: `${EHeaderTabKey.HOME}`,
@@ -147,6 +149,14 @@ const privateAdminRouter = [
     isBackImgHeader: false,
     type: "",
   },
+  {
+    path: `${EHeaderTabKey.APPROVAL_EMISSARY}`,
+    component: ApprovalEmissaryComponent,
+    children: null,
+    layout: DefaultLayout,
+    isBackImgHeader: false,
+    type: "",
+  },
 ];
 
 const getPublicRoutes = () => publicRouter;
@@ -157,8 +167,8 @@ const getAdminRoutes = () => [
   ...privateUserRouter,
 ];
 
-const getUserRoutes = (isEmissary: boolean) => {
-  if (isEmissary) {
+const getUserRoutes = (isEmissary: TabListProjectFundProcessing) => {
+  if (isEmissary === TabListProjectFundProcessing.APPROVED) {
     return [
       ...publicRouter,
       ...privateUserRouter,
@@ -176,6 +186,7 @@ const getRoutesBasedOnPath = (pathName: EHeaderTabKey, dataUser: any) => {
     EHeaderTabKey.CATEGORY,
     EHeaderTabKey.APPROVAL_PROJECT,
     EHeaderTabKey.ADMIN_USER,
+    EHeaderTabKey.APPROVAL_EMISSARY,
   ];
   // USER
   const arrRoleUserAcitve = [

@@ -18,7 +18,9 @@ export enum UserFields {
     DISTRICT = "district",   
     ADDRESS = "address",      
     IS_EMISSARY = "isEmissary", // có phải là sứ giả      
-    IS_EMISSARY_APPROVED = "isEmissaryApproved", // đã duyệt thành sứ giả chưa   
+    IS_EMISSARY_APPROVED = "isEmissaryApproved", // đã duyệt thành sứ giả chưa 
+    CCCD_IFORM_FILE = "cccdIFormFile", // mặt  căn cước 
+    CCCD = "cccd", // mặt  căn cước
 }
 
 export interface UsersDTO {
@@ -39,4 +41,11 @@ export interface UsersDTO {
     [UserFields.WARD]?: string;                          
     [UserFields.DISTRICT]?: string;                   
     [UserFields.ADDRESS]?: string;                       
+    [UserFields.CCCD]?: string;                       
+}
+
+
+export enum UserTabActive {
+    PERSON = 1, // trang cá nhân
+    HISTORY, //lịch sử ủng hộ
 }

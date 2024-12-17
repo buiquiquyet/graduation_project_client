@@ -1,4 +1,4 @@
-import "./ApprovalProject.scss";
+import "./ApprovalEmissary.scss";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -6,7 +6,7 @@ import {
   addIsEditProjectFund,
 } from "@/shared/reducer/project-fund-slice/ProjectFundSlice";
 import ApprovalEmissaryList from "./pages/Approval-emissary-list";
-export default function ApprovalProjectFundComponent() {
+export default function ApprovalEmissaryComponent() {
   const dispatch = useDispatch(); // action redux
   useEffect(() => {
     return () => {
@@ -19,7 +19,7 @@ export default function ApprovalProjectFundComponent() {
       <div className="user-wrapper">
         <div className="user-avatar">
           <div>
-            <h1>Danh sách các dự án sứ giả</h1>
+            <h1>Danh sách duyệt trở thành sứ giả</h1>
           </div>
         </div>
         <div className="container d-flex flex-column " style={{ gap: "40px" }}>

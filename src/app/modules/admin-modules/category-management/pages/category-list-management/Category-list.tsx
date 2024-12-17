@@ -79,10 +79,8 @@ export default memo(function CategoryList() {
   };
   // search
   const onChangeSearch = debounce((value: any) => {
-    if(dataCategorys?.datas?.length > 0) {
-      const valueSearch = value.target.value;
-      handleCallApiCategorysList(valueSearch);
-    }
+    const valueSearch = value.target.value;
+    handleCallApiCategorysList(valueSearch);
   }, 1000);
   // change page table
   const handleChangePage = (event: any, newPage: any) => {
