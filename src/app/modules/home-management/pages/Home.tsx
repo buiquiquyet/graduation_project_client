@@ -71,15 +71,15 @@ function HomeComponent() {
                 <div className="block-18 color-2 align-items-stretch">
                   <div className="text">
                     <h3 className="mb-4">Tiền quyên góp</h3>
-                    <p>
+                    <p style={{fontSize:'20px'}}>
                       Quyên góp không chỉ là cho đi, mà còn là nhận lại những
                       niềm vui và sự biết ơn từ người khác.
                     </p>
-                    <p>
+                    {/* <p>
                       <Link to={""} className="btn btn-white px-3 py-2 mt-2">
                         Quyên góp ngay bây giờ
                       </Link>
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
@@ -87,15 +87,15 @@ function HomeComponent() {
                 <div className="block-18 color-3 align-items-stretch">
                   <div className="text">
                     <h3 className="mb-4">Tình nguyện viên.</h3>
-                    <p>
+                    <p style={{fontSize:'20px'}}>
                       Chỉ cần một bàn tay đưa ra giúp đỡ, bạn đã có thể thay đổi
                       cả một cuộc đời.
                     </p>
-                    <p>
+                    {/* <p>
                       <Link to={""} className="btn btn-white px-3 py-2 mt-2">
                         Tình nguyện viên.
                       </Link>
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>

@@ -6,7 +6,7 @@ export const getCitys = async () => {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest(
       "GET",
-      `https://open.oapi.vn/location/provinces?page=0&size=64`
+      `https://open.oapi.vn/location/provinces?page=0&size=1000`
     );
 
     return response; // Trả về response chứa status và data
@@ -19,7 +19,7 @@ export const getCitys = async () => {
 export const getDistricts = async (provinceId?: string | number) => {
   const url = provinceId
     ? `https://open.oapi.vn/location/districts/${provinceId}?page=0&size=64`
-    : `https://open.oapi.vn/location/districts?page=0&size=64`;
+    : `https://open.oapi.vn/location/districts?page=0&size=999`;
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest("GET", url);
@@ -31,10 +31,10 @@ export const getDistricts = async (provinceId?: string | number) => {
   }
 };
 // lấy thông tin phường xã
-export const getWards = async (districtId?: string | number) => {
+export const getWards = async (districtId?: string | number, page?: number, size?: number) => {
   const url = districtId
     ? `https://open.oapi.vn/location/wards/${districtId}?page=0&size=64`
-    : `https://open.oapi.vn/location/wards?page=0&size=64`;
+    : `https://open.oapi.vn/location/wards?page=${page}&size=${size}`;
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest("GET", url);

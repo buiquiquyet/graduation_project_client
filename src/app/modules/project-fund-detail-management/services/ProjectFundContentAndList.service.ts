@@ -5,8 +5,11 @@ import { customRequest } from "@/shared/ultils/request";
 const apiCommon = "payment";
 
 // get list các donate
-export const getListDonates = async (page: Page, projectFundId?: string) => {
-  let params = BuildParams.Params(page);
+export const getListDonates = async (page: Page, projectFundId?: string, valueSearch: string = "") => {
+  let additionalParams = {
+    valueSearch,
+  };
+  let params = BuildParams.Params(page, additionalParams);
   try {
     // Gọi customRequest với phương thức POST, đường dẫn, body và headers
     const response = await customRequest(

@@ -15,17 +15,26 @@ import { Select } from "antd";
 import { TabListProjectFundProcessing } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user.enum";
 import { ProjectFundProcessingListConst } from "@/app/modules/user-modules/project-fund-user-management/constants/Project-fund-user-list.const";
 import { ApprovalEmissaryConst } from "../constants/Approval-emissary-const";
-import { debounce } from "lodash";
+import { debounce, delay } from "lodash";
 import {
   getListUserEmissary,
   updateStatusUserEmissary,
 } from "@/app/modules/user-management/services/User.services";
+import {
+  getCitys,
+  getDistricts,
+  getWards,
+} from "@/app/modules/user-management/services/User-edit.services";
+import { UserFields } from "@/app/modules/user-management/constants/User.interface";
 
 const { Option } = Select;
 export default memo(function ApprovalEmissaryListComponent() {
   const { setLoading } = useContextCommon();
   const pages: Page = new Page();
   const [page, setPages] = useState(pages); // page của table
+  const [citys, setCitys] = useState<any[]>([]); // // thanh pho
+  const [districts, setDistricts] = useState<any[]>([]); // quan huyen
+  const [wards, setWards] = useState<any[]>([]); // phuong xa
   const [dataProjectFundsProcessing, setDataProjectFundsProcessing] =
     useState<ApiResponseTable>({
       currentPage: 1,
@@ -59,7 +68,25 @@ export default memo(function ApprovalEmissaryListComponent() {
     );
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
-      setDataProjectFundsProcessing(res?.data);
+      const newData: any = res?.data?.datas.map((item: any) => {
+        console.log(
+          citys?.find((city: any) => city.id === item?.[UserFields.CITY])?.name
+        );
+
+        return {
+          ...item,
+          [UserFields.CITY]: citys?.find(
+            (city: any) => city.id === item?.[UserFields.CITY]
+          )?.name,
+          [UserFields.DISTRICT]: districts?.find(
+            (district: any) => district.id === item?.[UserFields.DISTRICT]
+          )?.name,
+          [UserFields.WARD]: wards?.find(
+            (ward: any) => ward.id === item?.[UserFields.WARD]
+          )?.name,
+        };
+      });
+      setDataProjectFundsProcessing({ ...res?.data, datas: newData });
     } else {
       setDataProjectFundsProcessing({
         currentPage: 1,
@@ -112,12 +139,71 @@ export default memo(function ApprovalEmissaryListComponent() {
   const onChangeSelectOptionStatus = (value: TabListProjectFundProcessing) => {
     setSelectOptionStatus(value);
   };
+  const delay = (wait: number) => {
+    return new Promise((resolve) => setTimeout(resolve, wait));
+  };
+
+  const getWardsWithPagination = async () => {
+    let wards: any[] = [];
+    let page = 0;
+    const size = 1000; // Kích thước mỗi trang
+    let hasMoreData = true;
+    try {
+      while (hasMoreData) {
+        setLoading(true);
+        const wardRes = await getWards("", page, size);
+        if (wardRes?.data?.data?.length) {
+          wards = [...wards, ...wardRes.data.data]; // Gộp dữ liệu từ các trang
+          page += 1; // Tăng page lên
+        } else {
+          hasMoreData = false; // Dừng lại nếu không còn dữ liệu
+        }
+
+        // Thêm delay giữa các lần gọi API
+        await delay(200); // Delay 200ms giữa các lần gọi API
+      }
+      return wards;
+    } catch (error) {
+      console.error("Error fetching wards:", error);
+      return [];
+    }
+  };
+
+  const getDataInBatches = async () => {
+    try {
+      // Gọi API tuần tự với delay
+      const cityRes = await getCitys();
+      await delay(200); // Delay giữa các gọi API
+      const districtRes = await getDistricts();
+      await delay(200);
+      const wardRes = await getWardsWithPagination();
+
+      // Xử lý kết quả trả về từ các API
+      if (cityRes) {
+        setCitys(cityRes?.data?.data);
+      }
+      if (districtRes) {
+        setDistricts(districtRes?.data?.data);
+      }
+      if (wardRes) {
+        setWards(wardRes);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     if (page) {
-      handleCallApiUserEmissaryList(page, tabList);
+      
+      getDataInBatches();
     }
   }, [page]);
-
+  useEffect(() => {
+    if (citys?.length && districts?.length && wards?.length) {
+      handleCallApiUserEmissaryList(page, tabList);
+    }
+  }, [citys, districts, wards, page, tabList]);
   return (
     <div className="tab-list-project-fund-approvaL">
       <div className="container  pt-5 pb-5">

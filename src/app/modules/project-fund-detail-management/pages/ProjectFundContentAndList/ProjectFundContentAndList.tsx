@@ -31,6 +31,7 @@ import {
 } from "@/app/modules/admin-modules/project-fund-admin-management/services/Project-fund.services";
 import { ProjectFundFields } from "@/app/modules/admin-modules/project-fund-admin-management/constants/Project-fund.interface";
 import { CharityFundFields } from "@/app/modules/admin-modules/charity-fund-management/constants/charity-fund.interface";
+import { debounce } from "lodash";
 interface ProjectFundContentAndListProps {
   idFund: string;
   projectFundDescription: string;
@@ -87,9 +88,13 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
     setActiveTab(value);
   };
   // call api list donate
-  const handleCallApiDonateList = async (page: Page, projectFundId: string) => {
+  const handleCallApiDonateList = async (
+    page: Page,
+    projectFundId: string,
+    valueSearch: string = ""
+  ) => {
     setLoading(true);
-    const res: any = await getListDonates(page, projectFundId);
+    const res: any = await getListDonates(page, projectFundId, valueSearch);
     setLoading(false);
     if (handleCheckSuccessResponse(res)) {
       setDataListDonates(res?.data);
@@ -114,6 +119,13 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
       pageNumber: newPage,
     });
   };
+  // search
+  const onChangeSearch = debounce((value: any) => {
+    const valueSearch = value.target.value;
+    if (projectFundId) {
+      handleCallApiDonateList(page, projectFundId, valueSearch);
+    }
+  }, 1000);
   // set like
   const handleClickSetLike = async () => {
     // like
@@ -331,7 +343,11 @@ const ProjectFundContentAndList: React.FC<ProjectFundContentAndListProps> = ({
         {activeTab === ProjectFundContentAndListAcitve.LIST && (
           <LazyLoadComponent>
             <div className="container project-fund-content-list w-100 p-0">
-              <LibTable columns={columnTable} data={dataListDonates?.datas} />
+              <LibTable
+                columns={columnTable}
+                data={dataListDonates?.datas}
+                onChangeSearch={onChangeSearch}
+              />
               {dataListDonates.datas &&
                 dataListDonates.totalRecords > page.perPageOptions[0] && (
                   <LibBasePagination

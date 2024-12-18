@@ -208,17 +208,20 @@ const ProjectFundDetailComponent = () => {
                             type="number"
                           /> */}
                         </div>
-                        <div
-                          className="d-flex justify-content-end col-12 col-sm-12 col-md-12 col-lg-12 "
-                          style={{ gap: "10px" }}
-                        >
-                          <BaseButton
-                            color={ButtonColor.Error}
-                            onClick={onClickDialogDonate}
-                            title="Ủng hộ ngay"
-                          />
-                          {/* <BaseButton title="Trở thành sứ giả" /> */}
-                        </div>
+                        {new Date(
+                          dataDetailProjectFund?.[ProjectFundFields.END_DATE]
+                        ) > new Date() && (
+                          <div
+                            className="d-flex justify-content-end col-12 col-sm-12 col-md-12 col-lg-12 "
+                            style={{ gap: "10px" }}
+                          >
+                            <BaseButton
+                              color={ButtonColor.Error}
+                              onClick={onClickDialogDonate}
+                              title="Ủng hộ ngay"
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

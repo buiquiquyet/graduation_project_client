@@ -5,7 +5,11 @@ import { Fragment } from "react/jsx-runtime";
 import BaseButton from "@/shared/component/base-button/BaseButton";
 import { useContextCommon } from "@/helper/ContextCommon/ContextCommon";
 import LibSwitchInput from "@/shared/libraries/lib-switch-input-component/libSwitchInput";
-import { createValidationSchema } from "@/shared/validate";
+import {
+  createValidationSchema,
+  ValidateInputTextError,
+  ValidationRules,
+} from "@/shared/validate";
 
 import { ProjectFundEditConst } from "../../constants/Project-fund-edit.const";
 import {
@@ -40,6 +44,7 @@ import {
 import { getListCharityFundsForOptions } from "../../../charity-fund-management/services/Charity-fund.services";
 import { getListCategorys } from "../../../category-management/services/Category.services";
 import BaseVideoFile from "@/shared/component/base-video-file/BaseVideoFile";
+import * as Yup from "yup";
 export default memo(function ProjectFundEdit() {
   // check useContext
   const { setLoading } = useContextCommon();
@@ -69,7 +74,30 @@ export default memo(function ProjectFundEdit() {
     };
   };
 
-  const validationSchema = createValidationSchema(handleGetInfoUser());
+  const customValidationRules: ValidationRules = {
+    [ProjectFundFields.START_DATE]: Yup.string()
+      .required(ValidateInputTextError.ERROR)
+      .matches(/^\d{4}-\d{2}-\d{2}$/, "Định dạng chưa đúng."),
+    [ProjectFundFields.END_DATE]: Yup.string()
+      .required(ValidateInputTextError.ERROR)
+      .matches(/^\d{4}-\d{2}-\d{2}$/, "Định dạng chưa đúng.")
+      .test(
+        "is-greater",
+        "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+        function (value) {
+          const { startDate } = this.parent;
+          return !startDate || !value || new Date(value) > new Date(startDate);
+        }
+      ),
+      [ProjectFundFields.TARGET_AMOUNT]: Yup.number()
+        .required(ValidateInputTextError.ERROR)
+        .min(1, 'Số tiền thấp nhất phải là 1')
+        .max(1000000000, 'Số tiền không được vượt quá 100.000.000.000'),
+  };
+  const validationSchema = createValidationSchema(
+    handleGetInfoUser(),
+    customValidationRules
+  );
 
   let initialValues: ProjectFundDTO | any = handleGetInfoUser(); // biến gán init của form submit
   let formik = useFormik({
@@ -93,7 +121,7 @@ export default memo(function ProjectFundEdit() {
         });
       }
       // THÊM video vào formData
-      if(listFileVideo?.length > 0) {
+      if (listFileVideo?.length > 0) {
         formData.append(
           ProjectFundFields.VIDEO_IFORM_FILE,
           listFileVideo[0]?.originFileObj
@@ -242,10 +270,7 @@ export default memo(function ProjectFundEdit() {
           </div>
           <div className="input-label">
             <span>Tải video </span>
-            <BaseVideoFile
-              onChange={onChangeVideo}
-              fileList={listFileVideo}
-            />
+            <BaseVideoFile onChange={onChangeVideo} fileList={listFileVideo} />
           </div>
         </div>
         <div
