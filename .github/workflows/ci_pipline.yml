@@ -1,69 +1,54 @@
 # .github/workflows/ci_pipeline.yml
 
-# Tên của Workflow, hiển thị trên tab Actions của GitHub
-name: Full CI/CD Pipeline
+# Tên của Workflow
+name: Full CI/CD Pipeline (No Python, No Test)
 
 # 1. Điều kiện kích hoạt (Trigger)
-# Workflow sẽ chạy khi có lệnh 'git push' lên các nhánh được liệt kê
 on:
   push:
-    branches: [ main, develop ] # Thêm 'develop' nếu bạn có nhánh phát triển
+    branches: [ main, develop ]
 
 # 2. Định nghĩa các Jobs (Công việc)
 jobs:
   build:
-    runs-on: ubuntu-latest # Chọn máy ảo Linux để chạy
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      
+      # Xóa hoặc comment toàn bộ khối Setup Python Environment
       # - name: Setup Python Environment
       #   uses: actions/setup-python@v5
       #   with:
       #     python-version: '3.x'
 
-      # - name: Run Python Script (Giả lập Build/Processing)
-      #   run: |
-      #     echo "Bắt đầu xử lý file Python..."
-      #     python3 python.py # Thay bằng tên script Python của bạn
-      #     mkdir build_artifact
-      #     echo "Build Complete: $(date +%F)" > build_artifact/build_info.txt
+      # Giữ lại các bước giả lập Build và tạo Artifacts (File đầu ra)
+      - name: Giả lập Build và Tạo Artifacts
+        run: |
+          echo "Bắt đầu xây dựng ứng dụng (Không dùng Python)..."
+          # Đây là nơi bạn sẽ chạy lệnh build thực tế (ví dụ: npm run build, go build,...)
+          mkdir build_artifact
+          echo "Build Complete: $(date +%F)" > build_artifact/build_info.txt
 
-      # - name: Upload Build Artifacts
-      #   # Lưu trữ file build để các job sau có thể sử dụng
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: build-info-file
-      #     path: build_artifact/build_info.txt
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-info-file
+          path: build_artifact/build_info.txt
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   needs: [build] # Đảm bảo chạy sau khi 'build' thành công
-  #   steps:
-  #     - name: Download Artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: build-info-file
-  #         path: build_artifact/ # Tải file build từ job trước
-
-  #     - name: Run Verification Test
-  #       run: |
-  #         echo "Kiểm tra file build..."
-  #         # Kiểm tra xem file build_info.txt có được tải xuống không
-  #         cat build_artifact/build_info.txt
-          
-  #         if grep "Build Complete" build_artifact/build_info.txt; then
-  #           echo "Kiểm thử Verification thành công!"
-  #         else
-  #           echo "Kiểm thử thất bại."
-  #           exit 1
-  #         fi
+  # Job 'test' đã được xóa
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [test] # Đảm bảo chạy sau khi 'test' thành công
-    # Thường nên có bước xác nhận thủ công hoặc chỉ chạy trên nhánh chính
-    environment: Staging 
+    # Job deploy cần job 'build' hoàn thành
+    needs: [build]
+    environment: Staging
     steps:
-      - name: Deployment Stage (Giả lập)
+      - name: Download Artifacts for Deploy
+        uses: actions/download-artifact@v4
+        with:
+          name: build-info-file
+          path: build_artifact/
+
+      - name: Deployment Stage (Thực hiện triển khai)
         run: echo "Triển khai thành công lên môi trường Staging/Dev!"
