@@ -25,7 +25,7 @@ jobs:
       - name: Run Python Script (Giả lập Build/Processing)
         run: |
           echo "Bắt đầu xử lý file Python..."
-          python3 your_script.py # Thay bằng tên script Python của bạn
+          python3 python3.py # Thay bằng tên script Python của bạn
           mkdir build_artifact
           echo "Build Complete: $(date +%F)" > build_artifact/build_info.txt
 
