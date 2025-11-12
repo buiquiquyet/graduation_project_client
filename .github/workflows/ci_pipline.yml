@@ -1,0 +1,69 @@
+# .github/workflows/ci_pipeline.yml
+
+# Tên của Workflow, hiển thị trên tab Actions của GitHub
+name: Full CI/CD Pipeline
+
+# 1. Điều kiện kích hoạt (Trigger)
+# Workflow sẽ chạy khi có lệnh 'git push' lên các nhánh được liệt kê
+on:
+  push:
+    branches: [ main, develop ] # Thêm 'develop' nếu bạn có nhánh phát triển
+
+# 2. Định nghĩa các Jobs (Công việc)
+jobs:
+  build:
+    runs-on: ubuntu-latest # Chọn máy ảo Linux để chạy
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run Python Script (Giả lập Build/Processing)
+        run: |
+          echo "Bắt đầu xử lý file Python..."
+          python3 your_script.py # Thay bằng tên script Python của bạn
+          mkdir build_artifact
+          echo "Build Complete: $(date +%F)" > build_artifact/build_info.txt
+
+      - name: Upload Build Artifacts
+        # Lưu trữ file build để các job sau có thể sử dụng
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-info-file
+          path: build_artifact/build_info.txt
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [build] # Đảm bảo chạy sau khi 'build' thành công
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-info-file
+          path: build_artifact/ # Tải file build từ job trước
+
+      - name: Run Verification Test
+        run: |
+          echo "Kiểm tra file build..."
+          # Kiểm tra xem file build_info.txt có được tải xuống không
+          cat build_artifact/build_info.txt
+          
+          if grep "Build Complete" build_artifact/build_info.txt; then
+            echo "Kiểm thử Verification thành công!"
+          else
+            echo "Kiểm thử thất bại."
+            exit 1
+          fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test] # Đảm bảo chạy sau khi 'test' thành công
+    # Thường nên có bước xác nhận thủ công hoặc chỉ chạy trên nhánh chính
+    environment: Staging 
+    steps:
+      - name: Deployment Stage (Giả lập)
+        run: echo "Triển khai thành công lên môi trường Staging/Dev!"
